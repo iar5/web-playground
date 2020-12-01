@@ -1,5 +1,5 @@
-import * as THREE from '/lib/three/build/three.module.js'
-import { OrbitControls } from '/lib/three/examples/jsm/controls/OrbitControls.js'
+import * as THREE from '../../lib/three/build/three.module.js'
+import { OrbitControls } from '../../lib/three/examples/jsm/controls/OrbitControls.js'
 import createClub from './createClub.js'
 import createPeople from './createPeople.js'
 

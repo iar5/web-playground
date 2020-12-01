@@ -30,3 +30,8 @@ three etc absolute aus node_modules ziehen
 		+ build möglich
 		
         Express server der das routing macht
+
+
+# Static setup 
+
+- relative pfade nutzen weil GH ''https://iar5.github.io/three-playground'' als root nimmt

@@ -1,4 +1,4 @@
-import * as THREE from '/lib/three/build/three.module.js'
+import * as THREE from '../../lib/three/build/three.module.js'
 import { CSS3DRenderer, CSS3DObject } from '/lib/three/examples/jsm/renderers/CSS3DRenderer.js'
 
 /**

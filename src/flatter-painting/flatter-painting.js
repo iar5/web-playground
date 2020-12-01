@@ -1,4 +1,4 @@
-import * as THREE from '/lib/three/build/three.module.js'
+import * as THREE from '../../lib/three/build/three.module.js'
 
 //https://stackoverflow.com/questions/40807515/cloth-simulator-using-three-js
 

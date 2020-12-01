@@ -1,6 +1,6 @@
-import * as THREE from '/lib/three/build/three.module.js'
-import { FBXLoader } from '/lib/three/examples/jsm/loaders/FBXLoader.js'
-import { OrbitControls } from '/lib/three/examples/jsm/controls/OrbitControls.js'
+import * as THREE from '../../lib/three/build/three.module.js'
+import { FBXLoader } from '../../lib/three/examples/jsm/loaders/FBXLoader.js'
+import { OrbitControls } from '../../lib/three/examples/jsm/controls/OrbitControls.js'
 
 
 
