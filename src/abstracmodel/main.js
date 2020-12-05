@@ -1,10 +1,14 @@
 import * as THREE from '../../lib/three/build/three.module.js'
 import { OrbitControls } from '../../lib/three/examples/jsm/controls/OrbitControls.js'
+import { GLTFLoader } from '../../lib/three/examples/jsm/loaders/GLTFLoader.js'
+import ThreeDatGui from "../../libmy/ThreeDatGui.js"
+import Skydome from "./js/SkyShader.js"
 
 
 
+const gui = new ThreeDatGui()
 
-const TEXLOADER  = new THREE.TextureLoader()
+const gltfloader = new GLTFLoader();
 
 var renderer = new THREE.WebGLRenderer({ antialias: true })
 renderer.setSize(window.innerWidth, window.innerHeight)
@@ -23,11 +27,12 @@ controls.maxDistance = 100
 controls.target.set(0, 0.5, 0)
 controls.update()
 
-
 var scene = new THREE.Scene()
 
-var ambientLight = new THREE.AmbientLight('rgb(255,255,255)', 0.5) 
+var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.5) 
 scene.add(ambientLight)
+gui.registerLight(ambientLight)
+
 
 var spotLight = new THREE.SpotLight(0xffffff, 1)
 spotLight.position.set(0.5, 3, 2)
@@ -40,19 +45,21 @@ spotLight.shadow.camera.near = 0.1
 spotLight.shadow.camera.far = 100 // performance
 scene.add(spotLight)
 //scene.add(new THREE.CameraHelper(spotLight.shadow.camera))
+gui.registerLight(spotLight)
 
-var ground = new THREE.Mesh(new THREE.PlaneBufferGeometry(2, 2), new THREE.MeshLambertMaterial({color: 'rgb(150, 255, 150)'}))
-ground.rotateX(THREE.MathUtils.degToRad(90))
-ground.material.side = THREE.DoubleSide
-ground.receiveShadow = true
-scene.add(ground)
 
-var skytexture = TEXLOADER.load('/assets/img/360/sky16.bmpf33d334a-3dfd-4a67-9131-9721af012d32Zoom.jpg')
-var skymesh = new THREE.Mesh(new THREE.SphereGeometry(100, 25, 25), new THREE.MeshBasicMaterial({map: skytexture}))
-skymesh.rotateY(THREE.MathUtils.degToRad(-90))
-skymesh.material.side = THREE.BackSide
-scene.add(skymesh)
+let skydome = new Skydome()
+scene.add(skydome)
 
+
+gltfloader.load('./assets/procgarden.gltf', function(gltf){
+    let mesh = gltf.scene.children[0]
+    scene.add(mesh);
+
+    var material = new THREE.MeshPhysicalMaterial();
+    mesh.material = material
+    gui.registerMaterial(material)
+})
 
 
 
