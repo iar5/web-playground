@@ -47,19 +47,24 @@ scene.add(spotLight)
 //scene.add(new THREE.CameraHelper(spotLight.shadow.camera))
 gui.registerLight(spotLight)
 
-
 let skydome = new Skydome()
 scene.add(skydome)
 
+
+// https://threejs.org/docs/#api/en/materials/ShaderMaterial
 
 gltfloader.load('./assets/procgarden.gltf', function(gltf){
     let mesh = gltf.scene.children[0]
     scene.add(mesh);
 
     var material = new THREE.MeshPhysicalMaterial();
+    material.envMap = new THREE.TextureLoader().load('/assets/img/360/sky16.bmpf33d334a-3dfd-4a67-9131-9721af012d32Zoom.jpg')
+
     mesh.material = material
     gui.registerMaterial(material)
 })
+
+
 
 
 
@@ -67,6 +72,8 @@ requestAnimationFrame(update)
 function update() {
     requestAnimationFrame(update)
     controls.update()
+    if(skydome.update) skydome.update()
+
     renderer.render(scene, camera)    
 }
 

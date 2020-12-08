@@ -126,25 +126,32 @@ export default class SkyShader extends THREE.Mesh{
 
     constructor(){
 
-        let skyDomeRadius = 500.01;
-        let sphereMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-            skyRadius: { value: skyDomeRadius },
-            env_c1: { value: new THREE.Color("#0d1a2f") },
-            env_c2: { value: new THREE.Color("#0f8682") },
-            noiseOffset: { value: new THREE.Vector3(100.01, 100.01, 100.01) },
-            starSize: { value: 0.01 },
-            starDensity: { value: 0.09 },
-            clusterStrength: { value: 0.2 },
-            clusterSize: { value: 0.2 },
-        },
+      let uniforms = {
+        skyRadius: { value: 500.01 },
+        env_c1: { value: new THREE.Color("#0d1a2f") },
+        env_c2: { value: new THREE.Color("#0f8682") },
+        noiseOffset: { value: new THREE.Vector3(100.01, 100.01, 100.01) },
+        starSize: { value: 0.01 },
+        starDensity: { value: 0.09 },
+        clusterStrength: { value: 0.2 },
+        clusterSize: { value: 0.2 },
+      }
+
+      let sphereMaterial = new THREE.ShaderMaterial({
+        uniforms,
         vertexShader: StarrySkyShader.vertexShader,
         fragmentShader: StarrySkyShader.fragmentShader,
         side: THREE.DoubleSide,
-        })
-        let sphereGeometry = new THREE.SphereGeometry(skyDomeRadius, 20, 20);
+      })
+      let sphereGeometry = new THREE.SphereGeometry(uniforms.skyRadius.value, 20, 20);
 
-        super(sphereGeometry, sphereMaterial)
+      super(sphereGeometry, sphereMaterial)
+      this.uniforms = uniforms
+    }
+
+    update(){
+      let s = 0.01
+      this.uniforms.noiseOffset.value.add(new THREE.Vector3(s,s,s))
     }
 }
   
