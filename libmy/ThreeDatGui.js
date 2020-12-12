@@ -29,16 +29,14 @@ export default class ThreeDatGui{
             folder.add(material, "roughness", 0, 1, 0.01)
             folder.add(material, "metalness", 0, 1, 0.01)
             folder.add( material, 'wireframe')
-        }  
-        else if(material instanceof THREE.MeshPhysicalMaterial){
-            folder.addColorThree(material, "color")
-            folder.addColorThree(material, "emissive")
-            folder.add(material, "roughness", 0, 1, 0.01)
-            folder.add(material, "metalness", 0, 1, 0.01)
-            folder.add(material, "reflectivity", 0, 1, 0.01)
-            folder.add(material, "clearcoat", 0, 1, 0.01)
-            folder.add(material, "clearcoatRoughness", 0, 1, 0.01)
-            folder.add( material, 'wireframe')
+
+            if(material instanceof THREE.MeshPhysicalMaterial){
+                folder.add(material, "reflectivity", 0, 1, 0.01)
+                folder.add(material, "clearcoat", 0, 1, 0.01)
+                folder.add(material, "clearcoatRoughness", 0, 1, 0.01)
+                folder.add(material, "transmission", 0, 1, 0.01)
+                folder.add(material, "ior", 1, 2, 0.01)
+            }
         }    
     }
 
@@ -46,7 +44,7 @@ export default class ThreeDatGui{
         let folder = this.lightFolder.addFolder(light.type + " " + light.name)
 
         folder.addColorThree(light, "color")
-        folder.add(light, "intensity", 0, 1, 0.01)
+        folder.add(light, "intensity", 0, 5, 0.01)
         
         if(!(light instanceof THREE.AmbientLight)){
             folder.add(light.position, "x", -50, 50, 0.01)
@@ -57,6 +55,18 @@ export default class ThreeDatGui{
         if(light instanceof THREE.PointLight){
             folder.add(light, "distance", 0, 100, 0.01)
             folder.add(light, "decay", 0, 5, 0.01)
+
+            const helper = new THREE.PointLightHelper(light, 1);
+            helper.visible = false
+            light.parent.add(helper)
+            folder.add({"show helper": helper.visible}, "show helper").onChange( b => { helper.visible = b })
+        }
+
+        if(light instanceof THREE.SpotLight){
+            const helper = new THREE.SpotLightHelper(light);
+            helper.visible = false
+            light.parent.add(helper);
+            folder.add({"show helper": helper.visible}, "show helper").onChange( b => { helper.visible = b })
         }
 
         //folder.add(light.rotation, "x", 0, Math.PI*2, 0.01)

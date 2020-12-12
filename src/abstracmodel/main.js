@@ -2,6 +2,7 @@ import * as THREE from '../../lib/three/build/three.module.js'
 import { OrbitControls } from '../../lib/three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from '../../lib/three/examples/jsm/loaders/GLTFLoader.js'
 import ThreeDatGui from "../../libmy/ThreeDatGui.js"
+import { resize } from '../../libmy/utils.js'
 import Skydome from "./js/SkyShader.js"
 
 
@@ -10,31 +11,35 @@ const gui = new ThreeDatGui()
 
 const gltfloader = new GLTFLoader();
 
-var renderer = new THREE.WebGLRenderer({ antialias: true })
+let renderer = new THREE.WebGLRenderer({ antialias: true })
+document.body.appendChild(renderer.domElement)
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFShadowMap
-document.body.appendChild(renderer.domElement)
+renderer.physicallyCorrectLights = true
 
-var camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.001, 10000)
+let camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.001, 10000)
 camera.position.z = 3
-camera.position.y = 1
 
-var controls = new OrbitControls(camera, renderer.domElement)
+let controls = new OrbitControls(camera, renderer.domElement)
 controls.maxPolarAngle = THREE.MathUtils.degToRad(90)
 controls.minDistance = 0.1
 controls.maxDistance = 100
 controls.target.set(0, 0.5, 0)
 controls.update()
 
-var scene = new THREE.Scene()
+window.addEventListener('resize', () => {resize(renderer, camera)}, false );
 
-var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.5) 
+let scene = new THREE.Scene()
+
+
+
+let ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 1) 
 scene.add(ambientLight)
 gui.registerLight(ambientLight)
 
 
-var spotLight = new THREE.SpotLight(0xffffff, 1)
+let spotLight = new THREE.SpotLight(0xffffff, 1)
 spotLight.position.set(0.5, 3, 2)
 spotLight.angle = THREE.MathUtils.degToRad(30)
 spotLight.castShadow = true
@@ -44,23 +49,31 @@ spotLight.decay = 2
 spotLight.shadow.camera.near = 0.1
 spotLight.shadow.camera.far = 100 // performance
 scene.add(spotLight)
-//scene.add(new THREE.CameraHelper(spotLight.shadow.camera))
 gui.registerLight(spotLight)
 
 let skydome = new Skydome()
 scene.add(skydome)
 
 
-// https://threejs.org/docs/#api/en/materials/ShaderMaterial
+const cubeRenderTarget = new THREE.WebGLCubeRenderTarget( 128, { format: THREE.RGBFormat, generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter } );
+
+const cubeCamera = new THREE.CubeCamera(0.0001, 10000, cubeRenderTarget); 
+scene.add(cubeCamera);
+
+
+let model 
 
 gltfloader.load('./assets/procgarden.gltf', function(gltf){
-    let mesh = gltf.scene.children[0]
-    scene.add(mesh);
+    model = gltf.scene.children[0]
+    model.position.y = 0.4
+    scene.add(model);
 
-    var material = new THREE.MeshPhysicalMaterial();
-    material.envMap = new THREE.TextureLoader().load('/assets/img/360/sky16.bmpf33d334a-3dfd-4a67-9131-9721af012d32Zoom.jpg')
 
-    mesh.material = material
+    let material = new THREE.MeshPhysicalMaterial();
+    material.transparent = true // damit transmission klappt
+    material.envMap = cubeCamera.renderTarget.texture;
+
+    model.material = material
     gui.registerMaterial(material)
 })
 
@@ -69,10 +82,15 @@ gltfloader.load('./assets/procgarden.gltf', function(gltf){
 
 
 requestAnimationFrame(update)
+
 function update() {
     requestAnimationFrame(update)
     controls.update()
     if(skydome.update) skydome.update()
+
+    if(model) model.visible = false
+    cubeCamera.update(renderer, scene);
+    if(model) model.visible = true
 
     renderer.render(scene, camera)    
 }

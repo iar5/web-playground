@@ -18,7 +18,7 @@ var scene = new THREE.Scene();
 var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
 geometry.scale( - 1, 1, 1 ); // invert the geometry on the x-axis so that all of the faces point inward
 
-var texture = new THREE.TextureLoader().load("./image.jpg");
+var texture = new THREE.TextureLoader().load("/assets/img/360/santacruise.jpg");
 var material = new THREE.MeshBasicMaterial( {map: texture } );
 var mesh = new THREE.Mesh( geometry, material );
 scene.add( mesh );
