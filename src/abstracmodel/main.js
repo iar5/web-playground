@@ -3,20 +3,20 @@ import { OrbitControls } from '../../lib/three/examples/jsm/controls/OrbitContro
 import { GLTFLoader } from '../../lib/three/examples/jsm/loaders/GLTFLoader.js'
 import ThreeDatGui from "../../libmy/ThreeDatGui.js"
 import { resize } from '../../libmy/utils.js'
-import Skydome from "./js/SkyShader.js"
+import Sky from "./js/TestShader.js"
 
 
 
 const gui = new ThreeDatGui()
-
-const gltfloader = new GLTFLoader();
 
 let renderer = new THREE.WebGLRenderer({ antialias: true })
 document.body.appendChild(renderer.domElement)
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFShadowMap
-renderer.physicallyCorrectLights = true
+renderer.context.getExtension('OES_standard_derivatives');
+gui.lightFolder.add(renderer, "physicallyCorrectLights")
+
 
 let camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.001, 10000)
 camera.position.z = 3
@@ -34,7 +34,7 @@ let scene = new THREE.Scene()
 
 
 
-let ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 1) 
+let ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.01) 
 scene.add(ambientLight)
 gui.registerLight(ambientLight)
 
@@ -51,18 +51,18 @@ spotLight.shadow.camera.far = 100 // performance
 scene.add(spotLight)
 gui.registerLight(spotLight)
 
-let skydome = new Skydome()
-scene.add(skydome)
+let sky = new Sky()
+scene.add(sky)
 
 
 const cubeRenderTarget = new THREE.WebGLCubeRenderTarget( 128, { format: THREE.RGBFormat, generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter } );
-
 const cubeCamera = new THREE.CubeCamera(0.0001, 10000, cubeRenderTarget); 
 scene.add(cubeCamera);
 
 
 let model 
 
+const gltfloader = new GLTFLoader();
 gltfloader.load('./assets/procgarden.gltf', function(gltf){
     model = gltf.scene.children[0]
     model.position.y = 0.4
@@ -72,7 +72,8 @@ gltfloader.load('./assets/procgarden.gltf', function(gltf){
     let material = new THREE.MeshPhysicalMaterial();
     material.transparent = true // damit transmission klappt
     material.envMap = cubeCamera.renderTarget.texture;
-
+    material.roughness = 0
+    material.reflectivity = 1
     model.material = material
     gui.registerMaterial(material)
 })
@@ -83,10 +84,11 @@ gltfloader.load('./assets/procgarden.gltf', function(gltf){
 
 requestAnimationFrame(update)
 
-function update() {
+function update(time) {
     requestAnimationFrame(update)
     controls.update()
-    if(skydome.update) skydome.update()
+    
+    if(sky.update) sky.update(time)
 
     if(model) model.visible = false
     cubeCamera.update(renderer, scene);

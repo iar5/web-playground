@@ -2,7 +2,7 @@ import * as THREE from '../../../lib/three/build/three.module.js'
 
 // https://stackblitz.com/edit/starry-skydome?file=StarrySkyShader.js
 
-const StarrySkyShader = {
+const shader = {
 
     vertexShader: `
       varying vec3 vPos;
@@ -139,13 +139,12 @@ export default class SkyShader extends THREE.Mesh{
 
       let sphereMaterial = new THREE.ShaderMaterial({
         uniforms,
-        vertexShader: StarrySkyShader.vertexShader,
-        fragmentShader: StarrySkyShader.fragmentShader,
-        side: THREE.DoubleSide,
+        vertexShader: shader.vertexShader,
+        fragmentShader: shader.fragmentShader,
+        side: THREE.BackSide,
       })
-      let sphereGeometry = new THREE.SphereGeometry(uniforms.skyRadius.value, 20, 20);
 
-      super(sphereGeometry, sphereMaterial)
+      super(new THREE.SphereGeometry(uniforms.skyRadius.value, 20, 20), sphereMaterial)
       this.uniforms = uniforms
     }
 
