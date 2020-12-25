@@ -6,13 +6,28 @@
 </head>
 
 <body>
-  <div id="html3d"></div>
+  <div id="htmlSrc">
+      <p>Moin from HTML</p>
+  </div> 
+  
   <div id="webgl"></div>
+  <div id="html3D"></div>
 </body>
 </html>
 
 <style>
-#webgl{
-  pointer-events: none;
+#html3D, #webgl {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+}
+
+
+#htmlSrc{
+  width: 100px;
+  height: 100px;
+  background: pink;
+  color: blue;
 }
 </style>
