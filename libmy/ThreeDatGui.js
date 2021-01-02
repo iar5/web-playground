@@ -28,7 +28,7 @@ export default class ThreeDatGui{
             folder.addColorThree(material, "emissive")
             folder.add(material, "roughness", 0, 1, 0.01)
             folder.add(material, "metalness", 0, 1, 0.01)
-            folder.add( material, 'wireframe')
+            folder.add(material, 'wireframe')
 
             if(material instanceof THREE.MeshPhysicalMaterial){
                 folder.add(material, "reflectivity", 0, 1, 0.01)

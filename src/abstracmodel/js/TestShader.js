@@ -4,7 +4,7 @@ import * as THREE from '../../../lib/three/build/three.module.js'
 
 const shader = {
 
-    vertexShader: `
+    vertexShader:`
       varying vec3 vPos;
   
       void main() {
