@@ -9,9 +9,18 @@ document.addEventListener('keyup', function (e) {
     keysHold.splice(i, 1);
 })
 
+document.addEventListener("visibilitychange", () => {
+    keysHold = []
+})
+window.addEventListener("pagehide", () => {
+    keysHold = []
+});
+
+
 /**
- * Achtung! hab das von keycode auf key geändert
+ * @param key string der Taste
  */
 export function isKeyHold(key) { 
     return keysHold.indexOf(key) != -1 
 }
+

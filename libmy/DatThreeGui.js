@@ -3,13 +3,14 @@ import * as THREE from '../lib/three/build/three.module.js'
 import * as dat from '../lib/dat.gui.js';
 
 
-export default class ThreeDatGui{
+/**
+ * Objekte müssen THREE.Object3D.name property haben
+ */
+export default class DatThreeGui{
 
     constructor(){
         this.datgui = new dat.GUI();
         this.datgui.domElement.style.float = "left"
-        this.lightFolder = this.datgui.addFolder('Lights');
-        this.materialFolder = this.datgui.addFolder('Matrials');
 
         this.datgui.__proto__.addColorThree = function(object, property){
             // folder.addColor({ emissive: material.emissive.getHex() }, 'emissive').onChange((c) => material.emissive.set(c))
@@ -19,9 +20,19 @@ export default class ThreeDatGui{
             this.addColor(o, property).onChange(c => object[property].set(c))    
         }
     }
+    
+    register(obj){
+        if (obj instanceof THREE.Material) {
+            this.registerMaterial(obj)
+        }
+        else if (obj instanceof THREE.Light) {
+            this.registerLight(obj)
+        }
+    }
 
     registerMaterial(material){
-        let folder = this.materialFolder.addFolder(material.type + " " + material.name)
+        if (!this.materialsFolder) this.materialsFolder = this.datgui.addFolder('Materials');
+        let folder = this.materialsFolder.addFolder(material.type + " " + material.name)
 
         if(material instanceof THREE.MeshStandardMaterial){
             folder.addColorThree(material, "color")
@@ -40,7 +51,8 @@ export default class ThreeDatGui{
         }    
     }
 
-    registerLight(light){        
+    registerLight(light){       
+        if (!this.lightFolder) this.lightFolder = this.datgui.addFolder('Lights');
         let folder = this.lightFolder.addFolder(light.type + " " + light.name)
 
         folder.addColorThree(light, "color")
