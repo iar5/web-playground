@@ -1,0 +1,37 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --public",
+    "build": "cross-env NODE_ENV=production webpack"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^3.5.2",
+    "dat.gui": "^0.7.7",
+    "eslint": "^7.19.0",
+    "exports-loader": "^1.1.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "gsap": "^3.6.0",
+    "html-webpack-plugin": "^4.2.0",
+    "imports-loader": "^0.8.0",
+    "json-loader": "^0.5.7",
+    "sass": "^1.29.0",
+    "sass-loader": "^10.1.0",
+    "stats-js": "^1.0.1",
+    "style-loader": "^1.1.4",
+    "terser-webpack-plugin": "^4.2.3",
+    "three-pathfinding": "^0.12.1",
+    "ts-loader": "^7.0.1",
+    "ts-node": "^9.1.0",
+    "typescript": "^3.8.3",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-dev-server": "^3.11.0",
+    "worker-loader": "^3.0.6",
+    "three": "^0.124.0"
+  }
+}

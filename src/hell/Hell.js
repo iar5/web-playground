@@ -5,6 +5,8 @@ import * as THREE from '../../../lib/three/build/three.module.js'
 const shader = {
 
     vertexShader: `
+	  uniform vec3 positionOffset;
+
       varying vec3 vPos;
   
       void main() {
@@ -23,8 +25,8 @@ const shader = {
 	#endif
 
 	uniform float time;
-	uniform vec2 mouse;
 	uniform vec2 resolution;
+	uniform vec3 positionOffset;
 
     varying vec3 vPos;
 
@@ -52,7 +54,9 @@ const shader = {
 
 	void main( void ) {
 		vec3 dir = normalize(vPos);
-		vec3 pos = vec3(0, 0,time/4.+vPos.z/600.*0.5);
+		vec3 pos = positionOffset/100.;
+		// vec3 dir = normalize(vPos+positionOffset); // cooler zoom fail
+		//vec3 pos = vec3(0, 0,time/4.+vPos.z/600.*0.5); // vorbei ziehen lassen
 		vec3 color = vec3(0);
 		for (int i = 0; i < MAXITER; i++) {
 			vec3 f2 = field(pos);
@@ -76,22 +80,17 @@ export default class Room extends THREE.Mesh {
 
         let uniforms = {
             time: { value: 0 },
-            mouse: { value: new THREE.Vector2() },
+			positionOffset: { value: new THREE.Vector3() },
             resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
         }
-
-        let sphereMaterial = new THREE.ShaderMaterial({
+        let shaderMaterial = new THREE.ShaderMaterial({
             uniforms,
             vertexShader: shader.vertexShader,
             fragmentShader: shader.fragmentShader,
             side: THREE.BackSide,
         })
-        super(new THREE.SphereGeometry(600, 20, 20), sphereMaterial)
+		super(new THREE.SphereGeometry(600, 20, 20), shaderMaterial)
         this.uniforms = uniforms
-    }
-
-    update(time) {
-        //this.uniforms.time.value = time / 1000
     }
 }
 
