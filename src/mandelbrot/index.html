@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="user-scalable=no">
+        <link rel="icon" href="/assets/favicon.png">
+        <title>Mandelbrot Set</title>
+    </head>
+
+    <body>
+        <div id="status">
+            <p>center: <span id="center"></span></p>
+            <p>zoom: <span id="zoom"></span></p>
+            <p>fps: <span id="fps"></span></p>
+        </div>
+
+        <div id="info">
+            <h1>Mandelbrot Set</h1>
+
+            <div id="infoText">
+                <p>zoom in and explore</p>
+                <br>
+
+                <div class="spinningBorder">
+                    <p style="margin-left: 2px;"> - use <span class="bold">WASD</span> to move</p>
+                    <p style="margin-left: 2px;"> - use <span class="bold">Q</span> and <span class="bold">E</span> to zoom</p>
+                    <hr>
+                    <p>(or <span class="bold">pinch</span> and <span class="bold">pan</span> gestures on mobile devices)</p>
+                </div>
+                <br>
+
+                <p>due to the costruction of the mandelbrot set it takes longer to calculate the black areas. keep this in mind while exploring.</p>
+                <br>
+                <p>at a certain zoom factor the visualization is limited by webgl's single float precision.</p>
+                <br>
+            </div>
+
+            <input type="button" id="button" value="collapse info text">
+        </div>
+
+        <canvas id="canvas"></canvas>
+    </body>
+
+    <script type="module" src="main.js"></script>
+
+    <script>
+        const button = document.getElementById('button')
+        const box = document.getElementById('infoText')
+
+        button.onclick = () => {
+            box.style.display = (box.style.display == 'none' ? 'initial' : 'none')
+        }
+
+    </script>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html, body, canvas{
+            width: 100%;
+            height: 100%;
+            overscroll-behavior: none
+        }
+        p{
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: normal;
+            font-size: 0.8em;
+        }
+        span.bold{
+            font-weight: bolder;
+            font-family: initial;
+        }
+        #status{
+            position: fixed;
+            display: inline-block;
+            background-color: black;
+            color: white;
+        }
+        #info{
+            position: fixed;
+            right: 0;
+            background-color: black;
+            color: white;
+            width: 190px;
+        }
+        #button{
+            width: 100%;
+            background-color: transparent;
+            color: white;
+        }
+                
+        /* https://stackoverflow.com/questions/28365839/dashed-border-animation-in-css3-animation */
+        .spinningBorder {
+        background: 
+            linear-gradient(90deg, white 50%, transparent 50%),
+            linear-gradient(0deg, white 50%, transparent 50%),
+            linear-gradient(90deg, white 50%, transparent 50%),
+            linear-gradient(0deg, white 50%, transparent 50%);
+            background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
+            background-size: 15px 4px, 4px 15px, 15px 4px, 4px 15px;
+            background-position: left top, right top, left bottom, left top;
+            animation: border-dance 8s infinite linear;
+            padding: 5px;
+            margin: 1%;
+        }
+            
+        @keyframes border-dance {
+        0% {background-position: left top, right top, right bottom, left bottom;}
+        100% {background-position: right top, right bottom, left bottom, left top;}
+        }
+    </style>
+</html>

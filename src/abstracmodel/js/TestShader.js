@@ -174,7 +174,7 @@ export default class SkyShader extends THREE.Mesh{
     }
 
     update(time){
-      this.uniforms.time.value = time/1000
+      this.uniforms.time.value = time/2000
     }
 }
   
