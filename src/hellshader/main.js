@@ -20,7 +20,8 @@ renderer.context.getExtension('OES_standard_derivatives');
 
 
 const scene = new THREE.Scene()
-scene.fog = new THREE.FogExp2(new THREE.Color(0, 255, 0), 0, 10)
+//scene.fog = new THREE.FogExp2(0x00ff00, 0, 0.0005)
+//scene.fog = new THREE.Fog(0xff0000, 5, 50)
 
 const ambientLight = new THREE.AmbientLight(0x404040, 1); 
 scene.add(ambientLight);
@@ -50,6 +51,7 @@ let room = new Room()
 player.add(room)
 
 
+
 let material = new THREE.MeshPhysicalMaterial({
     transparent: true, // damit transmission klappt
     envMap: cubeCamera.renderTarget.texture,
@@ -59,6 +61,7 @@ let material = new THREE.MeshPhysicalMaterial({
     reflectivity: 0,
     clearcoat: 1
 });
+
 let model = new THREE.Mesh(new THREE.SphereBufferGeometry(1, 32, 32), material)
 gui.registerMaterial(material)
 scene.add(model)
@@ -76,7 +79,10 @@ function update() {
 
     if(model) model.visible = false
     cubeCamera.update(renderer, scene);
-    if(model) model.visible = true
+    if(model){
+        model.visible = true
+        model.material.opacity = 1-((model.position.distanceTo(camera.position)-20)/200)
+    }
 
     renderer.render(scene, camera) 
    

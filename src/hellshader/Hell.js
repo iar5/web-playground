@@ -89,7 +89,7 @@ export default class Room extends THREE.Mesh {
             fragmentShader: shader.fragmentShader,
             side: THREE.BackSide,
         })
-		super(new THREE.SphereGeometry(600, 20, 20), shaderMaterial)
+		super(new THREE.SphereGeometry(1000, 20, 20), shaderMaterial)
         this.uniforms = uniforms
     }
 }
