@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Image displacement</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="assets/favicon.png"></head>
+    <link rel="stylesheet" href="surface.css">
+</head>
+<html>
+    <body>
+        <header>
+            <h1>
+                <p>Image displacement</p>
+                <div></div>
+            </h1>
+
+            <input id="file" type="file" accept="image/png, image/jpeg">
+
+            <div id="controls">
+                <p>depth
+                    <input type="range" step="0.1" min="-2" max="2" id="depth">
+                </p>
+
+                <p>rotation
+                    <input id="rx" type="number" step="0.05" value="0">
+                    <input id="ry" type="number" step="0.05" value="0">
+                    <input id="rz" type="number" step="0.05" value="0">
+                </p>
+
+                <p>
+                    <input id="resetButton" type="button" value="reset view">
+                </p>
+                
+                <label>
+                    <input id="checkboxDepthTest" type="checkbox"> 
+                    depth test
+                </label>
+                <br>
+                <label>
+                    <input id="checkboxOrientationControle" type="checkbox"> 
+                    mobile orientation (beta)
+                </label>
+            </div>
+
+            <div id=toggleView>
+                <img src="arrow.png">
+            </div>
+        </header>
+
+        <canvas id="canvas"></canvas>
+    </body>
+
+
+    <script type="module">
+        import ImagePlot3D from './surface.js';
+
+        const imagePlot3D = new ImagePlot3D(document.getElementById('canvas'), 'example.png');
+
+        // Fileinput
+        const inputElement = document.getElementById("file")
+        inputElement.onchange = function(e) { 
+            let file = inputElement.files[0]
+            if(file){
+                var reader  = new FileReader();
+                reader.addEventListener("load", () => { imagePlot3D.updateImage(reader.result) }, false);
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Load initial input values
+        updateButtonValues()
+
+        // Animation Parameters
+        document.getElementById("rx").addEventListener("change", e => imagePlot3D.setRotationParameters(e.target.value, undefined, undefined))
+        document.getElementById("ry").addEventListener("change", e => imagePlot3D.setRotationParameters(undefined, e.target.value, undefined))
+        document.getElementById("rz").addEventListener("change", e => imagePlot3D.setRotationParameters(undefined, undefined, e.target.value))
+        document.getElementById("depth").addEventListener('input', e => imagePlot3D.setDepth(e.target.value))
+        document.getElementById("resetButton").addEventListener('click', e => reset())
+
+        document.getElementById("toggleView").addEventListener('click', () => document.getElementsByTagName("header")[0].classList.toggle("closed"))
+        document.getElementById("checkboxDepthTest").addEventListener('click', e => imagePlot3D.toggleDepthTest(e.target.checked))
+        document.getElementById("checkboxOrientationControle").addEventListener('click', e => imagePlot3D.enableOrientationControle(e.target.checked))
+        
+        function reset(){
+            imagePlot3D.resetView();
+            updateButtonValues();
+        }
+
+        function updateButtonValues(){
+            let params = imagePlot3D.getParameters()
+            rx.value = params.rotations[0]
+            ry.value = params.rotations[1]
+            rz.value = params.rotations[2]
+            depth.value = params.depth
+            checkboxDepthTest.checked = params.depthTestEnabled
+            checkboxOrientationControle.checked = params.orientationControleEnabled
+        }   
+    </script>  
+</html>

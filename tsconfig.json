@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "experimentalDecorators": true,
+        "outDir": "./dist/"
+    },
+    "types": [
+        "three",
+    ],
+    "exclude": [
+        "node_modules",
+    ],
+    "compileOnSave": true,
+    "buildOnSave": false,
+}
