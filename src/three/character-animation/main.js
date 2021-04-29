@@ -1,6 +1,6 @@
-import * as THREE from '../../lib/three/build/three.module.js'
-import { OrbitControls } from '../../lib/three/examples/jsm/controls/OrbitControls.js'
-import Stats from '../../lib/stats.module.js'
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import Stats from '../../../lib/stats.module.js'
 
 import { create, update} from './AnimationViewer.js';
 

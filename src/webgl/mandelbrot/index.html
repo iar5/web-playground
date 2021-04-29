@@ -22,10 +22,8 @@
                 <br>
 
                 <div class="spinningBorder">
-                    <p style="margin-left: 2px;"> - use <span class="bold">WASD</span> to move</p>
-                    <p style="margin-left: 2px;"> - use <span class="bold">Q</span> and <span class="bold">E</span> to zoom</p>
-                    <hr>
-                    <p>(or <span class="bold">pinch</span> and <span class="bold">pan</span> gestures on mobile devices)</p>
+                    <p><span class="bold">On Desktop:</span>  use <span class="bold">WASD</span> to move and <span class="bold">Q</span> and <span class="bold">E</span> to zoom</p>
+                    <p style="margin-top: 4px"><span class="bold">On mobile </span> use <span class="bold">pinch</span> and <span class="bold">pan</span> gestures on mobile devices)</p>
                 </div>
                 <br>
 
@@ -62,19 +60,23 @@
             overscroll-behavior: none
         }
         p{
+            text-align: justify;
+        }
+        p, span, a{
             font-family: Arial, Helvetica, sans-serif;
             font-weight: normal;
-            font-size: 0.8em;
+            font-size: 0.8rem;
         }
         span.bold{
             font-weight: bolder;
-            font-family: initial;
         }
         #status{
             position: fixed;
             display: inline-block;
             background-color: black;
             color: white;
+            padding: 4px;
+            margin: 1%
         }
         #info{
             position: fixed;
@@ -82,6 +84,8 @@
             background-color: black;
             color: white;
             width: 190px;
+            padding: 4px;
+            margin: 1%
         }
         #button{
             width: 100%;
@@ -91,6 +95,7 @@
                 
         /* https://stackoverflow.com/questions/28365839/dashed-border-animation-in-css3-animation */
         .spinningBorder {
+            padding: 2px;
         background: 
             linear-gradient(90deg, white 50%, transparent 50%),
             linear-gradient(0deg, white 50%, transparent 50%),

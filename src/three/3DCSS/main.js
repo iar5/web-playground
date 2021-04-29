@@ -1,6 +1,6 @@
-import * as THREE from '../../../lib/three/build/three.module.js'
-import { OrbitControls } from '../../../lib/three/examples/jsm/controls/OrbitControls.js'
-import { CSS3DRenderer, CSS3DObject } from '../../../lib/three/examples/jsm/renderers/CSS3DRenderer.js'
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer.js'
 
 /**
  * https://codepen.io/Fyrestar/pen/QOXJaJ](https://codepen.io/Fyrestar/pen/QOXJaJ).
@@ -28,7 +28,6 @@ const controls = new OrbitControls(camera, renderer.domElement)
 controls.maxPolarAngle = THREE.MathUtils.degToRad(90)
 controls.minDistance = 0.1
 controls.maxDistance = 100
-controls.target.set(0, 0.5, 0)
 controls.update()
 
 const scene = new THREE.Scene()
@@ -65,8 +64,8 @@ group.add(mesh);
 // sphere davor
 material = new THREE.MeshBasicMaterial({opacity: 1, color: new THREE.Color("green")});
 geometry = new THREE.SphereBufferGeometry(htmlElement.clientWidth/4);
-mesh = new THREE.Mesh(geometry, material);
-group.add(mesh);
+let sphereMesh = new THREE.Mesh(geometry, material);
+group.add(sphereMesh);
 
 
 
@@ -76,5 +75,6 @@ function update() {
     requestAnimationFrame(update)
     renderer.render(scene, camera)    
     cssRenderer.render(scene, camera);
+    sphereMesh.position.x = Math.sin(Date.now()/1000)* 100
 }
 

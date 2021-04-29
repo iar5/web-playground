@@ -1,4 +1,4 @@
-import * as THREE from '../../lib/three/build/three.module.js';
+import * as THREE from 'three';
 
 
 var isUserInteracting = false
@@ -18,7 +18,7 @@ var scene = new THREE.Scene();
 var geometry = new THREE.SphereBufferGeometry( 500, 60, 40 );
 geometry.scale( - 1, 1, 1 ); // invert the geometry on the x-axis so that all of the faces point inward
 
-var texture = new THREE.TextureLoader().load("raytracerspace.jpg");
+var texture = new THREE.TextureLoader().load("360raytracer/raytracerspace.jpg");
 var material = new THREE.MeshBasicMaterial( {map: texture } );
 var mesh = new THREE.Mesh( geometry, material );
 scene.add( mesh );

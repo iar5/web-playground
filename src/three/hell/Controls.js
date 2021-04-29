@@ -1,7 +1,7 @@
-import { OrbitControls } from '../../lib/three/examples/jsm/controls/OrbitControls.js'
-import { FlyControls } from '../../lib/three/examples/jsm/controls/FlyControls.js';
-import { Camera } from '../../lib/three/build/three.module.js';
-import { isKeyHold } from '../../libmy/keyhold.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { FlyControls } from 'three/examples/jsm/controls/FlyControls.js';
+import { Camera } from 'three/build/three.module.js';
+import { isKeyHold } from '../../../libmy/keyhold.js';
 
 
 export default class Controls{

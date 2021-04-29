@@ -26,7 +26,7 @@ function findExperiment(dir){
         experiments.push(config)
 
         htmlWebpacks.push(new HtmlWebpackPlugin({
-            template: config.html ? p + config.html : '/src/experiment.html',
+            template: config.html ? p + config.html : './src/experiment.html',
             filename: file + '/index.html',
             inject: 'body',
             chunks: [file],
@@ -58,7 +58,7 @@ module.exports = {
             { from: 'assets', to: '' },
         ]),
         new HtmlWebpackPlugin({
-            template: '/src/index.html',
+            template: './src/index.html',
             filename: 'index.html',
             templateParameters: {
                 experiments

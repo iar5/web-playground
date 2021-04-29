@@ -1,4 +1,4 @@
-import * as THREE from '../../../lib/three/build/three.module.js'
+import * as THREE from 'three'
 
 
 export default class SkyTexture extends THREE.Mesh{

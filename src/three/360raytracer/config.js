@@ -1,5 +1,5 @@
 module.exports = {
-    "title": "Panorama Raytracer",
+    "title": "Raytracer Panorama",
     "description": "",
     "tags": ["Three.js", "360", "Java", "Raytracer"],
     "public": true,

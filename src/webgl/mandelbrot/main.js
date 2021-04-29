@@ -54,7 +54,7 @@ var zoom = 2 // entspricht länge der längsten seite
 
 /* START */
 
-createProgramFromFiles(gl, 'mandelbrot.vs', 'mandelbrot.fs', p => {
+createProgramFromFiles(gl, 'mandelbrot/mandelbrot.vs', 'mandelbrot/mandelbrot.fs', p => {
     program = p
     resizeCanvas()
 

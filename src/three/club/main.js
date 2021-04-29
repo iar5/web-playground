@@ -1,6 +1,6 @@
-import * as THREE from '../../lib/three/build/three.module.js'
-import { OrbitControls } from '../../lib/three/examples/jsm/controls/OrbitControls.js'
-import { FBXLoader } from '/lib/three/examples/jsm/loaders/FBXLoader.js'
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     var scene = new THREE.Scene();
 
-    var clubUpdate = createClub(scene, camera)
+    var clubUpdate = createLocation(scene, camera)
     var peopleUpdate = createPeople(scene)
 
 
@@ -80,7 +80,7 @@ function createPeople(scene) {
     var clock = new THREE.Clock();
 
     var mixer
-    fbxLoader.load('/assets/models/Belly Dance.fbx', function (object) {
+    fbxLoader.load('/models/mixamo/Belly Dance.fbx', function (object) {
         mixer = new THREE.AnimationMixer(object)
         mixer.clipAction(object.animations[0]).play()
 
@@ -110,11 +110,11 @@ function createLocation(scene, camera) {
     const textureLoader = new THREE.TextureLoader()
 
     var blueTiles = new THREE.MeshStandardMaterial({
-        map: textureLoader.load("/assets/textures/blueTiles.jpg", function (texture) {
+        map: textureLoader.load("/textures/blueTiles.jpg", function (texture) {
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(8, 3);
         }),
-        bumpMap: textureLoader.load("/assets/textures/blueTilesBump.jpg", function (texture) {
+        bumpMap: textureLoader.load("/textures/blueTilesBump.jpg", function (texture) {
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(8, 3);
         }),
@@ -123,11 +123,11 @@ function createLocation(scene, camera) {
         roughness: .1
     });
     var whiteTiles = new THREE.MeshStandardMaterial({
-        map: textureLoader.load("/assets/textures/whiteTiles.jpg", function (texture) {
+        map: textureLoader.load("/textures/whiteTiles.jpg", function (texture) {
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(12, 12);
         }),
-        bumpMap: textureLoader.load("/assets/textures/whiteTilesBump.jpg", function (texture) {
+        bumpMap: textureLoader.load("/textures/whiteTilesBump.jpg", function (texture) {
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(12, 12);
         }),
@@ -207,7 +207,7 @@ function createLocation(scene, camera) {
     camera.add(listener);
 
     var sound = new THREE.PositionalAudio(listener);
-    new THREE.AudioLoader().load('/assets/audio/Universe of 90s Techno Parties.mp4', (buffer) => {
+    new THREE.AudioLoader().load('/audio/Universe of 90s Techno Parties.mp4', (buffer) => {
         sound.setBuffer(buffer);
         sound.setRefDistance(5);
         //sound.play();

@@ -7,8 +7,8 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 
 
-import ThreeDatGui from "../../libmy/DatThreeGui.js"
-import { resize } from '../../libmy/utils.js'
+import ThreeDatGui from "../../../libmy/DatThreeGui.js"
+import { resize } from '../../../libmy/utils.js'
 import Sky from "./js/TestShader.js"
 
 

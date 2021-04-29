@@ -1,8 +1,9 @@
 module.exports = {
-    "title": "Image displacement",
+    "title": "Photo displacement",
     "description": "",
     "tags": ["WebGL", "Vertex Shader"],
     "public": true,
-    "entry": "surface.js",
-    "html": "surface.html"
+    "entry": "main.js",
+    "html": "index.html",
+    "copy": ["example.png"]
 }

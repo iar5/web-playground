@@ -1,8 +1,8 @@
-import * as THREE from '../../lib/three/build/three.module.js'
-import { GLTFLoader } from '../../lib/three/examples/jsm/loaders/GLTFLoader.js'
-import { FBXLoader } from '../../lib/three/examples/jsm/loaders/FBXLoader.js'
-import * as dat from '../../lib/dat.gui.js';
-import { isKeyHold } from '../../libmy/keyhold.js' 
+import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
+import * as dat from '../../../lib/dat.gui.js';
+import { isKeyHold } from '../../../libmy/keyhold.js'
 
 var clock = new THREE.Clock();
 

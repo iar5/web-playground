@@ -1,4 +1,4 @@
-import * as THREE from '../../../lib/three/build/three.module.js'
+import * as THREE from 'three'
 
 // https://stackblitz.com/edit/starry-skydome?file=StarrySkyShader.js
 

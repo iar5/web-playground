@@ -1,5 +1,5 @@
 
-import * as THREE from '../lib/three/build/three.module.js'
+import * as THREE from 'three'
 import * as dat from '../lib/dat.gui.js';
 
 

@@ -1,9 +1,9 @@
-import * as THREE from '../../lib/three/build/three.module.js'
-import { Object3D } from '../../lib/three/build/three.module.js'
-import { GLTFLoader } from '../../lib/three/examples/jsm/loaders/GLTFLoader.js'
-import ThreeDatGui from "../../libmy/DatThreeGui.js"
-import { resize } from '../../libmy/utils.js'
-import { isKeyHold } from '../../libmy/keyhold.js'
+import * as THREE from 'three'
+import { Object3D } from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import ThreeDatGui from "../../../libmy/DatThreeGui.js"
+import { resize } from '../../../libmy/utils.js'
+import { isKeyHold } from '../../../libmy/keyhold.js'
 import Room from "./Hell.js"
 import Controls from './controls.js'
 
