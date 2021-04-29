@@ -3,14 +3,10 @@ import * as THREE from '../lib/three/build/three.module.js'
 import * as dat from '../lib/dat.gui.js';
 
 
-<<<<<<< HEAD:libmy/ThreeDatGui.js
-export default class ThreeDatGui {
-=======
 /**
  * Objekte müssen THREE.Object3D.name property haben
  */
 export default class DatThreeGui{
->>>>>>> cb1aa4ab88053cb59715dfc700ea9ce9417ee291:libmy/DatThreeGui.js
 
     constructor() {
         this.datgui = new dat.GUI();
@@ -34,14 +30,9 @@ export default class DatThreeGui{
         }
     }
 
-<<<<<<< HEAD:libmy/ThreeDatGui.js
-    registerMaterial(material) {
-        let folder = this.materialFolder.addFolder(material.type + " " + material.name)
-=======
     registerMaterial(material){
         if (!this.materialsFolder) this.materialsFolder = this.datgui.addFolder('Materials');
         let folder = this.materialsFolder.addFolder(material.type + " " + material.name)
->>>>>>> cb1aa4ab88053cb59715dfc700ea9ce9417ee291:libmy/DatThreeGui.js
 
         if (material instanceof THREE.MeshStandardMaterial) {
             folder.addColorThree(material, "color")
@@ -60,12 +51,8 @@ export default class DatThreeGui{
         }
     }
 
-<<<<<<< HEAD:libmy/ThreeDatGui.js
-    registerLight(light) {
-=======
     registerLight(light){       
         if (!this.lightFolder) this.lightFolder = this.datgui.addFolder('Lights');
->>>>>>> cb1aa4ab88053cb59715dfc700ea9ce9417ee291:libmy/DatThreeGui.js
         let folder = this.lightFolder.addFolder(light.type + " " + light.name)
 
         folder.addColorThree(light, "color")
