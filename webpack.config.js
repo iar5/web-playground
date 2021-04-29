@@ -1,66 +1,82 @@
 const webpack = require('webpack')
 const path = require('path')
-const HtmlPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
+const fs = require('fs')
 
 
-const IS_PROUCTION = process.env.NODE_ENV === 'production'
+const entrys = {}
+const experiments = []
+const htmlWebpacks = []
+const copyPlugins = []
 
-/* Export configuration */
-module.exports = {
-    mode: IS_PROUCTION ? 'production' : 'development',
-    entry: { 
-        game: './src/game/main.ts',
-        admin: './src/admin/main.js'
-    },
-    plugins: [
-        new HtmlPlugin({
-            template: __dirname + '/src/game/index.html',
-            filename: 'index.html',
+function findExperiment(dir){
+    fs.readdirSync(dir).forEach(file => {
+
+        const filePath = path.join(dir, file);
+        if (!fs.statSync(filePath).isDirectory()) return
+
+        const p = `./${filePath}/`
+        if (!fs.existsSync(p + `config.js`)) return
+        const config = require(p + `config.js`)
+        
+        entrys[file] = p + config.entry
+        config._path = file 
+        experiments.push(config)
+
+        htmlWebpacks.push(new HtmlWebpackPlugin({
+            template: config.html ? p + config.html : '/src/experiment.html',
+            filename: file + '/index.html',
             inject: 'body',
-            chunks: ["game"]
-        }),
-        new HtmlPlugin({
-            template: __dirname + '/src/admin/index.html',
-            filename: 'admin/index.html',
-            inject: 'body',
-            chunks: ["admin"]
-        }),
-        new CopyPlugin([
-            { from: 'public', to: '' },
-        ]),
-        new webpack.DefinePlugin({
-            'process.env': {
-                isProduction: process.env.NODE_ENV === 'production',
+            chunks: [file],
+            templateParameters: {
+                config
             }
-        }),
-    ],
-    optimization: IS_PROUCTION ? {
-        removeAvailableModules: false,
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                terserOptions: {
-                    format: {
-                        comments: false,
-                    },
-                },
-                extractComments: false,
+        }))
+
+        if (config.copy){
+            config.copy.forEach(copy=>{
+                copyPlugins.push(new CopyPlugin([
+                    { from: filePath + "/" + copy, to: file+"/"+copy },
+                ]))
             })
-        ],
-    } : {},
+        }
+    });
+}
+findExperiment("./src/webgl/")
+findExperiment("./src/three/")
+
+
+
+
+
+module.exports = {
+    entry: entrys,
+    plugins: [
+        new CopyPlugin([
+            { from: 'assets', to: '' },
+        ]),
+        new HtmlWebpackPlugin({
+            template: '/src/index.html',
+            filename: 'index.html',
+            templateParameters: {
+                experiments
+            },
+            chunks: []
+        })
+    ].concat(htmlWebpacks).concat(copyPlugins),
     output: {
         filename: '[name]/[name].js',
         path: __dirname + '/dist',
     },
-    devServer: { 
+    devServer: {
+        //host: '0.0.0.0',
+        // https: true,
         contentBase: "./dist",
         hot: true,
         inline: true,
-        host: '0.0.0.0',
         disableHostCheck: true,
-        // https: true,
         stats: {
             cached: false,
             cachedAssets: false,
@@ -70,7 +86,7 @@ module.exports = {
             modules: false
         }
     },
-    devtool: IS_PROUCTION ? false : "source-map",
+    devtool: "source-map",
     module: {
         rules: [
             {
