@@ -1,16 +1,14 @@
-import * as THREE from '../../lib/three/build/three.module.js'
-import { OrbitControls } from '../../lib/three/examples/jsm/controls/OrbitControls.js'
-import { GLTFLoader } from '../../lib/three/examples/jsm/loaders/GLTFLoader.js'
-import ThreeDatGui from "../../libmy/ThreeDatGui.js"
-import { resize } from '../../libmy/utils.js'
-import { isKeyHold } from '../../libmy/keyhold.js'
-import { EffectComposer } from '../../lib/three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from '../../lib/three/examples/jsm/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from '../../lib/three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import DatThreeGui from "../../../libmy/DatThreeGui.js"
+import { resize } from '../../../libmy/utils.js'
 
 
-
-const gui = new ThreeDatGui()
+const gui = new DatThreeGui()
 const clock = new THREE.Clock()
 
 const renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -65,22 +63,6 @@ scene.add(ambientLight)
 gui.registerLight(ambientLight)
 
 
-let spotLight = new THREE.SpotLight(0xffffff, 1)
-spotLight.position.set(0.5, 3, 2)
-spotLight.angle = THREE.MathUtils.degToRad(30)
-spotLight.castShadow = true
-spotLight.penumbra = 0.5
-spotLight.distance = 10
-spotLight.decay = 2
-spotLight.shadow.camera.near = 0.1
-spotLight.shadow.camera.far = 100
-scene.add(spotLight)
-gui.registerLight(spotLight)
-
-let dir = new THREE.DirectionalLight()
-scene.add(dir)
-
-
 
 
 
@@ -106,14 +88,14 @@ scene.add(cubeCamera);
 let model 
 
 const gltfloader = new GLTFLoader();
-gltfloader.load('./assets/procgarden.gltf', function(gltf){
+gltfloader.load('wetter/assets/procgarden.gltf', (gltf) => {
     model = gltf.scene.children[0]
     model.position.y = 1
     model.castShadow = true
     model.receiveShadow = true
     scene.add(model);
 
-    let material = new THREE.MeshPhysicalMaterial();
+    let material = new THREE.MeshPhysicalMaterial({});
     material.transparent = true // damit transmission klappt
     material.envMap = cubeCamera.renderTarget.texture;
     material.roughness = 0
@@ -121,22 +103,22 @@ gltfloader.load('./assets/procgarden.gltf', function(gltf){
     model.material = material
     gui.registerMaterial(material)
 })
-
-
 requestAnimationFrame(update)
 
 
-function update(time) {
+function update() {
     requestAnimationFrame(update)
     
-
     if(model) model.visible = false
     cubeCamera.update(renderer, scene);
     if(model) model.visible = true
 
-    //renderer.render(scene, camera) 
     composer.render();
    
-    controls.update(clock.getDelta());
+    controls.update();
 }
 
+
+export { scene, gui, renderer }
+
+import "./skycontroler"

@@ -12,7 +12,7 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 
 
 const scene = new Scene()
-scene.fog = new THREE.FogExp2(0x00ff00, 0.0005)
+scene.fog = new THREE.FogExp2(0x00ff00, 0.01)
 
 const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.001, 10000)
 camera.position.z = -3
@@ -28,7 +28,7 @@ scene.add(ambientLight);
 
 
 // Ground
-const mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(10, 10), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
+const mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(100, 100), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
 mesh.rotation.x = - Math.PI / 2;
 mesh.receiveShadow = true;
 scene.add(mesh);
@@ -56,7 +56,7 @@ light.shadow.camera.near = 0.5
 light.shadow.camera.far = 100
 
 
-new NoiseFog(scene)
+let fog = new NoiseFog(scene)
 
 
 
@@ -65,6 +65,7 @@ requestAnimationFrame(update)
 function update() {
     requestAnimationFrame(update)
 
+    fog.update()
     renderer.render(scene, camera)
 }
 
