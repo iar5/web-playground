@@ -11,37 +11,39 @@ const experiments = []
 const htmlWebpacks = []
 const copyPlugins = []
 
-function findExperiment(dir){
+function findExperiment(dir) {
     fs.readdirSync(dir).forEach(file => {
 
-        const filePath = path.join(dir, file);
+        const filePath = path.join(dir, file)
         if (!fs.statSync(filePath).isDirectory()) return
 
-        const p = `./${filePath}/`
-        if (!fs.existsSync(p + `config.js`)) return
-        const config = require(p + `config.js`)
-        
-        entrys[file] = p + config.entry
-        config._path = file 
+        const srcPath = `./${filePath}/`
+        if (!fs.existsSync(srcPath + `config.js`)) return
+        const config = require(srcPath + `config.js`)
+
+
+        // create chunk
+        const outPath = srcPath.replace("/src", "").replace(/\\/g, '/') // windows backslash replace
+        entrys[outPath] = srcPath + config.entry
+        config.urlPath = outPath + "index.html"
         experiments.push(config)
 
+        // setup chunk injection
         htmlWebpacks.push(new HtmlWebpackPlugin({
-            template: config.html ? p + config.html : './src/experiment.html',
-            filename: file + '/index.html',
+            filename: outPath + '/index.html',
+            chunks: [outPath],
+            template: config.html ? srcPath + config.html : './src/experiment.html',
             inject: 'body',
-            chunks: [file],
             templateParameters: {
-                config
+                config // geht in die template html mit rein
             }
         }))
 
-        if (config.copy){
-            config.copy.forEach(copy=>{
-                copyPlugins.push(new CopyPlugin([
-                    { from: filePath + "/" + copy, to: file+"/"+copy },
-                ]))
-            })
-        }
+        copyPlugins.push({
+            from: srcPath.slice(0, -1).substring(2), // letzten backslash entfernen und ./ am anfang entfernen
+            to: outPath,
+            ignore: ['*.js', '*.ts', '*.css', "*.html"],
+        })
     });
 }
 findExperiment("./src/webgl/")
@@ -56,7 +58,7 @@ module.exports = {
     plugins: [
         new CopyPlugin([
             { from: 'assets', to: '' },
-        ]),
+        ].concat(copyPlugins)),
         new HtmlWebpackPlugin({
             template: './src/index.html',
             filename: 'index.html',
@@ -65,10 +67,10 @@ module.exports = {
             },
             chunks: []
         })
-    ].concat(htmlWebpacks).concat(copyPlugins),
+    ].concat(htmlWebpacks),
     output: {
-        filename: '[name]/[name].js',
         path: __dirname + '/dist',
+        filename: '[name].js',
     },
     devServer: {
         //host: '0.0.0.0',

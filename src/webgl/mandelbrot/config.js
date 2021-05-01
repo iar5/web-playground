@@ -5,5 +5,4 @@ module.exports = {
     "public": true,
     "entry": "main.js",
     "html": "index.html",
-    "copy": ["mandelbrot.vs", "mandelbrot.fs"]
 }

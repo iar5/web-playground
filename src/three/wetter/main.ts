@@ -88,7 +88,7 @@ scene.add(cubeCamera);
 let model 
 
 const gltfloader = new GLTFLoader();
-gltfloader.load('wetter/assets/procgarden.gltf', (gltf) => {
+gltfloader.load('./procgarden.gltf', (gltf) => {
     model = gltf.scene.children[0]
     model.position.y = 1
     model.castShadow = true

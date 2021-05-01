@@ -4,5 +4,4 @@ module.exports = {
     "tags": ["Three.js"],
     "public": true,
     "entry": "main.ts",
-    "copy": ["assets/procgarden.gltf"],
 }

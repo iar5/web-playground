@@ -2,7 +2,7 @@ import ImagePlot3D from "./surface.js"
 
 
 const canvas = document.getElementById('canvas')
-const imagePlot3D = new ImagePlot3D(canvas, '/imgdisplacer/example.png');
+const imagePlot3D = new ImagePlot3D(canvas, './example.png');
 
 // Fileinput
 const inputElement = document.getElementById("file")
