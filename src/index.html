@@ -2,19 +2,19 @@
 <html>
 
 <head>
-    <title>Playground</title>
+    <title>Web Playground</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 </head>
 
 <body>
     <div class="infoBar">
-        <h1>Playground</h1>
+        <h1>Web Playground</h1>
     </div>
     <ul class="experiments">
         <% experiments.forEach(experiment => { %>
-            <% const experimentClass=experiment.public ? 'public' : 'private'; %>
+            <% if(isProd && experiment.public != true) return; %>
 
-            <li class="<%= experimentClass %>">
+            <li class="<%= experiment.public != true ? 'notpublic' : '' %>">
                 <a href="<%= experiment.urlPath %>">
                     <%= experiment.title %>
                 </a>
@@ -50,6 +50,9 @@
     li{
         list-style-type: none;
         margin: 4px 0;
+    }
+    li.notpublic:before{
+        content: "(dev)";
     }
     a{
         color: black;

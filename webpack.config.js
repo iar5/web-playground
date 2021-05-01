@@ -6,6 +6,11 @@ const TerserPlugin = require("terser-webpack-plugin");
 const fs = require('fs')
 
 
+
+
+const isProd = process.env.NODE_ENV === "production"
+
+
 const entrys = {}
 const experiments = []
 const htmlWebpacks = []
@@ -39,6 +44,7 @@ function findExperiment(dir) {
             }
         }))
 
+        // copy local assets 
         copyPlugins.push({
             from: srcPath.slice(0, -1).substring(2), // letzten backslash entfernen und ./ am anfang entfernen
             to: outPath,
@@ -52,8 +58,8 @@ findExperiment("./src/three/")
 
 
 
-
 module.exports = {
+    mode: isProd ? "production" : "development",
     entry: entrys,
     plugins: [
         new CopyPlugin([
@@ -63,6 +69,7 @@ module.exports = {
             template: './src/index.html',
             filename: 'index.html',
             templateParameters: {
+                isProd,
                 experiments
             },
             chunks: []
