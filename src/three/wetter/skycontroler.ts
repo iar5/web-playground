@@ -54,7 +54,7 @@ function guiChanged() {
     const theta = THREE.MathUtils.degToRad(effectController.azimuth);
 
     dir.position.setFromSphericalCoords(1, phi, theta);
-
+    
     uniforms['sunPosition'].value.copy(dir.position);
 
     renderer.toneMappingExposure = effectController.exposure;

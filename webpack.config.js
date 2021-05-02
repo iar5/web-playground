@@ -52,7 +52,7 @@ function findExperiment(dir) {
             ignore: ['*.js', '*.ts', '*.css', "*.html"],
         })
     });
-    return result
+    return result.sort((a, b) => { a.title === b.title ? 0 : a.title < b.title ? -1 : 1; })
 }
 
 const webglExperiments = findExperiment("./src/webgl/")
@@ -74,18 +74,19 @@ module.exports = {
             filename: 'index.html',
             templateParameters: {
                 isProd,
-                experiments: webglExperiments.concat(threeExperiments),
+                experimentsCategories: { "WebGL": webglExperiments, "Three.js": threeExperiments }
             },
             chunks: []
         })
     ].concat(htmlWebpacks),
     output: {
+        // wird für jedes HtmlWebpackPlugin durchgeführt
         path: __dirname + '/dist',
         filename: '[name].js',
     },
     devServer: {
         //host: '0.0.0.0',
-        // https: true,
+        //https: true,
         contentBase: "./dist",
         hot: true,
         inline: true,

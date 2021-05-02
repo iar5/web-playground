@@ -17,7 +17,6 @@ scene.fog = new THREE.FogExp2(0x00ff00, 0.01)
 const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.001, 10000)
 camera.position.z = -3
 camera.position.y = 3
-camera.lookAt(new Vector3())
 scene.add(camera)
 window.addEventListener('resize', () => { resize(renderer, camera) }, false);
 

@@ -1,5 +1,5 @@
 module.exports = {
-    "title": "Fun",
+    "title": "DOF Shader",
     "description": "",
     "tags": ["Three.js", "Materials"],
     "public": true,

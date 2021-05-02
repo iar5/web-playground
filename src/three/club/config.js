@@ -2,6 +2,6 @@ module.exports = {
     "title": "Club",
     "description": "",
     "tags": ["Three.js"],
-    "public": false,
+    "public": true,
     "entry": "main.js",
 }

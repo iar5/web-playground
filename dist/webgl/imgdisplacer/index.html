@@ -1,0 +1,120 @@
+<!doctype html><html lang="en"><head><title>Photo displacer</title><meta charset="UTF-8"><meta name="viewport" content="width=device-widthinitial-scale=1,maximum-scale=1,user-scalable=no"><link rel="icon" href="assets/favicon.png"></head><html><body><header><h1><p>Photo displacer</p></h1><input id="file" type="file" accept="image/png, image/jpeg"><div id="controls"><p>depth <input type="range" step="0.1" min="-2" max="2" id="depth"></p><p>rotation <input id="rx" type="number" step="0.05" value="0"> <input id="ry" type="number" step="0.05" value="0"> <input id="rz" type="number" step="0.05" value="0"></p><p><input id="resetButton" type="button" value="reset view"></p><label><input id="checkboxDepthTest" type="checkbox"> depth test</label><br><label><input id="checkboxOrientationControle" type="checkbox"> mobile orientation (beta)</label></div><div id="toggleView"><p>X</p></div></header><canvas id="canvas"></canvas><script src="../.././webgl/imgdisplacer/.js"></script></body><style>*{
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body, canvas{
+            width: 100%;
+            height: 100%;
+            overscroll-behavior: none; /* disables pull-to-refresh (on android crhome) */
+        }
+
+        header{
+            position: absolute;
+            top: 0;
+            width: 200px;
+            border: 1px solid black;
+            margin-top: 20px;
+            margin-left: 20px;
+            padding: 1% 2px;
+            background-color: white;
+        }
+
+        header.closed {border: none; width: 0;}
+        header.closed > h1,
+        header.closed > #file,
+        header.closed > #controls {display: none}
+        header.closed > #toggleView > * {
+            left: 0;
+            top: 0;
+            transform: scaleY(1);
+            background-color: white;
+        }
+
+        #resetButton{
+            margin: 4px 0;
+        }
+
+        /**
+        * Control View
+        */
+
+        h1{
+            padding: 1%;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 4%;
+            border: 1px solid black;
+            font-size: 1.5rem;
+        }
+
+        h1 > div{
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        h1 > p{
+            margin-bottom: 2%;
+            z-index: 1
+        }
+
+        * {
+            font-family: sans-serif;
+        }
+
+        #file{
+            padding: 1%;
+            margin-bottom: 4%;
+            display: inline-block;
+            box-sizing: border-box;
+            border: 1px solid black;
+            background-color: rgb(245, 245, 245);
+            width: 100%
+        }
+
+
+        #controls{
+            margin-bottom: 23px;
+        }
+
+        #controls label{
+            margin-left: 1px;
+            background-color: white;
+        }
+
+        #controls p{
+            margin-bottom: 5px;
+        }
+
+        input[type="number"]{
+            width: 20%;
+            vertical-align: middle;
+            box-sizing: border-box;
+        }  
+
+        input[type="button"]{
+            width: 50%;
+            border: 1px solid black;
+            background-color: rgb(245, 245, 245);
+        }
+
+
+
+
+        #toggleView {
+            margin-top: 10px;
+            height: 20px;
+        }
+        #toggleView > *{
+            margin-top: 10px;
+            width: 32px;
+            position: absolute;
+            right: 4px;
+            bottom: 4px;
+            transform: scaleY(-1);
+            border: 1px solid black;
+        }</style></html></html>
