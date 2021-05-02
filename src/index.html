@@ -4,12 +4,16 @@
 <head>
     <title>Web Playground</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
 </head>
 
 <body>
-    <div class="infoBar">
+    <div id="info-bar">
         <h1>Web Playground</h1>
+        <p>last updated: <%= new Date().toISOString().split('T')[0] %></p>
     </div>
+
     <ul class="experiments">
         <% experiments.forEach(experiment => { %>
             <% if(isProd && experiment.public != true) return; %>
@@ -19,7 +23,7 @@
                     <%= experiment.title %>
                 </a>
                 <div class="tags">
-                    <% experiment.tags.forEach(tag => { %>
+                    <% experiment.tags.forEach(tag => { if(tag == "WebGL" || tag == "Three.js") return; %> 
                         <span>
                             <%= tag %>
                         </span>
@@ -44,9 +48,13 @@
         margin: auto;
         padding-top: 5%;
     }
-    h1{
-        margin-bottom: 40px;
+    #info-bar{
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
+
+
+
     li{
         list-style-type: none;
         margin: 4px 0;

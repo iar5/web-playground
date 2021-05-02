@@ -13,11 +13,11 @@ const isProd = process.env.NODE_ENV === "production"
 
 
 const entrys = {}
-const experiments = []
 const htmlWebpacks = []
 const copyPlugins = []
 
 function findExperiment(dir) {
+    const result = []
     fs.readdirSync(dir).forEach(file => {
 
         const filePath = path.join(dir, file)
@@ -26,13 +26,13 @@ function findExperiment(dir) {
         const srcPath = `./${filePath}/`
         if (!fs.existsSync(srcPath + `config.js`)) return
         const config = require(srcPath + `config.js`)
-
+        if (isProd && config.public == false) return
 
         // create chunk
         const outPath = srcPath.replace("/src", "").replace(/\\/g, '/') // windows backslash replace
         entrys[outPath] = srcPath + config.entry
         config.urlPath = outPath + "index.html"
-        experiments.push(config)
+        result.push(config)
 
         // setup chunk injection
         htmlWebpacks.push(new HtmlWebpackPlugin({
@@ -52,9 +52,11 @@ function findExperiment(dir) {
             ignore: ['*.js', '*.ts', '*.css', "*.html"],
         })
     });
+    return result
 }
-findExperiment("./src/webgl/")
-findExperiment("./src/three/")
+
+const webglExperiments = findExperiment("./src/webgl/")
+const threeExperiments = findExperiment("./src/three/")
 
 
 
@@ -72,7 +74,7 @@ module.exports = {
             filename: 'index.html',
             templateParameters: {
                 isProd,
-                experiments
+                experiments: webglExperiments.concat(threeExperiments),
             },
             chunks: []
         })

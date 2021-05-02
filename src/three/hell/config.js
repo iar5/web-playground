@@ -1,7 +1,7 @@
 module.exports = {
     "title": "Hell",
     "description": "",
-    "tags": [],
+    "tags": ["Three.js", "Shader"],
     "public": false,
     "entry": "main.js",
 }

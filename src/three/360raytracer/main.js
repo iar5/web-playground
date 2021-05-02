@@ -8,7 +8,6 @@ var lon = 0, onMouseDownLon = 0
 var lat = 0, onMouseDownLat = 0
 var phi = 0, theta = 0
 
-var container = document.getElementById( 'container' );
 
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1100 );
 camera.target = new THREE.Vector3( 0, 0, 0 );
@@ -26,8 +25,7 @@ scene.add( mesh );
 var renderer = new THREE.WebGLRenderer();
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
-container.appendChild( renderer.domElement );
-
+document.body.append(renderer.domElement)
 
 
 
