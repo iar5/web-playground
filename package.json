@@ -8,6 +8,7 @@
   },
   "keywords": [],
   "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.5.2",
     "dat.gui": "^0.7.7",

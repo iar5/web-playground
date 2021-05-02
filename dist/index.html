@@ -1,0 +1,36 @@
+<!doctype html><html><head><title>Web Playground</title><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"></head><body><div class="infoBar"><h1>Web Playground</h1></div><ul class="experiments"><li class=""><a href="./webgl/imgdisplacer/index.html">Photo displacement</a><div class="tags"><span>WebGL </span><span>Vertex Shader</span></div></li><li class=""><a href="./webgl/mandelbrot/index.html">Mandelbrot</a><div class="tags"><span>WebGL </span><span>Fragment Shader </span><span>Mandelbrot </span><span>Interactive </span><span>Animation</span></div></li><li class=""><a href="./three/360raytracer/index.html">Raytracer Panorama</a><div class="tags"><span>Three.js </span><span>360 </span><span>Java </span><span>Raytracer</span></div></li><li class=""><a href="./three/3DCSS/index.html">3DCSS</a><div class="tags"><span>Three.js </span><span>HTML</span></div></li><li class=""><a href="./three/abstracmodel/index.html">Fun</a><div class="tags"><span>Three.js </span><span>Materials</span></div></li><li class=""><a href="./three/noisefog/index.html">Noise Fog</a><div class="tags"></div></li><li class=""><a href="./three/wetter/index.html">Weather</a><div class="tags"><span>Three.js</span></div></li></ul></body></html><style>*{
+        font-family: sans-serif;
+        padding: 0;
+        margin: 0;
+    }
+    body{
+        width: 90%;
+        max-width: 1000px;
+        margin: auto;
+        padding-top: 5%;
+    }
+    h1{
+        margin-bottom: 40px;
+    }
+    li{
+        list-style-type: none;
+        margin: 4px 0;
+    }
+    li.notpublic:before{
+        content: "(dev)";
+    }
+    a{
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .tags{
+        display: inline-block;
+    }
+    .tags > *{
+        background-color: rgb(200, 253, 255);
+        border-radius: 4px;
+        margin: 0 2px;
+        padding: 1px;
+        font-size: 0.9rem;
+    }</style>
