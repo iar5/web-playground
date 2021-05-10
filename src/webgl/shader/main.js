@@ -1,9 +1,9 @@
-import { createProgramFromSource, destroyGl } from '../../libmy/webglUtils.js'
-import { isMobile, lerp } from '../../libmy/utils.js'
+import { createProgramFromSource, destroyGl } from '../../../libmy/webglUtils.js'
+import { isMobile, lerp } from '../../../libmy/utils.js'
 import { vs, fs } from './shaderNebel.js'
 
 
-export default function(canvas){
+const Shader = function(canvas){
 
     const hasTouch = isMobile()
     const gl = canvas.getContext("experimental-webgl") 
@@ -96,5 +96,11 @@ export default function(canvas){
         }
     }
 }
+export default Shader
 
+
+
+const canvas = document.createElement("canvas")
+document.body.append(canvas)
+new Shader(canvas)
 
