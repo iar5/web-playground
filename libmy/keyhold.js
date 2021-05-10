@@ -10,10 +10,10 @@ document.addEventListener('keyup', function (e) {
 })
 
 document.addEventListener("visibilitychange", () => {
-    keysHold.length = 0
+    resetKeys()
 })
 window.addEventListener("pagehide", () => {
-    keysHold.length = 0
+    resetKeys()
 });
 
 
@@ -22,5 +22,10 @@ window.addEventListener("pagehide", () => {
  */
 export function isKeyHold(key) { 
     return keysHold.indexOf(key) != -1 
+}
+
+
+export function resetKeys(){
+    keysHold.length = 0
 }
 

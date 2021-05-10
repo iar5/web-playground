@@ -18,6 +18,12 @@ document.addEventListener('touchend', (e) => {
 })
 
 
+export function preventTouchGestures(canvas){
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); })
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); })
+    canvas.addEventListener('touchend', (e) => { e.preventDefault(); })
+}
+
 
 
 var startX = 0

@@ -3,13 +3,16 @@
  */
 
 import { createProgramFromFiles, isWebGL2Supported } from '../../../libmy/webglUtils.js'
-import { getPinchChange, getPanChangeX, getPanChangeY } from '../../../libmy/touchGestures.js'
+import { getPinchChange, getPanChangeX, getPanChangeY, preventTouchGestures } from '../../../libmy/touchGestures.js'
 import { isKeyHold } from '../../../libmy/keyhold.js'
 import { isMobile } from '../../../libmy/utils.js'
 import FpsCounter from '../../../libmy/fpsCounter.js'
 
+
+
 const fpsCounter = new FpsCounter()
 const canvas = document.getElementById("canvas")
+preventTouchGestures(canvas)
 
 const gl = canvas.getContext(isWebGL2Supported() ? "webgl2" : "webgl") 
 gl.clearColor(0, 0, 0, 0)
