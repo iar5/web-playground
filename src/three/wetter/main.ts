@@ -55,28 +55,9 @@ f.add(bloomPass, "radius", 0, 1, 0.01)
 
 
 
-
-
-
 let ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.01) 
 scene.add(ambientLight)
 gui.registerLight(ambientLight)
-
-
-
-
-
-
-let tgeo = new THREE.PlaneBufferGeometry(10, 10, 10, 10)
-tgeo.rotateX(THREE.MathUtils.degToRad(-90))
-let tmat = new THREE.MeshLambertMaterial({ 
-    color: 'rgb(150, 255, 150)' ,
-    side: THREE.DoubleSide
-})
-const terrain = new THREE.Mesh(tgeo, tmat)
-terrain.receiveShadow = true
-
-scene.add(terrain)
 
 
 
@@ -85,14 +66,13 @@ const cubeCamera = new THREE.CubeCamera(0.0001, 10000, cubeRenderTarget);
 scene.add(cubeCamera);
 
 
-let model 
-
-const gltfloader = new GLTFLoader();
-gltfloader.load('./procgarden.gltf', (gltf) => {
+var model 
+new GLTFLoader().load('/mymodels/procgarden.gltf', (gltf) => {
     model = gltf.scene.children[0]
-    model.position.y = 1
     model.castShadow = true
     model.receiveShadow = true
+    model.position.y = 2
+    model.scale.set(4,4,4)
     scene.add(model);
 
     let material = new THREE.MeshPhysicalMaterial({});
@@ -103,22 +83,31 @@ gltfloader.load('./procgarden.gltf', (gltf) => {
     model.material = material
     gui.registerMaterial(material)
 })
-requestAnimationFrame(update)
-
-
-function update() {
-    requestAnimationFrame(update)
-    
-    if(model) model.visible = false
-    cubeCamera.update(renderer, scene);
-    if(model) model.visible = true
-
-    composer.render();
-   
-    controls.update();
-}
-
 
 export { scene, gui, renderer }
 
-import "./skycontroler"
+import "./sky"
+import "./terrain"
+
+
+
+import NoiseFog from "../noisefog/NoiseFog"
+const fog = new NoiseFog(scene)
+
+
+
+
+
+requestAnimationFrame(loop)
+function loop() {
+    requestAnimationFrame(loop)
+
+    if (model) model.visible = false
+    cubeCamera.update(renderer, scene);
+    if (model) model.visible = true
+
+    fog.update()
+    composer.render();
+
+    controls.update();
+}

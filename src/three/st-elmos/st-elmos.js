@@ -62,14 +62,14 @@ ground.material.side = THREE.DoubleSide
 ground.receiveShadow = true
 scene.add(ground)
 
-var skytexture = TEXLOADER.load('/assets/img/360/sky16.bmpf33d334a-3dfd-4a67-9131-9721af012d32Zoom.jpg')
+var skytexture = TEXLOADER.load('/img/360/sky16.bmpf33d334a-3dfd-4a67-9131-9721af012d32Zoom.jpg')
 var skymesh = new THREE.Mesh(new THREE.SphereGeometry(100, 25, 25), new THREE.MeshBasicMaterial({map: skytexture}))
 skymesh.rotateY(THREE.MathUtils.degToRad(-90))
 skymesh.material.side = THREE.BackSide
 scene.add(skymesh)
 
 var mixer
-FBXLOADER.load('/assets/models/Golf Drive.fbx', object => {
+FBXLOADER.load('/models/Golf Drive.fbx', object => {
 
     mixer = new THREE.AnimationMixer(object)
     mixer.clipAction(object.animations[0]).play()

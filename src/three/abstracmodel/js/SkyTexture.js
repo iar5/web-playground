@@ -6,7 +6,7 @@ export default class SkyTexture extends THREE.Mesh{
     constructor(){
         const texloader = new THREE.TextureLoader()
 
-        let texture = texloader.load('assets/11.jpg')
+        let texture = texloader.load('/textures/11.jpg')
         let geometry = new THREE.SphereGeometry(600, 25, 25)
         let material = new THREE.MeshBasicMaterial({map: texture})
 

@@ -1,37 +1,72 @@
-<!doctype html><html><head><title>Web Playground</title><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><meta name="description" content=""><meta name="keywords" content=""></head><body><div id="info-bar"><h1>Web Playground</h1><p>last updated: 2021-05-10</p></div><h3>WebGL</h3><ul class="experiments"><li class=""><a href="./webgl/imgdisplacer/index.html">Photo displacement</a><div class="tags"><span>Vertex Shader </span><span>Displacement</span></div></li><li class=""><a href="./webgl/mandelbrot/index.html">Mandelbrot</a><div class="tags"><span>Fragment Shader </span><span>Mandelbrot </span><span>Interactive </span><span>Animation</span></div></li></ul><h3>Three.js</h3><ul class="experiments"><li class=""><a href="./three/360raytracer/index.html">Raytracer Panorama</a><div class="tags"><span>360 </span><span>Java </span><span>Raytracer </span><span>Equirectangular Camera</span></div></li><li class=""><a href="./three/3DCSS/index.html">3DCSS</a><div class="tags"><span>HTML</span></div></li><li class=""><a href="./three/abstracmodel/index.html">DOF Shader</a><div class="tags"><span>Materials</span></div></li><li class=""><a href="./three/club/index.html">Club</a><div class="tags"></div></li><li class=""><a href="./three/hell/index.html">Hell</a><div class="tags"><span>Shader</span></div></li><li class=""><a href="./three/noisefog/index.html">Noise Fog</a><div class="tags"><span>Fog </span><span>Shader</span></div></li><li class=""><a href="./three/wetter/index.html">Weather</a><div class="tags"><span>Sky</span></div></li></ul></body></html><style>*{
+<!doctype html><html><head><title>Web Dev-Playground | Tom Wendland</title><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><meta name="description" content=""><meta name="keywords" content=""><link rel="icon" href="/favicon.png"></head><body><div id="info-bar"><h1>Web Dev-Playground</h1><p>Collection of recent or current small projects or test cases.</p><p>Last updated: 15.5.2021</p></div><h3>WebGL</h3><ul class="experiments"><li class=""><a href="./webgl/imgdisplacer/index.html">Photo displacement</a><div class="tags"><span>Vertex Shader </span><span>Displacement</span></div></li><li class=""><a href="./webgl/mandelbrot/index.html">Mandelbrot</a><div class="info"><span>i.</span><div>Interactive and animated mandelbrot implementation in a fragment shader using WebGL</div></div><div class="tags"><span>Fragment Shader </span><span>Mandelbrot </span><span>Interactive </span><span>Animation</span></div></li></ul><h3>Three.js</h3><ul class="experiments"><li class=""><a href="./three/360raytracer/index.html">Raytraced Panorama</a><div class="info"><span>i.</span><div>Panoramic image shown in a 360° Three.js viewer. The image is rendered with a raytracer written from scratch in Java</div></div><div class="tags"><span>360 </span><span>Raytracer </span><span>Equirectangular Camera</span></div></li><li class=""><a href="./three/3DCSS/index.html">3DCSS</a><div class="tags"><span>HTML</span></div></li><li class=""><a href="./three/abstracmodel/index.html">DOF Shader</a><div class="tags"><span>Materials</span></div></li><li class=""><a href="./three/club/index.html">Club</a><div class="tags"></div></li><li class=""><a href="./three/hell/index.html">Hell</a><div class="tags"><span>Shader</span></div></li><li class=""><a href="./three/noisefog/index.html">Noise Fog</a><div class="tags"><span>Fog </span><span>Shader</span></div></li><li class=""><a href="./three/wetter/index.html">Weather</a><div class="tags"><span>Sky</span></div></li></ul><h3>CSS</h3><ul class="experiments"></ul></body></html><style>*{
         font-family: sans-serif;
         padding: 0;
         margin: 0;
+        color:rgb(20, 20, 20);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
     }
     html{
+        padding: 1%;
+        box-sizing: border-box;
+        background: linear-gradient(-45deg, #ee775280, #e73c7e80, #23a6d580, #23d5ab80);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
     }
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
     body{
-        width: 95%;
+        box-sizing: border-box;
+        width: 90%;
         max-width: 1000px;
         margin: auto;
         margin-top: 5vh;
         padding: 40px;
-        background: rgba(255, 255, 255, 0.8);
-        border: 20px solid rgba(255, 255, 255, 0.5)
+        background: rgba(255, 255, 255, 0.7);
+        border: 20px solid rgba(255, 255, 255, 0.6);
+        border-radius: 60px;
+        border-top: 0;
+        border-bottom: 0;
     }
     #info-bar{
         margin-bottom: 20px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 20px;
+        padding: 10px 20px;
+        box-sizing: padding-box;
     }
 
 
     h3{
         margin-top: 30px;
         margin-bottom: 10px;
-        text-decoration: underline;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 20px;
+        padding: 10px 20px;
+        display: inline-block
     }
 
     li{
         list-style-type: none;
         margin: 4px 0;
+        margin-left: 20px;
     }
     li.notpublic:before{
-        content: "(dev)";
+        content: "(dev.)";
     }
+    li>*{
+        vertical-align: baseline;
+    }
+
     a{
         color: black;
         text-decoration: none;
@@ -41,10 +76,44 @@
         display: inline-block;
     }
     .tags > *{
-        background-color: rgb(255, 255, 255);
-        border: 1px solid white;
+        background-color: rgb(221, 255, 221);
+        border: 1px solid greenyellow;
         border-radius: 4px;
-        margin: 0 2px;
-        padding: 1px;
-        font-size: 0.9rem;
+        margin-right: 1px;
+        padding: 2px 3px;
+        font-size: 0.8rem;
+        display: inline-block;
+        box-sizing: border-box
+    }
+    li>.tags:first-of-type{
+        margin-left: 6px;
+    }
+
+    .info{
+        position: relative;
+        display: inline-block
+    }
+    .info span{
+        font-size: 0.8rem;
+        width: 12px;
+        height: 14px;
+        display: inline-block;
+        text-align: center;
+        background: white;
+    }
+    .info div{
+        background: white;
+        position: absolute;
+        left: 14px;
+        bottom: 16px;
+        display: none;
+        width: 200px;
+        padding: 4px;
+        font-size: 0.8rem;
+        line-height: 0.8rem;
+        border-radius: 2px;
+    }
+    .info:hover div{
+        display: initial;
+        box-shadow: 0 0 1em greenyellow;
     }</style>

@@ -50,7 +50,7 @@ void main( void )
   	vec2 size = vec2(0.1, 0.01);
   	float power = .2;
 	float fallof = 0.2;
-	vec3 light_color = vec3(0.1, 0.1, 0.5);
+	vec3 light_color = vec3(0.1, 0.1, 0.1);
 
 	size = u_mouse/1.9;
 	size.x *= min(aspect, 1.1);

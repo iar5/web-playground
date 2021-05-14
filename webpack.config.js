@@ -55,6 +55,7 @@ function findExperiment(dir) {
     return result.sort((a, b) => { a.title === b.title ? 0 : a.title < b.title ? -1 : 1; })
 }
 
+const cssExperiments = findExperiment("./src/design/")
 const webglExperiments = findExperiment("./src/webgl/")
 const threeExperiments = findExperiment("./src/three/")
 
@@ -67,14 +68,14 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new CopyPlugin([
-            { from: 'assets', to: '' },
+            { from: 'public', to: '' },
         ].concat(copyPlugins)),
         new HtmlWebpackPlugin({
             template: './src/index.html',
             filename: 'index.html',
             templateParameters: {
                 isProd,
-                experimentsCategories: { "WebGL": webglExperiments, "Three.js": threeExperiments }
+                experimentsCategories: { "WebGL": webglExperiments, "Three.js": threeExperiments, "CSS": cssExperiments }
             },
             chunks: []
         })

@@ -189,15 +189,29 @@ export default class NoiseFog {
     constructor(scene: Scene) {
 
       this.scene = scene
+      scene.fog = new THREE.FogExp2(0x00ff00, 0.01)
 
-        // vFogWorldPosition iwie uniform eingeben`?
+      // vFogWorldPosition iwie uniform eingeben`?
 
-        //THREE.ShaderChunk.fog_pars_vertex = fog_pars_vertex
-        //THREE.ShaderChunk.fog_vertex = fog_vertex
-        //THREE.ShaderChunk.fog_pars_fragment = _NOISE_GLSL + fog_pars_fragment
-        //THREE.ShaderChunk.fog_fragment = fog_fragment
+      //THREE.ShaderChunk.fog_pars_vertex = fog_pars_vertex
+      //THREE.ShaderChunk.fog_vertex = fog_vertex
+      //THREE.ShaderChunk.fog_pars_fragment = _NOISE_GLSL + fog_pars_fragment
+      //THREE.ShaderChunk.fog_fragment = fog_fragment
 
+      this.recomputeSceneShader()
+    }
 
+    public update(){
+
+      this.uniforms.fogTime.value += 0.001
+      // oder global console.log(THREE.ShaderLib.phong);
+      this.shaders.forEach(shader => {
+        shader.uniforms.fogTime.value = this.uniforms.fogTime.value
+
+      })
+    }
+
+    public recomputeSceneShader(){
       this.scene.traverse((child) => {
         if (child instanceof Mesh) {
 
@@ -211,16 +225,6 @@ export default class NoiseFog {
             shader.uniforms = THREE.UniformsUtils.merge([shader.uniforms, this.uniforms]);
           }
         }
-      })
-    }
-
-    public update(){
-
-      this.uniforms.fogTime.value += 0.001
-      // oder global console.log(THREE.ShaderLib.phong);
-      this.shaders.forEach(shader => {
-        shader.uniforms.fogTime.value = this.uniforms.fogTime.value
-
       })
     }
 }

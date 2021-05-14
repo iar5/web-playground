@@ -34,13 +34,14 @@ const effectController = {
     exposure: renderer.toneMappingExposure
 };
 
-gui.datgui.add(effectController, 'turbidity', 0.0, 20.0, 0.1).onChange(guiChanged);
-gui.datgui.add(effectController, 'rayleigh', 0.0, 4, 0.001).onChange(guiChanged);
-gui.datgui.add(effectController, 'mieCoefficient', 0.0, 0.1, 0.001).onChange(guiChanged);
-gui.datgui.add(effectController, 'mieDirectionalG', 0.0, 1, 0.001).onChange(guiChanged);
-gui.datgui.add(effectController, 'elevation', 0, 90, 0.1).onChange(guiChanged);
-gui.datgui.add(effectController, 'azimuth', - 180, 180, 0.1).onChange(guiChanged);
-gui.datgui.add(effectController, 'exposure', 0, 1, 0.0001).onChange(guiChanged);
+let f = gui.datgui.addFolder("Sky")
+f.add(effectController, 'turbidity', 0.0, 20.0, 0.1).onChange(guiChanged);
+f.add(effectController, 'rayleigh', 0.0, 4, 0.001).onChange(guiChanged);
+f.add(effectController, 'mieCoefficient', 0.0, 0.1, 0.001).onChange(guiChanged);
+f.add(effectController, 'mieDirectionalG', 0.0, 1, 0.001).onChange(guiChanged);
+f.add(effectController, 'elevation', 0, 90, 0.1).onChange(guiChanged);
+f.add(effectController, 'azimuth', - 180, 180, 0.1).onChange(guiChanged);
+f.add(effectController, 'exposure', 0, 1, 0.0001).onChange(guiChanged);
 
 function guiChanged() {
 
@@ -69,5 +70,5 @@ effectController.mieCoefficient = 0.004
 effectController.mieDirectionalG = 0.995
 effectController.elevation = 19.3
 effectController.azimuth = 147
-effectController.exposure = 0.0845
+effectController.exposure = 1
 guiChanged();

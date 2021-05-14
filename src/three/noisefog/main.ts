@@ -12,7 +12,6 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 
 
 const scene = new Scene()
-scene.fog = new THREE.FogExp2(0x00ff00, 0.01)
 
 const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.001, 10000)
 camera.position.z = -3

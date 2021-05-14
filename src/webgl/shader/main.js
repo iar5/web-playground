@@ -1,6 +1,6 @@
 import { createProgramFromSource, destroyGl } from '../../../libmy/webglUtils.js'
 import { isMobile, lerp } from '../../../libmy/utils.js'
-import { vs, fs } from './shaderNebel.js'
+import { vs, fs } from './shaderRecNebel.js'
 
 
 const Shader = function(canvas){
