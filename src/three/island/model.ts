@@ -1,7 +1,7 @@
-import { DoubleSide } from "three"
+import { DoubleSide, Vector3 } from "three"
 import THREE = require("three")
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
-import { gui, renderer, scene } from "./main"
+import { camera, gui, renderer, scene } from "./main"
 
 
 
@@ -47,11 +47,13 @@ const cubeCamera = new THREE.CubeCamera(0.0001, 10000, cubeRenderTarget);
 
 function renderEnv(){
     if(!model) return
+    const cameraPos = camera.position.clone() // camera springt (warum auch immer) beim rendern, deswegen alte position merken und später zurück setzen
     model.visible = false 
     cubeCamera.position.copy(model.position)
     cubeCamera.update(renderer, scene);
     model.visible = true
     model.material.envMap = cubeRenderTarget.texture
+    camera.position.copy(cameraPos)
 }
 
 setTimeout(renderEnv, 5000)
