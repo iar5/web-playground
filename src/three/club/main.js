@@ -2,74 +2,73 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 
-document.addEventListener("DOMContentLoaded", function(event) {
 
-    /////////
-    // Global variables
-    ////
+/////////
+// Global variables
+////
 
-    var width = window.innerWidth
-    var height = window.innerHeight
+var width = window.innerWidth
+var height = window.innerHeight
 
-    var renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: true,
-    });
-    renderer.setClearColor("#000000");
-    renderer.setSize(width, height);
-    renderer.shadowMapEnabled = true;
-    renderer.shadowMapType = THREE.PCFSoftShadowMap;
-    document.body.appendChild(renderer.domElement)
+var renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: true,
+});
+renderer.setClearColor("#000000");
+renderer.setSize(width, height);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement)
 
 
+
+
+//////
+// Camera and controls
+////
+var camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
+camera.position.z = 15;
+camera.position.y = 5;
+
+var controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, camera.position.y/2, 0);
+controls.maxPolarAngle = THREE.MathUtils.degToRad(90)
+controls.minDistance = 0.1
+controls.maxDistance = 100
+controls.update();
+
+var scene = new THREE.Scene();
+
+var clubUpdate = createLocation(scene, camera)
+var peopleUpdate = createPeople(scene)
+
+
+
+//////
+// Game Loop
+////
+renderer.setAnimationLoop(function () { 
+
+    clubUpdate()
+    peopleUpdate()
     
-
-    //////
-    // Camera and controls
-    ////
-    var camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-    camera.position.z = 15;
-    camera.position.y = 5;
-
-    var controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, camera.position.y/2, 0);
-    controls.maxPolarAngle = THREE.MathUtils.degToRad(90)
-    controls.minDistance = 0.1
-    controls.maxDistance = 100
-    controls.update();
-
-    var scene = new THREE.Scene();
-
-    var clubUpdate = createLocation(scene, camera)
-    var peopleUpdate = createPeople(scene)
-
-
-
-    //////
-    // Game Loop
-    ////
-    renderer.setAnimationLoop(function () { 
-
-        clubUpdate()
-        peopleUpdate()
-        
-        renderer.render(scene, camera);
-    });
+    renderer.render(scene, camera);
+});
 
 
 
 
-    //////
-    // Window events
-    ////
-    window.addEventListener("resize", function () {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        renderer.setSize(width, height);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-    });
-})
+//////
+// Window events
+////
+window.addEventListener("resize", function () {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+});
+
 
 
 
@@ -210,16 +209,36 @@ function createLocation(scene, camera) {
     new THREE.AudioLoader().load('/audio/Universe of 90s Techno Parties.mp4', (buffer) => {
         sound.setBuffer(buffer);
         sound.setRefDistance(5);
-        //sound.play();
     })
     sound.position.set(0, 5, 0)
-
     var analyser = new THREE.AudioAnalyser(sound, 32);
+
+    const btn = document.createElement("div")
+    document.body.append(btn)
+    btn.innerText = "Play Music"
+    btn.style.position = "fixed"
+    btn.style.width = "100px"
+    btn.style.left = 0
+    btn.style.right = 0
+    btn.style.bottom = "10px"
+    btn.style.margin = "auto"
+    btn.style.background = "black"
+    btn.style.color = "white"
+    btn.style.padding = "10px 20px"
+    btn.style.borderRadius = "20px"
+    btn.style.textAlign = "center"
+    btn.style.fontFamily = "sans-serif"
+    btn.style.border = "1px solid white"
+
+
+    btn.onclick = ()=>{
+        sound.play()
+        btn.remove()
+    }
+
 
 
     return function () {
-        // update something
-
         if (sound.isPlaying) {
             let f = analyser.getAverageFrequency() / 256;
             pointLightL.intensity = f

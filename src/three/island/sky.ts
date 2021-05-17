@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { Mesh, MeshPhongMaterial, Vector3 } from 'three';
 import { Sky } from 'three/examples/jsm/objects/Sky.js';
 import { scene, gui, renderer, camera } from "./main"
+import { updateEnvMap } from './model';
 
 // https://threejs.org/examples/webgl_shaders_sky.html
 // https://threejs.org/examples/webgl_shaders_ocean.html
@@ -90,6 +91,8 @@ function guiValuesChanged() {
     const env = pmremGenerator.fromScene(sky).texture;
     scene.environment = env
     scene.background = env
+
+    updateEnvMap()
 }
 
 setSkySunny()

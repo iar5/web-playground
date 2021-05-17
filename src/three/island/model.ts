@@ -11,16 +11,17 @@ new GLTFLoader().load('/mymodels/procgarden.gltf', (gltf) => {
     model = gltf.scene.children[0]
     model.castShadow = true
     model.receiveShadow = true
-    model.position.y = 6
-    model.scale.set(4, 4, 4)
+    model.position.y = 5
+    model.scale.set(3, 3, 3)
     scene.add(model);
 
     const material = new THREE.MeshPhysicalMaterial({
         transparent: true, // damit transmission klappt
         envMap: cubeRenderTarget.texture,
         roughness: 0,
+        metalness: 1,
         reflectivity: 1,
-        color: "black",
+        color: "white",
         clearcoat: 1,
         clearcoatRoughness: 0.3,
         name: "Abstract Model",
@@ -55,12 +56,11 @@ function renderEnv(){
     model.material.envMap = cubeRenderTarget.texture
     camera.position.copy(cameraPos)
 }
-
-setTimeout(renderEnv, 5000)
+setTimeout(renderEnv, 2000)
 
 function updateModel(){
     if (model) model.rotation.y += 0.002
 }
 
 
-export { updateModel }
+export { updateModel, renderEnv as updateEnvMap }

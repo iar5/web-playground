@@ -1,7 +1,7 @@
 module.exports = {
-    "title": "Club scene",
+    "title": "Club",
     "description": "",
-    "tags": ["Three.js"],
+    "tags": ["Three.js", "Audio"],
     "public": true,
     "entry": "main.js",
 }

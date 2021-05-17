@@ -5,7 +5,7 @@ import DatThreeGui from "../../../libmy/DatThreeGui"
 import { resize } from '../../../libmy/utils.js'
 import NoiseFog from "../noisefog/NoiseFog"
 import NoiseFog2 from '../noisefog/NoiseFog2';
-
+import * as Stats from 'stats-js';
 
 
 
@@ -17,6 +17,11 @@ document.body.appendChild(renderer.domElement)
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFShadowMap
 
+
+const stats = new Stats();
+document.body.appendChild(stats.dom);
+stats.dom.style.right = "0"
+stats.dom.style.left = ""
 
 const gui: DatThreeGui = new DatThreeGui()
 const scene: THREE.Scene = new THREE.Scene()
@@ -51,6 +56,8 @@ initWater()
 requestAnimationFrame(loop)
 function loop() {
     requestAnimationFrame(loop)
+    stats.begin();
+
     controls.update();
 
     //fog.update()
@@ -59,6 +66,7 @@ function loop() {
         
     //composer.render(0.1);
     renderer.render(scene, camera)
+    stats.end();
 }
 
 export { scene, gui, renderer, camera }

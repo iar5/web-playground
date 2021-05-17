@@ -7,7 +7,7 @@ import { SimplexNoise } from "three/examples/jsm/math/SimplexNoise"
 
 
 
-const repeat = new Vector2(5,5)
+const repeat = new Vector2(10,10)
 
 const texColor = new TextureLoader().load('/textures/terrain/ColorMap.jpeg')
 texColor.wrapS = texColor.wrapT = THREE.RepeatWrapping;
@@ -75,11 +75,11 @@ terrain.geometry.vertices.forEach(v => {
 
 
 
-
+//const mat = new THREE.MeshBasicMaterial({color: "black"})
 const mat = new MeshPhysicalMaterial({
-    color: "white",
+    color: "black",
     name: "Monolyt",
-    transparent: true, // damit transmission klappt
+    //transparent: true, // erforderlich für transmission aber dann wirds im cube renderer für mode lspiegel effekt nicht angezeigt
     roughness: 0,
     reflectivity: 1,
     clearcoat: 1,
@@ -91,7 +91,7 @@ gui.addMaterial(mat)
 
 for (var i = 0; i < 10; i++) {
     let h = 5 + rand() * 40
-    let geo = new BoxGeometry(2 + rand() * 4, h, 2 + rand() * 4)
+    let geo = new BoxGeometry(2 + rand() * 2, h, 2 + rand() * 2)
     let mesh = new Mesh(geo, mat)
     let x = 100 * (rand() - 0.5)
     let z = 100 * (rand() - 0.5)
