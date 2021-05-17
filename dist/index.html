@@ -1,14 +1,15 @@
-<!doctype html><html><head><title>Web Dev-Playground | Tom Wendland</title><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><meta name="description" content=""><meta name="keywords" content=""><link rel="icon" href="/favicon.png"></head><body><div id="info-bar"><h1>Web Dev-Playground</h1><p>Collection of recent or current small projects or test cases.</p><p>Last updated: 15.5.2021</p></div><h3>WebGL</h3><ul class="experiments"><li class=""><a href="./webgl/imgdisplacer/index.html">Photo displacement</a><div class="tags"><span>Vertex Shader </span><span>Displacement</span></div></li><li class=""><a href="./webgl/mandelbrot/index.html">Mandelbrot</a><div class="info"><span>i.</span><div>Interactive and animated mandelbrot implementation in a fragment shader using WebGL</div></div><div class="tags"><span>Fragment Shader </span><span>Mandelbrot </span><span>Interactive </span><span>Animation</span></div></li></ul><h3>Three.js</h3><ul class="experiments"><li class=""><a href="./three/360raytracer/index.html">Raytraced Panorama</a><div class="info"><span>i.</span><div>Panoramic image shown in a 360° Three.js viewer. The image is rendered with a raytracer written from scratch in Java</div></div><div class="tags"><span>360 </span><span>Raytracer </span><span>Equirectangular Camera</span></div></li><li class=""><a href="./three/3DCSS/index.html">3DCSS</a><div class="tags"><span>HTML</span></div></li><li class=""><a href="./three/abstracmodel/index.html">DOF Shader</a><div class="tags"><span>Materials</span></div></li><li class=""><a href="./three/club/index.html">Club</a><div class="tags"></div></li><li class=""><a href="./three/hell/index.html">Hell</a><div class="tags"><span>Shader</span></div></li><li class=""><a href="./three/noisefog/index.html">Noise Fog</a><div class="tags"><span>Fog </span><span>Shader</span></div></li><li class=""><a href="./three/wetter/index.html">Weather</a><div class="tags"><span>Sky</span></div></li></ul><h3>CSS</h3><ul class="experiments"></ul></body></html><style>*{
+<!doctype html><html><head><title>Web Dev | Tom Wendland</title><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><meta name="description" content=""><meta name="keywords" content=""><link rel="icon" href="/favicon.png"></head><body><div id="info-bar"><h1>Web Dev</h1><p>Collection of small projects and test cases.</p><p>Last updated: 17.5.2021</p></div><h3>WebGL</h3><ul class="experiments"><li class=""><a href="./webgl/imgdisplacer/index.html">Photo displacement</a><div class="tags"><span>Vertex Shader </span><span>Displacement</span></div></li><li class=""><a href="./webgl/mandelbrot/index.html">Mandelbrot</a><div class="info"><span>i.</span><div>Interactive and animated mandelbrot implementation in a fragment shader using WebGL</div></div><div class="tags"><span>Fragment Shader </span><span>Mandelbrot </span><span>Interactive </span><span>Animation</span></div></li></ul><h3>Three.js</h3><ul class="experiments"><li class=""><a href="./three/360raytracer/index.html">Raytraced Panorama</a><div class="info"><span>i.</span><div>Panoramic image shown in a 360° Three.js viewer. The image is rendered with a raytracer written from scratch in Java</div></div><div class="tags"><span>360 </span><span>Raytracer </span><span>Equirectangular Camera</span></div></li><li class=""><a href="./three/3DCSS/index.html">3DCSS Test</a><div class="tags"><span>HTML</span></div></li><li class=""><a href="./three/abstracmodel/index.html">DOF Shader Test</a><div class="tags"><span>Materials</span></div></li><li class=""><a href="./three/club/index.html">Club scene</a><div class="tags"></div></li><li class=""><a href="./three/hell/index.html">Hell</a><div class="tags"><span>Shader</span></div></li><li class=""><a href="./three/noisefog/index.html">Noise Fog</a><div class="tags"><span>Fog </span><span>Shader</span></div></li><li class=""><a href="./three/wold/index.html">Island</a><div class="tags"><span>Sky</span></div></li></ul><h3>CSS</h3><ul class="experiments"></ul></body></html><style>*{
+        --fontColor: rgb(24, 24, 50);
         font-family: sans-serif;
         padding: 0;
         margin: 0;
-        color:rgb(20, 20, 20);
+        color: var(--fontColor);
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
     }
     html{
         padding: 1%;
         box-sizing: border-box;
-        background: linear-gradient(-45deg, #ee775280, #e73c7e80, #23a6d580, #23d5ab80);
+        background: linear-gradient(-45deg, #ee7752b7, #e73c7eb7, #23a5d5b7, #23d5abb7);
         background-size: 400% 400%;
         animation: gradient 15s ease infinite;
     }
@@ -32,10 +33,17 @@
         margin-top: 5vh;
         padding: 40px;
         background: rgba(255, 255, 255, 0.7);
-        border: 20px solid rgba(255, 255, 255, 0.6);
+        border: 20px solid rgba(255, 255, 255, 0.7);
         border-radius: 60px;
         border-top: 0;
         border-bottom: 0;
+        box-shadow: inset 0 0 10px #bebebe;
+
+    }
+    @media(max-width: 700px){
+        body{
+            padding: 30px 10px;
+        }
     }
     #info-bar{
         margin-bottom: 20px;
@@ -43,6 +51,13 @@
         border-radius: 20px;
         padding: 10px 20px;
         box-sizing: padding-box;
+        box-shadow: 0 0 10px #bebebe;
+        text-align: center;
+    }
+
+    h1{
+        font-size: 2rem;
+        line-height: 2rem;
     }
 
 
@@ -52,7 +67,8 @@
         background: rgba(255, 255, 255, 0.6);
         border-radius: 20px;
         padding: 10px 20px;
-        display: inline-block
+        display: inline-block;
+        box-shadow: 0 0 10px #bebebe;
     }
 
     li{
@@ -68,7 +84,7 @@
     }
 
     a{
-        color: black;
+        color: var(--fontColor);
         text-decoration: none;
         font-weight: bold;
     }
@@ -76,11 +92,11 @@
         display: inline-block;
     }
     .tags > *{
-        background-color: rgb(221, 255, 221);
-        border: 1px solid greenyellow;
+        background: rgba(white, 0.1);
+        border: 1px solid white;
         border-radius: 4px;
         margin-right: 1px;
-        padding: 2px 3px;
+        padding: 1px 3px;
         font-size: 0.8rem;
         display: inline-block;
         box-sizing: border-box
@@ -95,11 +111,14 @@
     }
     .info span{
         font-size: 0.8rem;
-        width: 12px;
+        width: 14px;
         height: 14px;
         display: inline-block;
         text-align: center;
-        background: white;
+        background: rgba(white, 0.1);
+        border: 1px solid white;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.6);
     }
     .info div{
         background: white;
@@ -108,12 +127,16 @@
         bottom: 16px;
         display: none;
         width: 200px;
-        padding: 4px;
+        padding: 6px;
         font-size: 0.8rem;
         line-height: 0.8rem;
-        border-radius: 2px;
+        border-radius: 4px;
+        box-shadow: 0 0 3px rgb(73, 73, 73);
+        background-color: rgb(250, 250, 250);
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out;
     }
     .info:hover div{
         display: initial;
-        box-shadow: 0 0 1em greenyellow;
+        opacity: 1;
     }</style>

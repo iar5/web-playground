@@ -1,12 +1,13 @@
 
 import * as THREE from 'three'
-import * as dat from '../lib/dat.gui.js';
+import * as dat from 'dat.gui';
 
 
 /**
  * Objekte müssen THREE.Object3D.name property haben
  */
 export default class DatThreeGui{
+
 
     constructor() {
         this.datgui = new dat.GUI();
@@ -15,31 +16,39 @@ export default class DatThreeGui{
         this.datgui.__proto__.addColorThree = function (object, property) {
             // folder.addColor({ emissive: material.emissive.getHex() }, 'emissive').onChange((c) => material.emissive.set(c))
             // problem wenn ich direkt zum object.property color objekt verlinke: three ist rgb 0-1 datgui liest aber 0-255
+            // kann dadurch nicht direkt die color property von nem three object registrieren
             let o = {}
             o[property] = object[property].getHex()
             this.addColor(o, property).onChange(c => object[property].set(c))
         }
     }
     
-    register(obj){
-        if (obj instanceof THREE.Material) {
-            this.registerMaterial(obj)
-        }
-        else if (obj instanceof THREE.Light) {
-            this.registerLight(obj)
-        }
-    }
-
-    registerMaterial(material){
+    addMaterial(material){
         if (!this.materialsFolder) this.materialsFolder = this.datgui.addFolder('Materials');
         let folder = this.materialsFolder.addFolder(material.type + " " + material.name)
 
-        if (material instanceof THREE.MeshStandardMaterial) {
-            folder.addColorThree(material, "color")
+        folder.addColorThree(material, "color")
+        folder.add(material, 'vertexColors')
+        folder.add(material, 'wireframe')
+
+        if (material instanceof THREE.MeshLambertMaterial) {
+            folder.addColorThree(material, "emissive")
+        }
+
+        else if(material instanceof THREE.MeshPhongMaterial){
+            folder.addColorThree(material, "emissive")
+            folder.addColorThree(material, "specular")
+            folder.add(material, 'shininess')
+            folder.add(material, 'bumpScale')
+            folder.add(material, 'displacementScale')
+            folder.add(material, 'flatShading')
+        }
+
+        else if (material instanceof THREE.MeshStandardMaterial) {
             folder.addColorThree(material, "emissive")
             folder.add(material, "roughness", 0, 1, 0.01)
             folder.add(material, "metalness", 0, 1, 0.01)
-            folder.add(material, 'wireframe')
+            folder.add(material, 'flatShading')
 
             if (material instanceof THREE.MeshPhysicalMaterial) {
                 folder.add(material, "reflectivity", 0, 1, 0.01)
@@ -51,7 +60,7 @@ export default class DatThreeGui{
         }
     }
 
-    registerLight(light){       
+    addLight(light){       
         if (!this.lightFolder) this.lightFolder = this.datgui.addFolder('Lights');
         let folder = this.lightFolder.addFolder(light.type + " " + light.name)
 

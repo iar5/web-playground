@@ -1,5 +1,5 @@
 module.exports = {
-    "title": "Weather",
+    "title": "Island",
     "description": "",
     "tags": ["Three.js", "Sky"],
     "public": true,

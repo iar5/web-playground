@@ -66,7 +66,7 @@ let material = new THREE.MeshPhysicalMaterial({
 
 
 let model = new THREE.Mesh(new THREE.SphereBufferGeometry(1, 128, 128), material)
-gui.registerMaterial(material)
+gui.addMaterial(material)
 scene.add(model)
 
 

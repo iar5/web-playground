@@ -8,6 +8,7 @@
   },
   "keywords": [],
   "devDependencies": {
+    "@types/dat.gui": "^0.7.6",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.5.2",
@@ -37,6 +38,8 @@
   },
   "dependencies": {
     "cross-env": "^7.0.3",
+    "file-loader": "^6.2.0",
+    "postprocessing": "^6.21.5",
     "seedrandom": "^3.0.5",
     "simplex-noise": "^2.4.0"
   }

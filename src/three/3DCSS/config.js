@@ -1,5 +1,5 @@
 module.exports = {
-    "title": "3DCSS",
+    "title": "3DCSS Test",
     "description": "",
     "tags": ["Three.js", "HTML"],
     "public": true,

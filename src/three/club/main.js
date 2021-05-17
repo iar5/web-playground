@@ -110,11 +110,11 @@ function createLocation(scene, camera) {
     const textureLoader = new THREE.TextureLoader()
 
     var blueTiles = new THREE.MeshStandardMaterial({
-        map: textureLoader.load("/textures/blueTiles.jpg", function (texture) {
+        map: textureLoader.load("/textures/tiles/blueTiles.jpg", function (texture) {
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(8, 3);
         }),
-        bumpMap: textureLoader.load("/textures/blueTilesBump.jpg", function (texture) {
+        bumpMap: textureLoader.load("/textures/tiles/blueTilesBump.jpg", function (texture) {
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(8, 3);
         }),
@@ -123,11 +123,11 @@ function createLocation(scene, camera) {
         roughness: .1
     });
     var whiteTiles = new THREE.MeshStandardMaterial({
-        map: textureLoader.load("/textures/whiteTiles.jpg", function (texture) {
+        map: textureLoader.load("/textures/tiles/whiteTiles.jpg", function (texture) {
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(12, 12);
         }),
-        bumpMap: textureLoader.load("/textures/whiteTilesBump.jpg", function (texture) {
+        bumpMap: textureLoader.load("/textures/tiles/whiteTilesBump.jpg", function (texture) {
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(12, 12);
         }),

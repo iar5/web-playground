@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { Mesh, Scene, Shader, ShaderLib } from 'three';
+import { Fog, FogExp2, IFog, Material, Mesh, Scene, Shader, ShaderLib } from 'three';
+import { Sky } from 'three/examples/jsm/objects/Sky';
 
 
 
@@ -123,13 +124,13 @@ const _NOISE_GLSL = `
 
 const fog_pars_vertex = `
   #ifdef USE_FOG
-      varying float fogDepth;
+      varying float myFogDepth;
       varying vec3 vFogWorldPosition;
   #endif`;
 
 const fog_vertex = `
   #ifdef USE_FOG
-      fogDepth = - mvPosition.z;
+      myFogDepth = - mvPosition.z;
       vFogWorldPosition = (modelMatrix * vec4( transformed, 1.0 )).xyz;
   #endif
   `;
@@ -139,7 +140,7 @@ const fog_pars_fragment = `
   #ifdef USE_FOG
       uniform float fogTime;
       uniform vec3 fogColor;
-      varying float fogDepth;
+      varying float myFogDepth;
       varying vec3 vFogWorldPosition;
 
       #ifdef FOG_EXP2
@@ -156,17 +157,17 @@ const fog_fragment = `
   #ifdef USE_FOG
   vec3 fogOrigin = cameraPosition;
   vec3 fogDirection = normalize(vFogWorldPosition - fogOrigin);
-  float fogDepth = distance(vFogWorldPosition, fogOrigin);
+  float myFogDepth = distance(vFogWorldPosition, fogOrigin);
 
   // f(p) = fbm( p + fbm( p ) )
   vec3 noiseSampleCoord = vFogWorldPosition * 0.0025 + vec3(0.0, 0.0, fogTime * 0.25);
   float noiseSample = FBM(noiseSampleCoord + FBM(noiseSampleCoord)) * 0.5 + 0.5;
-  fogDepth *= mix(noiseSample, 1.0, saturate((fogDepth - 5000.0) / 5000.0));
-  fogDepth *= fogDepth;
+  myFogDepth *= mix(noiseSample, 1.0, saturate((myFogDepth - 5000.0) / 5000.0));
+  myFogDepth *= myFogDepth;
 
   float heightFactor = 0.05;
   float fogFactor = heightFactor * exp(-fogOrigin.y * fogDensity) * (
-      1.0 - exp(-fogDepth * fogDirection.y * fogDensity)) / fogDirection.y;
+      1.0 - exp(-myFogDepth * fogDirection.y * fogDensity)) / fogDirection.y;
   fogFactor = saturate(fogFactor);
 
   gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
@@ -175,7 +176,18 @@ const fog_fragment = `
 
 
 /**
- * https://www.youtube.com/watch?v=k1zGz55EqfU
+// https://www.youtube.com/watch?v=k1zGz55EqfU
+// https://medium.com/@pailhead011/extending-three-js-materials-with-glsl-78ea7bbb9270
+
+// alle three.js Shader mit ihren uniforms etc.
+THREE.ShaderLib 
+
+// ersetzt den alten fog global für jeden shader. müsste dann über ganze shader lib iterieren und die tim uniform aktualisieren
+THREE.ShaderChunk.fog_pars_vertex = fog_pars_vertex
+THREE.ShaderChunk.fog_vertex = fog_vertex
+THREE.ShaderChunk.fog_pars_fragment = _NOISE_GLSL + fog_pars_fragment
+THREE.ShaderChunk.fog_fragment = fog_fragment
+
  */
 export default class NoiseFog {
 
@@ -183,49 +195,38 @@ export default class NoiseFog {
       fogTime: { value: 0.0 }
     }
 
-    private scene: THREE.Scene;
     private shaders: Array<Shader> =  []
 
-    constructor(scene: Scene) {
+  constructor(scene: Scene, fog: IFog = new THREE.FogExp2(0x00ff00, 0.01)) {
 
-      this.scene = scene
-      scene.fog = new THREE.FogExp2(0x00ff00, 0.01)
+    scene.fog = fog
+    scene.traverse((child) => {
+      if (child instanceof Mesh) {
+        this.replaceFogShaderPart(child.material)
+      }
+    })
+  }
 
-      // vFogWorldPosition iwie uniform eingeben`?
-
-      //THREE.ShaderChunk.fog_pars_vertex = fog_pars_vertex
-      //THREE.ShaderChunk.fog_vertex = fog_vertex
-      //THREE.ShaderChunk.fog_pars_fragment = _NOISE_GLSL + fog_pars_fragment
-      //THREE.ShaderChunk.fog_fragment = fog_fragment
-
-      this.recomputeSceneShader()
+  /**
+   * replaces default three.js fog shader part of the material with custom fog code
+   */
+  public replaceFogShaderPart(material: Material){
+      material.onBeforeCompile = (shader: Shader) => {
+        this.shaders.push(shader)
+        shader.vertexShader = shader.vertexShader.replace(`#include <fog_pars_vertex>`, fog_pars_vertex)
+        shader.vertexShader = shader.vertexShader.replace(`#include <fog_vertex>`, fog_vertex)
+        shader.fragmentShader = shader.fragmentShader.replace(`#include <fog_pars_fragment>`, _NOISE_GLSL + fog_pars_fragment)
+        shader.fragmentShader = shader.fragmentShader.replace(`#include <fog_fragment>`, fog_fragment);
+        shader.uniforms = THREE.UniformsUtils.merge([shader.uniforms, this.uniforms]);
     }
+  }
 
-    public update(){
-
-      this.uniforms.fogTime.value += 0.001
-      // oder global console.log(THREE.ShaderLib.phong);
-      this.shaders.forEach(shader => {
-        shader.uniforms.fogTime.value = this.uniforms.fogTime.value
-
-      })
-    }
-
-    public recomputeSceneShader(){
-      this.scene.traverse((child) => {
-        if (child instanceof Mesh) {
-
-          child.material.onBeforeCompile = (shader: Shader) => {
-
-            this.shaders.push(shader)
-            shader.vertexShader = shader.vertexShader.replace(`#include <fog_pars_vertex>`, fog_pars_vertex)
-            shader.vertexShader = shader.vertexShader.replace(`#include <fog_vertex>`, fog_vertex)
-            shader.fragmentShader = shader.fragmentShader.replace(`#include <fog_pars_fragment>`, _NOISE_GLSL + fog_pars_fragment)
-            shader.fragmentShader = shader.fragmentShader.replace(`#include <fog_fragment>`, fog_fragment);
-            shader.uniforms = THREE.UniformsUtils.merge([shader.uniforms, this.uniforms]);
-          }
-        }
-      })
-    }
+  public update() {
+    this.uniforms.fogTime.value += 0.001
+    
+    this.shaders.forEach(shader => {
+      shader.uniforms.fogTime.value = this.uniforms.fogTime.value
+    })
+  }
 }
 

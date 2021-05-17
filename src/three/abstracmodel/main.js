@@ -68,7 +68,7 @@ gltfloader.load('/mymodels/procgarden.gltf', function(gltf){
     material.lightMap = cubeCamera.renderTarget.texture;
     material.side = THREE.DoubleSide
     model.material = material
-    gui.registerMaterial(material)
+    gui.addMaterial(material)
 })
 
 
