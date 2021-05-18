@@ -197,7 +197,7 @@ export default class NoiseFog {
 
     private shaders: Array<Shader> =  []
 
-  constructor(scene: Scene, fog: IFog = new THREE.FogExp2(0x00ff00, 0.01)) {
+  constructor(scene: Scene, fog: IFog) {
 
     scene.fog = fog
     scene.traverse((child) => {

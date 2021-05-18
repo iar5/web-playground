@@ -40,6 +40,7 @@ grid.material.opacity = 0.2;
 grid.material.transparent = true;
 scene.add(grid);
 
+// Axis 
 const axesHelper = new THREE.AxesHelper(5);
 scene.add(axesHelper);
 

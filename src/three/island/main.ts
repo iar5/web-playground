@@ -3,11 +3,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import DatThreeGui from "../../../libmy/DatThreeGui"
 import { resize } from '../../../libmy/utils.js'
-import NoiseFog from "../noisefog/NoiseFog"
-import NoiseFog2 from '../noisefog/NoiseFog2';
 import * as Stats from 'stats-js';
 
 
+const clock = new THREE.Clock()
 
 const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
     powerPreference: "high-performance",
@@ -40,13 +39,12 @@ window.dispatchEvent(new Event('resize'))
 
 
 
-
+import "./RefractionSphere"
 import "./sky"
 import "./terrain"
+import { updateSun } from "./Lavaball"
 import { initWater, updateWater } from './water';
 import { updateModel } from './model';
-//import { composer } from './postprocessing'
-//const fog = new NoiseFog(scene, new THREE.FogExp2(0x444444, 0.005))
 
 
 initWater()
@@ -60,11 +58,11 @@ function loop() {
 
     controls.update();
 
-    //fog.update()
     updateModel()
     updateWater()
-        
-    //composer.render(0.1);
+    updateSun()
+    
+    //composer.render(clock.getDelta());
     renderer.render(scene, camera)
     stats.end();
 }

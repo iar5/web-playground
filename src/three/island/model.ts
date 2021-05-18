@@ -47,15 +47,18 @@ const cubeCamera = new THREE.CubeCamera(0.0001, 10000, cubeRenderTarget);
 
 
 function renderEnv(){
+    // camera springt (warum auch immer) beim rendern, deswegen alte position merken und später zurück setzen
+    // in Refraction Kugel das selbe problem 
+    // als ich beispiel kopiert hatte war das aber noch nicht so! 
     if(!model) return
-    const cameraPos = camera.position.clone() // camera springt (warum auch immer) beim rendern, deswegen alte position merken und später zurück setzen
+    const cameraPos = camera.position.clone() 
     model.visible = false 
     cubeCamera.position.copy(model.position)
     cubeCamera.update(renderer, scene);
     model.visible = true
-    model.material.envMap = cubeRenderTarget.texture
     camera.position.copy(cameraPos)
 }
+
 setTimeout(renderEnv, 2000)
 
 function updateModel(){

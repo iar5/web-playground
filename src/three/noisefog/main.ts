@@ -54,7 +54,7 @@ light.shadow.camera.near = 0.5
 light.shadow.camera.far = 100
 
 
-let fog = new NoiseFog(scene)
+const fog = new NoiseFog(scene, new THREE.FogExp2(0x444444, 0.005))
 
 
 
