@@ -9,7 +9,7 @@ import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 
 import ThreeDatGui from "../../../libmy/DatThreeGui.js"
 import { resize } from '../../../libmy/utils.js'
-import Sky from "./js/TestShader.js"
+import Sky from "./js/2DSkyShader"
 
 
 
@@ -18,19 +18,17 @@ document.body.appendChild(renderer.domElement)
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFShadowMap
-renderer.context.getExtension('OES_standard_derivatives');
 renderer.physicallyCorrectLights = true
 
 
 const gui = new ThreeDatGui()
-gui.hide()
 
 const scene = new THREE.Scene()
 
 let height = 4
 let width = height * window.innerWidth / window.innerHeight
 const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.001, 10000)
-camera.position.z = 3
+camera.position.z = 5
 scene.add(camera)
 
 

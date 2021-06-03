@@ -1,7 +1,7 @@
 module.exports = {
-    "title": "Noise Fog",
+    "title": "Forest",
     "description": "",
     "tags": ["Three.js", "Fog", "Shader"],
-    "public": true,
+    "public": false,
     "entry": "main.ts",
 }

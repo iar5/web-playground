@@ -54,7 +54,7 @@ scene.add(terrain)
 
 
 
-const simplex = new SimplexNoise()
+const simplex = new SimplexNoise({ random: seedrandom(4)})
 
 function heightfield(x, z) {
     let dst = Math.sqrt(x * x + z * z)

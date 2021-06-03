@@ -25,7 +25,6 @@ document.getElementById("rz").addEventListener("change", e => imagePlot3D.setRot
 document.getElementById("depth").addEventListener('input', e => imagePlot3D.setDepth(e.target.value))
 document.getElementById("resetButton").addEventListener('click', e => reset())
 
-document.getElementById("toggleView").addEventListener('click', () => document.getElementsByTagName("header")[0].classList.toggle("closed"))
 document.getElementById("checkboxDepthTest").addEventListener('click', e => imagePlot3D.toggleDepthTest(e.target.checked))
 document.getElementById("checkboxOrientationControle").addEventListener('click', e => imagePlot3D.enableOrientationControle(e.target.checked))
 

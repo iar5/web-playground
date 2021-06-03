@@ -25,21 +25,6 @@ const ambientLight = new AmbientLight(0x404040, 1);
 scene.add(ambientLight);
 
 
-// Ground
-const mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(100, 100), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
-mesh.rotation.x = - Math.PI / 2;
-mesh.receiveShadow = true;
-scene.add(mesh);
-
-for (let i = 0; i < 100; i++) {
-    let sphereMat = new MeshPhongMaterial({ color: "red" })
-    let sphereGeo = new SphereBufferGeometry(1 + Math.random() - 0.5)
-    let sphereMesh = new Mesh(sphereGeo, sphereMat)
-    sphereMesh.position.set(100 * (Math.random() - 0.5), 0, 100 * (Math.random() - 0.5))
-    scene.add(sphereMesh)
-}
-
-
 const light = new THREE.DirectionalLight(0xffffff, 1);
 scene.add(light);
 light.position.set(5, 10, 0)
@@ -53,6 +38,9 @@ light.shadow.camera.bottom = -2
 light.shadow.camera.near = 0.5
 light.shadow.camera.far = 100
 
+
+export { scene }
+import "./forest"
 
 const fog = new NoiseFog(scene, new THREE.FogExp2(0x444444, 0.005))
 

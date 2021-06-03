@@ -3,6 +3,7 @@ import { Mesh, MeshPhongMaterial, Vector3 } from 'three';
 import { Sky } from 'three/examples/jsm/objects/Sky.js';
 import { scene, gui, renderer, camera } from "./main"
 import { updateEnvMap } from './model';
+import { updateEnvMapR } from './RefractionSphere';
 
 // https://threejs.org/examples/webgl_shaders_sky.html
 // https://threejs.org/examples/webgl_shaders_ocean.html
@@ -93,6 +94,7 @@ function guiValuesChanged() {
     scene.background = env
 
     updateEnvMap()
+    updateEnvMapR()
 }
 
 setSkySunny()

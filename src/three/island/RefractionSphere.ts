@@ -44,3 +44,5 @@ function renderEnvMap(){
 setTimeout(renderEnvMap, 2000)
 
 
+
+export { renderEnvMap as updateEnvMapR }

@@ -33,7 +33,7 @@ const player = new THREE.Object3D
 scene.add(player)
 
 const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.001, 10000)
-camera.position.z = -3
+camera.position.z = -8
 camera.lookAt(new THREE.Vector3)
 scene.add(camera)
 window.addEventListener('resize', () => { resize(renderer, camera) }, false);

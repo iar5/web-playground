@@ -1,6 +1,6 @@
 import * as THREE from "three"
-import { TextureLoader } from "three";
-import { scene } from "./main";
+import { PointLight, TextureLoader } from "three";
+import { gui, scene } from "./main";
 
 
 // https://stemkoski.github.io/Three.js/Shader-Fireball.html
@@ -110,12 +110,15 @@ var sunMaterial = new THREE.ShaderMaterial({
     fragmentShader: frag
 });
 
-var sun = new THREE.Mesh(new THREE.SphereGeometry(3, 32, 64), sunMaterial);
-sun.position.x = -7
-sun.position.y = 5
-scene.add(sun);
+var lavaSphere = new THREE.Mesh(new THREE.SphereGeometry(3, 32, 64), sunMaterial);
+lavaSphere.position.x = -7
+lavaSphere.position.y = 5
+scene.add(lavaSphere);
 
 
+const light = new PointLight("red", 1, 26, 3.6)
+lavaSphere.add(light)
+gui.addLight(light)
 
 function updateSun(){
     sunMaterial.uniforms.time.value = performance.now()/1000
