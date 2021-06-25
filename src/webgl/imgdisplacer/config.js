@@ -1,5 +1,5 @@
 module.exports = {
-    "title": "Photo displacement",
+    "title": "Image Displacement",
     "description": "",
     "tags": ["WebGL", "Vertex Shader", "Displacement"],
     "public": true,

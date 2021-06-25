@@ -75,7 +75,7 @@ module.exports = {
             filename: 'index.html',
             templateParameters: {
                 isProd,
-                experimentsCategories: { "WebGL": webglExperiments, "Three.js": threeExperiments, "CSS": cssExperiments }
+                experimentsCategories: { "WebGL native": webglExperiments, "Three.js": threeExperiments, "CSS": cssExperiments }
             },
             chunks: []
         })

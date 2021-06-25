@@ -12,7 +12,7 @@
 <body>
     <div id="headline">
         <h1>Web Dev</h1>
-        <p>Small projects and test cases.</p>
+        <p>Small projects and tests</p>
         <p>Last updated: <%= new Date().getDate() %>.<%= new Date().getMonth()+1 %>.<%= new Date().getFullYear() %></p>
     </div>
 
@@ -51,21 +51,22 @@
 
 </html>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap');
 
     *{
         --fontColor: rgb(24, 24, 50);
-        font-family: sans-serif;
         padding: 0;
         margin: 0;
         color: var(--fontColor);
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+        font-family: 'Viaoda Libre', cursive;    
+        letter-spacing: 0.2px;
     }
     html{
         padding: 1%;
         box-sizing: border-box;
     }
     .gradienBackground{
-        background: linear-gradient(-45deg, #12ff9cb0, #82ffa7, #882cd3b7, #23d5abb7);
+        background: linear-gradient(-45deg, #12ff9cb0, #82ffa7, #ffffffb7, #23d5abb7);
         background-size: 300% 300%;
         animation: gradient 15s ease infinite;
     }
@@ -109,9 +110,6 @@
         box-shadow: 0 0 10px #bebebe;
         text-align: center;
         background: white
-    }
-    #headline>p:first-of-type{
-        font-size: 0.9rem;
     }
 
     h1{
@@ -200,11 +198,5 @@
     .info:hover div{
         display: initial;
         opacity: 1;
-    }
-</style>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400&display=swap');
-    *{
-        font-family: 'Nunito', sans-serif;
     }
 </style>

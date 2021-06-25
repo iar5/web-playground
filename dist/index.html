@@ -1,17 +1,19 @@
-<!doctype html><html class="gradienBackground"><head><title>Web Dev | Tom Wendland</title><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><meta name="description" content=""><meta name="keywords" content=""><link rel="icon" href="/favicon.png"></head><body><div id="headline"><h1>Web Dev</h1><p>Small projects and test cases.</p><p>Last updated: 4.6.2021</p></div><h3>WebGL</h3><ul class="experiments"><li class=""><a href="./webgl/imgdisplacer/index.html">Photo displacement</a><div class="tags"><span>Vertex Shader </span><span>Displacement</span></div></li><li class=""><a href="./webgl/mandelbrot/index.html">Mandelbrot</a><div class="info"><span>i.</span><div>Interactive and animated mandelbrot implementation in a fragment shader using WebGL</div></div><div class="tags"><span>Fragment Shader </span><span>Mandelbrot </span><span>Interactive </span><span>Animation</span></div></li></ul><h3>Three.js</h3><ul class="experiments"><li class=""><a href="./three/360raytracer/index.html">Raytraced Panorama</a><div class="info"><span>i.</span><div>Panoramic image shown in a 360° Three.js viewer. The image is rendered with a raytracer written from scratch in Java</div></div><div class="tags"><span>360 </span><span>Raytracer </span><span>Equirectangular Camera</span></div></li><li class=""><a href="./three/3DCSS/index.html">3DCSS Test</a><div class="tags"><span>HTML</span></div></li><li class=""><a href="./three/club/index.html">Club</a><div class="tags"><span>Audio</span></div></li><li class=""><a href="./three/hell/index.html">Hell</a><div class="tags"><span>Shader</span></div></li><li class=""><a href="./three/island/index.html">Island</a><div class="tags"><span>Sky </span><span>Water </span><span>Terrain </span><span>Mirror Material</span></div></li></ul></body></html><style>*{
+<!doctype html><html class="gradienBackground"><head><title>Web Dev | Tom Wendland</title><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><meta name="description" content=""><meta name="keywords" content=""><link rel="icon" href="/favicon.png"></head><body><div id="headline"><h1>Web Dev</h1><p>Small projects and tests</p><p>Last updated: 25.6.2021</p></div><h3>WebGL native</h3><ul class="experiments"><li class=""><a href="./webgl/imgdisplacer/index.html">Image Displacement</a><div class="tags"><span>Vertex Shader </span><span>Displacement</span></div></li><li class=""><a href="./webgl/mandelbrot/index.html">Mandelbrot</a><div class="info"><span>i.</span><div>Interactive and animated mandelbrot implementation in a fragment shader using WebGL</div></div><div class="tags"><span>Fragment Shader </span><span>Mandelbrot </span><span>Interactive </span><span>Animation</span></div></li></ul><h3>Three.js</h3><ul class="experiments"><li class=""><a href="./three/360raytracer/index.html">Raytraced Panorama</a><div class="info"><span>i.</span><div>Panoramic image shown in a 360° Three.js viewer. The image is rendered with a raytracer written from scratch in Java</div></div><div class="tags"><span>360 </span><span>Raytracer </span><span>Equirectangular Camera</span></div></li><li class=""><a href="./three/3DCSS/index.html">3DCSS Test</a><div class="tags"><span>HTML</span></div></li><li class=""><a href="./three/club/index.html">Club</a><div class="tags"><span>Audio</span></div></li><li class=""><a href="./three/hell/index.html">Hell</a><div class="tags"><span>Shader</span></div></li><li class=""><a href="./three/island/index.html">Island</a><div class="tags"><span>Sky </span><span>Water </span><span>Terrain </span><span>Mirror Material</span></div></li></ul></body></html><style>@import url('https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap');
+
+    *{
         --fontColor: rgb(24, 24, 50);
-        font-family: sans-serif;
         padding: 0;
         margin: 0;
         color: var(--fontColor);
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+        font-family: 'Viaoda Libre', cursive;    
+        letter-spacing: 0.2px;
     }
     html{
         padding: 1%;
         box-sizing: border-box;
     }
     .gradienBackground{
-        background: linear-gradient(-45deg, #12ff9cb0, #82ffa7, #882cd3b7, #23d5abb7);
+        background: linear-gradient(-45deg, #12ff9cb0, #82ffa7, #ffffffb7, #23d5abb7);
         background-size: 300% 300%;
         animation: gradient 15s ease infinite;
     }
@@ -55,9 +57,6 @@
         box-shadow: 0 0 10px #bebebe;
         text-align: center;
         background: white
-    }
-    #headline>p:first-of-type{
-        font-size: 0.9rem;
     }
 
     h1{
@@ -146,7 +145,4 @@
     .info:hover div{
         display: initial;
         opacity: 1;
-    }</style><style>@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400&display=swap');
-    *{
-        font-family: 'Nunito', sans-serif;
     }</style>

@@ -5,16 +5,11 @@ import { Vector2, Vector3 } from "three"
 const tempVec3 = new Vector3()
 
 
-
-/**
- * Klasse handelt movement richtung, beschleunigung 
- */
 export default class MovementControler {
 
+    public slowDownSideBackWalk: boolean = false
+    public maxSpeed: number = 2
 
-    public maxSpeed
-
-    // is keydown geht nicht weil ich da nicht auf false setzen kann wenn pointer gelockt wird
     private moveForward: boolean = false
     private moveLeft: boolean = false
     private moveBackward: boolean = false
@@ -22,62 +17,49 @@ export default class MovementControler {
     private blocked: boolean = false
     private forwardVelocity: number = 0
     private rightVelocity: number = 0
-    private direction = new Vector3()
-    private lastMovement: Vector3 = new Vector3()
+
+    private readonly direction = new Vector3()
+    private readonly lastMovement: Vector3 = new Vector3()
 
     constructor() {
-        this.maxSpeed =1.85 
-
-        document.addEventListener('keydown', e => {
+        document.addEventListener('pointerlockchange', () => {
+            this.resetKeys()
+        })
+        document.addEventListener("visibilitychange", () => {
+            this.resetVelocty()
+        })
+        window.addEventListener("pagehide", () => {
+            this.resetVelocty()
+        });
+        window.addEventListener("pagehide", () => {
+            this.resetVelocty()
+        });
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault()
+        });
+        document.addEventListener('keydown', (e) => {
             this.onKeyDown(e)
         });
-
-        document.addEventListener('keyup', e => {
+        document.addEventListener('keyup', (e) => {
             this.onKeyUp(e)
         });
     }
 
-    private onKeyDown(event) {
-        switch (event.keyCode) {
-            case 38: // up
-            case 87: // w
-                this.moveForward = true;
-                break;
-            case 37: // left
-            case 65: // a
-                this.moveLeft = true;
-                break;
-            case 40: // down
-            case 83: // s
-                this.moveBackward = true;
-                break;
-            case 39: // right
-            case 68: // d
-                this.moveRight = true;
-                break;
-            case 32: // space
-                break;
+    private onKeyDown(event: KeyboardEvent) {
+        switch (event.key) {
+            case "w": case "ArrowUp": this.moveForward = true; break;
+            case "a": case "ArrowLeft": this.moveLeft = true; break;
+            case "s": case "ArrowDown": this.moveBackward = true; break;
+            case "d": case "ArrowRight": this.moveRight = true; break;
         }
     }
 
-    private onKeyUp(event) {
-        switch (event.keyCode) {
-            case 38: // up
-            case 87: // w
-                this.moveForward = false;
-                break;
-            case 37: // left
-            case 65: // a
-                this.moveLeft = false;
-                break;
-            case 40: // down
-            case 83: // s
-                this.moveBackward = false;
-                break;
-            case 39: // right
-            case 68: // d
-                this.moveRight = false;
-                break;
+    private onKeyUp(event: KeyboardEvent) {
+        switch (event.key) {
+            case "w": case "ArrowUp": this.moveForward = false; break;
+            case "a": case "ArrowLeft": this.moveLeft = false; break;
+            case "s": case "ArrowDown": this.moveBackward = false; break;
+            case "d": case "ArrowRight": this.moveRight = false; break;
         }
     }
 
@@ -112,7 +94,7 @@ export default class MovementControler {
      * heißt hier ist x+ immer rechts und y- immer nach vorne  
      * @param result destination vector
      */
-    public updateAndGetMovement(delta: number, result: Vector3) {
+    public getUpdatedUnifiedMovementVector(delta: number, result: Vector3) {
         this.direction.x = Number(this.moveRight) - Number(this.moveLeft);
         this.direction.z = Number(this.moveForward) - Number(this.moveBackward);
         this.direction.normalize();
@@ -131,7 +113,16 @@ export default class MovementControler {
 
         // maximale frame speed 
         let mfs = this.maxSpeed * delta
-        this.lastMovement.set(-this.rightVelocity * mfs / 3, 0, this.forwardVelocity * mfs)
+
+        let forward, right
+        if (this.slowDownSideBackWalk) {
+            forward = (this.forwardVelocity < 0 ? this.forwardVelocity / 2 : this.forwardVelocity) * mfs
+            right = this.rightVelocity / 2 * mfs
+        } else {
+            forward = this.forwardVelocity * mfs
+            right = this.rightVelocity * mfs
+        }
+        this.lastMovement.set(-right, 0, forward)
         result.copy(this.lastMovement)
     }
 
