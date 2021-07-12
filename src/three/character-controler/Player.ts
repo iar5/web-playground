@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { Camera, Clock, ConeGeometry, Euler, MathUtils, Mesh, MeshBasicMaterial, MeshStandardMaterial, Object3D, PerspectiveCamera, Scene, SphereBufferGeometry, Vector3 } from 'three';
-import RotationControler, { MouseMode } from './RotationControler';
+// import RotationControler, { MouseMode } from './RotationControler';
 import MovementControler from './MovementControler';
 import PlayerCharacter from './PlayerCharacter';
 
@@ -20,7 +20,7 @@ const UP = new Vector3(0, 1, 0)
  * https://github.com/simondevyoutube/ThreeJS_Tutorial_CharacterController/blob/main/main.js
  */
 
-
+/*
 export default class Player {
 
     private readonly CAMERA_OFFSET = new Vector3(0, 1.7, 0)
@@ -97,4 +97,4 @@ export default class Player {
         this.camera.position.copy(this.playercharacter.position)
         this.camera.position.add(this.CAMERA_OFFSET)    
     }
-}
+}*/

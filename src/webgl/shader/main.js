@@ -1,11 +1,12 @@
 import { createProgramFromSource, destroyGl } from '../../../libmy/webglUtils.js'
-import { isMobile, lerp } from '../../../libmy/utils.js'
+import { isTouchDevice, lerp } from '../../../libmy/utils/js'
+import { lerp } from '../../../libmy/utils/math.js'
 import { vs, fs } from './shaderRecNebel.js'
 
 
 const Shader = function(canvas){
 
-    const hasTouch = isMobile()
+    const hasTouch = isTouchDevice()
     const gl = canvas.getContext("experimental-webgl") 
     gl.clearColor(0, 0, 0, 0)
     gl.clear(gl.COLOR_BUFFER_BIT)

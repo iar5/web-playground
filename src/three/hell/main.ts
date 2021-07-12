@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { Object3D } from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import ThreeDatGui from "../../../libmy/DatThreeGui.js"
-import { resize } from '../../../libmy/utils.js'
+import { resize } from '../../../libmy/utils/three'
 import { isKeyHold } from '../../../libmy/keyhold.js'
 import Room from "./Hell.js"
 import Controls from './Controls'

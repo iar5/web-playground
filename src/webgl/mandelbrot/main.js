@@ -5,7 +5,7 @@
 import { createProgramFromFiles, isWebGL2Supported } from '../../../libmy/webglUtils.js'
 import { getPinchChange, getPanChangeX, getPanChangeY, preventTouchGestures } from '../../../libmy/touchGestures.js'
 import { isKeyHold } from '../../../libmy/keyhold.js'
-import { isMobile } from '../../../libmy/utils.js'
+import { isTouchDevice } from '../../../libmy/utils/js'
 import FpsCounter from '../../../libmy/fpsCounter.js'
 
 
@@ -41,7 +41,7 @@ const colors = [ // https://stackoverflow.com/questions/16500656/which-color-gra
 const ZOOM_FAKTOR = 1.015; // qe zoom
 const STEP_FAKTOR = 0.01 // wasd translate
 const MAX_ITERATION = 500
-const IS_MOBILE = isMobile()
+const IS_MOBILE = isTouchDevice()
 
 var height
 var width 

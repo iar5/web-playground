@@ -21,6 +21,7 @@ function findExperiment(dir) {
     fs.readdirSync(dir).forEach(file => {
 
         const filePath = path.join(dir, file)
+        if(!filePath.includes("bath")) return
         if (!fs.statSync(filePath).isDirectory()) return
 
         const srcPath = `./${filePath}/`

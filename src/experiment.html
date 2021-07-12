@@ -8,19 +8,50 @@
     <meta name="keywords" content="<%= config.tags %>">
     <link rel="icon" href="/favicon.png">
 </head>
-
+<!--
+    TODO
+    zurück button 
+    liste mit referenzen
+-->
 <body>
 </body>
-
+    <header>
+        <h1><%= config.title %></h1>
+        <p><%= config.description %></p>
+        <ul>
+            <% if(config.references && config.references.length != 0) for(const [key, value] of Object.entries(config.references)){ %>
+                <li>
+                    <%= key %>
+                </li>
+            <% }; %>
+        </ul>
+    </header>
 </html>
 <style>
     * {
         padding: 0;
         margin: 0;
+        font-family: sans-serif;
     }
     html, body, canvas{
         width: 100%;
         height: 100%;
         overscroll-behavior: none
+    }
+    header{
+        border: 1px solid black;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        position: fixed;
+        left: 10px;
+        top: 10px;
+        padding: 5px;
+    }
+    h1{
+        font-size: .9rem;
+        font-weight: normal;
+    }
+    p{
+        font-size: 0.8rem;
     }
 </style>

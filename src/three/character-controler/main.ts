@@ -1,8 +1,8 @@
 import * as THREE from "three"
 import { AmbientLight, Clock, Object3D, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three'
-import { resize } from '../../../libmy/utils.js'
+import { resize } from '../../../libmy/utils/three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import Player from "./Player"
+// import Player from "./Player"
 
 
 
@@ -49,14 +49,14 @@ scene.add(axesHelper);
 
 
 
-const player = new Player(camera, renderer.domElement, scene)
-window["player"] = player
+// const player = new Player(camera, renderer.domElement, scene)
+// window["player"] = player
 
 
 requestAnimationFrame(update)
 function update() {
     requestAnimationFrame(update)
-    player.update(clock.getDelta())
+    // player.update(clock.getDelta())
     renderer.render(scene, camera)
 }
 

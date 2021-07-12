@@ -1,5 +1,5 @@
 import { mat4 } from '../../../lib/glMatrix-0.9.5.min.js'
-import { degToRad } from '../../../libmy/utils.js'
+import { degToRad } from '../../../libmy/utils/math'
 
 const tempMat = mat4.create()
 
