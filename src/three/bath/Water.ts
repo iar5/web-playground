@@ -1,7 +1,8 @@
-import { BufferGeometry, DoubleSide, MathUtils, Mesh, MeshNormalMaterial, MeshStandardMaterial, Object3D, PlaneBufferGeometry } from "three";
+import { BoxBufferGeometry, BoxGeometry, BufferGeometry, DoubleSide, MathUtils, Mesh, MeshNormalMaterial, MeshStandardMaterial, Object3D, PlaneBufferGeometry } from "three";
 import { doubleArray } from "../../../libmy/utils/js"
 import * as THREE from "three"
 import { FresnelShader } from 'three/examples/jsm/shaders/FresnelShader.js';
+import OpenBoxBufferGeometry from "./OpenBoxBufferGeometry";
 
 
 
@@ -15,17 +16,6 @@ const cubeCamera = new THREE.CubeCamera(0.0001, 10000, renderTarget);
 // scene.add(cubeCamera)
 
 
-var fShader = FresnelShader
-const uniforms = THREE.UniformsUtils.clone(fShader.uniforms);
-uniforms["tCube"].value = renderTarget.texture;
-
-const fresnelMaterial = new THREE.ShaderMaterial({
-    uniforms: uniforms,
-    vertexShader: fShader.vertexShader,
-    fragmentShader: fShader.fragmentShader
-});
-
-
 
 export default class Water extends Object3D{
 
@@ -35,8 +25,8 @@ export default class Water extends Object3D{
     private readonly SLOWDOWN = 0.995
 
     private geometry: PlaneBufferGeometry
-    private positionAttribute: Array<number>
-    private normalAttribute: Array<number>
+    private positionAttribute: ArrayLike<number>
+    private normalAttribute: ArrayLike<number>
 
     private vertX
     private vertZ
@@ -54,11 +44,8 @@ export default class Water extends Object3D{
 
         this.geometry = new PlaneBufferGeometry(widthX, widthZ, this.vertX-1, this.vertZ-1)
         this.geometry.rotateX(MathUtils.degToRad(-90))
-        this.translateY(2)
 
-        // @ts-ignore
         this.positionAttribute = this.geometry.attributes.position.array 
-        // @ts-ignore
         this.normalAttribute = this.geometry.attributes.normal.array
 
         // 2 in jeder dimesion mehr damit am rand alles 0 konstant bleibt
@@ -66,14 +53,35 @@ export default class Water extends Object3D{
         this.unewtemp = doubleArray(this.vertX+2, this.vertZ+2, 0)
         this.v = doubleArray(this.vertX+2, this.vertZ+2, 0)
 
+
+        const uniforms = THREE.UniformsUtils.clone(FresnelShader.uniforms);
+        uniforms["tCube"].value = renderTarget.texture;
+
+        const fresnelMaterial = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: FresnelShader.vertexShader,
+            fragmentShader: FresnelShader.fragmentShader,
+        });
+
+        let mesh = new Mesh(this.geometry, fresnelMaterial)
+        mesh.translateY(2)
+        this.add(mesh)
+
+
+
         // let material = new MeshNormalMaterial({ side: DoubleSide, wireframe: true})
         let material = new MeshStandardMaterial({
             transparent: true,
             opacity: 0.5,
-            color: new THREE.Color(0x00aaee)
+            color: new THREE.Color(0x00aaee),
         })
-        let mesh = new Mesh(this.geometry, fresnelMaterial)
-        this.add(mesh)
+
+        let bodyGeo = new OpenBoxBufferGeometry()
+        bodyGeo.scale(widthX/2, 1, widthZ/2)
+        let body = new Mesh(bodyGeo, material)
+        body.translateY(1)
+        this.add(body)
+        console.log(body);
     }
 
     update(){        
@@ -138,7 +146,8 @@ export default class Water extends Object3D{
         return this.positionAttribute[(x * this.vertX + y) * 3 + 1]
     }
 
-    setVerticeY(x: number, y: number, value: number): void {        
+    setVerticeY(x: number, y: number, value: number): void {   
+        // @ts-ignore     
         this.positionAttribute[(x * this.vertX + y) * 3 + 1] = value
     }
 
