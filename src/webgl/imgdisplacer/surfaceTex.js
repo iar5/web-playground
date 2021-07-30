@@ -1,7 +1,7 @@
 import { mat4 } from '../../../lib/glMatrix-0.9.5.min.js'
 import { loadImage, getImageData } from '../../../libmy/utils/image'
 import { degToRad } from '../../../libmy/utils/math'
-import { createProgramFromSource } from '../../../libmy/webglUtils.js'
+import { createProgramFromSource } from '../../../libmy/utils/webgl'
 import { setupMouseControl } from './controls.js'
 
 const vs_src = `

@@ -1,8 +1,53 @@
 import * as THREE from 'three'
-import { Clock, ObjectLoader, PlaneBufferGeometry } from 'three'
+import { Clock, CylinderBufferGeometry, MeshStandardMaterial, ObjectLoader, PlaneBufferGeometry } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import Water from "./Water"
 import { resize } from "../../../libmy/utils/three"
+import Stats from 'stats-js'
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+
+
+
+
+//////
+// Materials
+////
+const textureLoader = new THREE.TextureLoader()
+
+var blueTiles = new THREE.MeshStandardMaterial({
+    map: textureLoader.load("/textures/tiles/blueTiles.jpg", function (texture) {
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(10, 5);
+    }),
+    bumpMap: textureLoader.load("/textures/tiles/blueTilesBump.jpg", function (texture) {
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(10, 5);
+    }),
+    bumpScale: .5,
+    metalness: .2,
+    roughness: .1
+});
+var whiteTiles = new THREE.MeshStandardMaterial({
+    map: textureLoader.load("/textures/tiles/whiteTiles.jpg", function (texture) {
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(15, 15);
+    }),
+    bumpMap: textureLoader.load("/textures/tiles/whiteTilesBump.jpg", function (texture) {
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(15, 15);
+    }),
+    bumpScale: .5,
+    metalness: .8,
+    roughness: 0.5,
+    refletive: 1
+});
+var blackMaterial = new THREE.MeshLambertMaterial({
+    color: new THREE.Color(0x000000),
+})
+
+
+
+
 
 
 
@@ -17,12 +62,14 @@ var renderer = new THREE.WebGLRenderer({
 });
 renderer.setClearColor("#000000");
 renderer.setSize(width, height);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+// renderer.shadowMap.enabled = true;
+// renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement)
-
+renderer.toneMapping = THREE.ACESFilmicToneMapping
 const clock = new Clock()
 
+const stats = new Stats();
+document.body.appendChild(stats.dom);
 
 //////
 // Camera and controls
@@ -44,9 +91,20 @@ window.addEventListener("resize", resize(renderer, camera) );
 resize(renderer, camera)
 
 
+const cylinder = new THREE.Mesh(new CylinderBufferGeometry(2, 2, 2.5, 24), new MeshStandardMaterial({color: "white"}))
+cylinder.translateY(1.25)
+scene.add(cylinder)
+
 const water = new Water(20, 20, 5)
 scene.add(water)
 var wt = 0
+
+
+new OBJLoader().load("/models/restgirl/opti.obj", (model) => {
+    model.position.set(0, 4.3, 0)
+    model.scale.set(0.001, 0.001, 0.001)
+    scene.add(model)
+})
 
 //////
 // Game Loop
@@ -57,11 +115,11 @@ renderer.setAnimationLoop(() => {
         water.drop(Math.random(), Math.random(), Math.random())
         wt = 0
     }  
+    water.renderEnvMapUpdate(camera, renderer, scene)
     water.update()   
     renderer.render(scene, camera);
+    stats.update();
 });
-
-
 
 
 
@@ -86,38 +144,6 @@ loader.load('/models/restgirl/opti.obj', function (object) {
 //////
 // Room
 ////
-const textureLoader = new THREE.TextureLoader()
-
-var blueTiles = new THREE.MeshStandardMaterial({
-    map: textureLoader.load("/textures/tiles/blueTiles.jpg", function (texture) {
-        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-        texture.repeat.set(8, 3);
-    }),
-    bumpMap: textureLoader.load("/textures/tiles/blueTilesBump.jpg", function (texture) {
-        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-        texture.repeat.set(8, 3);
-    }),
-    bumpScale: .5,
-    metalness: .2,
-    roughness: .1
-});
-var whiteTiles = new THREE.MeshStandardMaterial({
-    map: textureLoader.load("/textures/tiles/whiteTiles.jpg", function (texture) {
-        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-        texture.repeat.set(12, 12);
-    }),
-    bumpMap: textureLoader.load("/textures/tiles/whiteTilesBump.jpg", function (texture) {
-        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-        texture.repeat.set(12, 12);
-    }),
-    bumpScale: .5,
-    metalness: .3,
-    roughness: 0
-});
-var blackMaterial = new THREE.MeshLambertMaterial({
-    color: new THREE.Color(0x000000),
-})
-
 var walls = new THREE.Group().translateY(5);
 var wall = new THREE.Mesh(new THREE.PlaneGeometry(20, 10, 1, 1), blueTiles)
 walls.add(wall.clone().translateZ(-10))
@@ -140,7 +166,6 @@ top.receiveShadow = true
 scene.add(top);
 
 
-
 //////
 // Lights
 ////
@@ -156,7 +181,10 @@ scene.add(pointLightL);
 var ambient = new THREE.AmbientLight(0xffffff, 0.4)
 scene.add(ambient)
 
+var dir = new THREE.DirectionalLight(0xffffff, 0.05)
+scene.add(dir)
 
-
+var am = new THREE.AmbientLight(0xaaccff, 0.05)
+scene.add(am)
 
 

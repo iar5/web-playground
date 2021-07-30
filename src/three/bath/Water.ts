@@ -1,39 +1,29 @@
 import { BufferGeometry, DoubleSide, MathUtils, Mesh, MeshNormalMaterial, MeshStandardMaterial, Object3D, PlaneBufferGeometry } from "three";
 import { doubleArray } from "../../../libmy/utils/js"
 import * as THREE from "three"
-import { camera, renderer, scene } from "./main";
 import { FresnelShader } from 'three/examples/jsm/shaders/FresnelShader.js';
 
 
 
-/*
+
 const renderTarget = new THREE.WebGLCubeRenderTarget(128, {
     format: THREE.RGBFormat,
     generateMipmaps: true,
     minFilter: THREE.LinearMipmapLinearFilter,
 });
 const cubeCamera = new THREE.CubeCamera(0.0001, 10000, renderTarget);
-scene.add(cubeCamera)
+// scene.add(cubeCamera)
 
 
 var fShader = FresnelShader
 const uniforms = THREE.UniformsUtils.clone(fShader.uniforms);
 uniforms["tCube"].value = renderTarget.texture;
 
-const customMaterial = new THREE.ShaderMaterial({
+const fresnelMaterial = new THREE.ShaderMaterial({
     uniforms: uniforms,
     vertexShader: fShader.vertexShader,
     fragmentShader: fShader.fragmentShader
 });
-
-
-function renderEnvMap() {
-    const cameraPos = camera.position.clone()
-    cubeCamera.position.copy(sphere.position)
-    cubeCamera.update(renderer, scene);
-    camera.position.copy(cameraPos)
-}*/
-
 
 
 
@@ -43,8 +33,6 @@ export default class Water extends Object3D{
     private readonly C = 0.6 // wave travel speed <h/t
     private readonly T = 0.1 // timestep <h/c
     private readonly SLOWDOWN = 0.995
-
-
 
     private geometry: PlaneBufferGeometry
     private positionAttribute: Array<number>
@@ -79,16 +67,29 @@ export default class Water extends Object3D{
         this.v = doubleArray(this.vertX+2, this.vertZ+2, 0)
 
         // let material = new MeshNormalMaterial({ side: DoubleSide, wireframe: true})
-        let material = new MeshStandardMaterial()
-        let mesh = new Mesh(this.geometry, material)
+        let material = new MeshStandardMaterial({
+            transparent: true,
+            opacity: 0.5,
+            color: new THREE.Color(0x00aaee)
+        })
+        let mesh = new Mesh(this.geometry, fresnelMaterial)
         this.add(mesh)
-
     }
 
     update(){        
         this.updateHeightfield()
         this.applyHeightfieldToVertices()
     }
+
+    renderEnvMapUpdate(camera, renderer, scene) {
+        // const cameraPos = camera.position.clone() // Spring Bug?
+
+        cubeCamera.position.copy(this.position)
+        cubeCamera.update(renderer, scene);
+
+        // camera.position.copy(cameraPos)
+    }
+
 
     updateHeightfield(){
         for (let i = 1; i < this.u.length - 1; i++) {
@@ -100,19 +101,18 @@ export default class Water extends Object3D{
             }
         }
 
-        /* if (collideWithInvisibleSphere) {
-            for (let i = 0; i < this.u.length; i++) {
-                for (let j = 0; j < this.u[0].length; j++) {
-                    let x = i - vCountX / 2 + 40
-                    let z = j - vCountZ / 2
-                    let r = Math.max(vCountX, vCountZ) * 0.3
-                    if (x * x + z * z < r * r) {
-                        this.v[i][j] = 0
-                        this.utemp[i][j] = 0
-                    }
+        for (let i = 0; i < this.u.length; i++) {
+            for (let j = 0; j < this.u[0].length; j++) {
+                let x = i - this.vertX / 2
+                let z = j - this.vertZ / 2
+                let r = Math.max(this.vertX, this.vertZ) * 0.1
+                if (x * x + z * z < r * r) {
+                    this.v[i][j] = 0
+                    this.unewtemp[i][j] = 0
                 }
             }
-        } */
+        }
+    
 
         // swap u buffer
         let unew = this.unewtemp
@@ -151,11 +151,7 @@ export default class Water extends Object3D{
      */
     drop(x: number, z: number, intensity: number): void {
         if (x < 0 || z < 0 || x > 1 || z > 1) return;
-
-        x = Math.round(this.vertX * x)
-        z = Math.round(this.vertZ * z)
-
-        this.u[x][z] = intensity
+        this.u[Math.round(this.vertX * x)][Math.round(this.vertZ * z)] = intensity
     }
 }
 

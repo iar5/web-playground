@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import Stats from '../../../lib/stats.module.js'
+import Stats from 'stats-js'
 
 import { create, update} from './AnimationViewer.js';
 
@@ -67,8 +67,9 @@ function onWindowResize() {
 }
 
 function animate() {
+    stats.begin();
     requestAnimationFrame( animate );
     update()
-    stats.update();
+    stats.end();
     renderer.render( scene, camera );
 }

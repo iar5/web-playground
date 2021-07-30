@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import DatThreeGui from "../../../libmy/DatThreeGui"
-import { resize } from '../../../libmy/utils.js'
+import { resize } from '../../../libmy/utils/three'
 import * as Stats from 'stats-js';
 
 

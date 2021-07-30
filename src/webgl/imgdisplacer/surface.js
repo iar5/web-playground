@@ -16,8 +16,9 @@
  */
 
 import { mat4 } from '../../../lib/glMatrix-0.9.5.min.js'
-import { degToRad, loadImage, getImageData } from '../../../libmy/utils.js'
-import { createProgramFromSource, destroyGl } from '../../../libmy/webglUtils.js'
+import { degToRad } from '../../../libmy/utils/math'
+import { loadImage, getImageData } from '../../../libmy/utils/image'
+import { createProgramFromSource, destroyGl } from '../../../libmy/utils/webgl'
 import controls from './controls.js'
 
 

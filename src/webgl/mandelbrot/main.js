@@ -2,7 +2,7 @@
  * @author Tom Wendland 
  */
 
-import { createProgramFromFiles, isWebGL2Supported } from '../../../libmy/webglUtils.js'
+import { createProgramFromFiles, isWebGL2Supported } from '../../../libmy/utils/webgl'
 import { getPinchChange, getPanChangeX, getPanChangeY, preventTouchGestures } from '../../../libmy/touchGestures.js'
 import { isKeyHold } from '../../../libmy/keyhold.js'
 import { isTouchDevice } from '../../../libmy/utils/js'

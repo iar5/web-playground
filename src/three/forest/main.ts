@@ -1,6 +1,6 @@
 import * as THREE from "three"
 import { AmbientLight, Clock, Mesh, MeshPhongMaterial, Object3D, PerspectiveCamera, Scene, SphereBufferGeometry, Vector3, WebGLRenderer } from 'three'
-import { resize } from '../../../libmy/utils.js'
+import { resize } from '../../../libmy/utils/three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import NoiseFog from "./NoiseFog"
 
