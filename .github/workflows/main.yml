@@ -11,7 +11,7 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
-        server: ftp.tomwendland.com
+        server: ftp.tomwendland.de
         username: tom
         password: 201tdx#S
         server-dir: experiments.tomwendland.de/
