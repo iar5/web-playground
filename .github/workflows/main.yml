@@ -14,4 +14,5 @@ jobs:
         server: ftp.tomwendland.de
         username: tom
         password: 201tdx#S
+        local-dir: dist/
         server-dir: experiments.tomwendland.de/
