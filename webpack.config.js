@@ -21,7 +21,7 @@ function findExperiment(dir) {
     fs.readdirSync(dir).forEach(file => {
 
         const filePath = path.join(dir, file)
-        if(!filePath.includes("bath")) return
+        //if(!filePath.includes("bath")) return
         if (!fs.statSync(filePath).isDirectory()) return
 
         const srcPath = `./${filePath}/`
@@ -43,7 +43,14 @@ function findExperiment(dir) {
             inject: 'body',
             templateParameters: {
                 config // geht in die template html mit rein
-            }
+            },
+            meta: {
+                viewport: "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0",
+                description: config.description,
+                keywords: config.tags.join(", ")
+            },
+            title: config.title,
+            favicon: "public/favicon.png"
         }))
 
         // copy local assets 
@@ -56,7 +63,7 @@ function findExperiment(dir) {
     return result.sort((a, b) => { a.title === b.title ? 0 : a.title < b.title ? -1 : 1; })
 }
 
-const cssExperiments = findExperiment("./src/design/")
+const otherExperiments = findExperiment("./src/other/")
 const webglExperiments = findExperiment("./src/webgl/")
 const threeExperiments = findExperiment("./src/three/")
 
@@ -76,7 +83,7 @@ module.exports = {
             filename: 'index.html',
             templateParameters: {
                 isProd,
-                experimentsCategories: { "WebGL native": webglExperiments, "Three.js": threeExperiments, "CSS": cssExperiments }
+                experimentsCategories: { "WebGL native": webglExperiments, "Three.js": threeExperiments, "Other": otherExperiments }
             },
             chunks: []
         })

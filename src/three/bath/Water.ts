@@ -3,9 +3,14 @@ import { doubleArray } from "../../../libmy/utils/js"
 import * as THREE from "three"
 import { FresnelShader } from 'three/examples/jsm/shaders/FresnelShader.js';
 import OpenBoxBufferGeometry from "./OpenBoxBufferGeometry";
+import { Reflector } from 'three/examples/jsm/objects/Reflector';
+import { degToRad } from "../../../libmy/utils/math";
 
 
-
+// https://29a.ch/slides/2012/webglwater/#slide-80
+// https://github.com/mrdoob/three.js/blob/master/examples/jsm/objects/Reflector.js
+// after the flood
+// reflector + refractor?
 
 const renderTarget = new THREE.WebGLCubeRenderTarget(128, {
     format: THREE.RGBFormat,
@@ -53,7 +58,21 @@ export default class Water extends Object3D{
         this.unewtemp = doubleArray(this.vertX+2, this.vertZ+2, 0)
         this.v = doubleArray(this.vertX+2, this.vertZ+2, 0)
 
+        // water body
+        let bodyMat = new MeshStandardMaterial({
+            transparent: true,
+            opacity: 0.5,
+            color: new THREE.Color(0x00aaee),
+        })
+        let bodyGeo = new OpenBoxBufferGeometry()
+        bodyGeo.scale(widthX / 2, 1, widthZ / 2)
+        let body = new Mesh(bodyGeo, bodyMat)
+        body.translateY(1)
+        this.add(body)
+        console.log(body);
 
+
+        // fresnel material 
         const uniforms = THREE.UniformsUtils.clone(FresnelShader.uniforms);
         uniforms["tCube"].value = renderTarget.texture;
 
@@ -65,23 +84,26 @@ export default class Water extends Object3D{
 
         let mesh = new Mesh(this.geometry, fresnelMaterial)
         mesh.translateY(2)
-        this.add(mesh)
+        this.add(mesh) 
 
 
 
-        // let material = new MeshNormalMaterial({ side: DoubleSide, wireframe: true})
-        let material = new MeshStandardMaterial({
-            transparent: true,
-            opacity: 0.5,
-            color: new THREE.Color(0x00aaee),
-        })
+        // reflector material 
+        /*let mirrorplane = new THREE.PlaneBufferGeometry(widthX, widthZ)
+        const mirror = new Reflector(mirrorplane, {
+            clipBias: 0.01,
+            textureWidth: 720,
+            textureHeight: 720,
+            color: new THREE.Color(0x777777),
+        });
+        mirror.rotateX(degToRad(-90))
+        mirror.position.y = 3
+        // this.add(mirror)
+        console.log(mirror);
 
-        let bodyGeo = new OpenBoxBufferGeometry()
-        bodyGeo.scale(widthX/2, 1, widthZ/2)
-        let body = new Mesh(bodyGeo, material)
-        body.translateY(1)
-        this.add(body)
-        console.log(body);
+        let mesh = new Mesh(this.geometry, mirror.material)
+        mesh.translateY(2)
+        this.add(mesh) */
     }
 
     update(){        
@@ -89,12 +111,14 @@ export default class Water extends Object3D{
         this.applyHeightfieldToVertices()
     }
 
+    renderReflector(){
+
+    }
+
     renderEnvMapUpdate(camera, renderer, scene) {
         // const cameraPos = camera.position.clone() // Spring Bug?
-
         cubeCamera.position.copy(this.position)
         cubeCamera.update(renderer, scene);
-
         // camera.position.copy(cameraPos)
     }
 
