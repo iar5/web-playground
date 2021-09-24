@@ -1,4 +1,4 @@
-import { Camera, PerspectiveCamera, WebGLRenderer } from "three"
+import { PerspectiveCamera, WebGLRenderer } from "three"
 
 
 export function resize(renderer: WebGLRenderer, camera: PerspectiveCamera) {

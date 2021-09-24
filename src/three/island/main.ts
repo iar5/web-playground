@@ -1,9 +1,12 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import DatThreeGui from "../../../libmy/DatThreeGui"
 import { resize } from '../../../libmy/utils/three'
 import * as Stats from 'stats-js';
+import RefractionSphere from './RefractionSphere'
+import LavaSphere from "./LavaSphere"
+import MirrorModel from './MirrorModel';
+import Ocean from './Ocean';
 
 
 const clock = new THREE.Clock()
@@ -34,33 +37,48 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.y = 5
 controls.maxPolarAngle = Math.PI / 2
 controls.maxDistance = 100
-window.addEventListener('resize', () => { resize(renderer, camera) }, false);
-window.dispatchEvent(new Event('resize'))
 
 
 
-import "./RefractionSphere"
+const refractionSphere = new RefractionSphere(new THREE.SphereGeometry(3, 64, 32))
+refractionSphere.position.set(7, 5, -3);
+
+const lavaSphere = new LavaSphere(new THREE.SphereGeometry(3, 32, 64))
+lavaSphere.position.set(-7, 5, 0)
+
+const mirrorModel = new MirrorModel()
+mirrorModel.position.set(0, 5, 0)
+
+const water = new Ocean()
+
+scene.add(refractionSphere, lavaSphere, mirrorModel, water)
+
+
+setInterval(() => {
+    refractionSphere.renderEnvMap()
+    mirrorModel.renderEnvMap()
+    resize(renderer, camera)
+
+}, 2000)
+
+
 import "./sky"
 import "./terrain"
-import { updateSun } from "./Lavaball"
-import { initWater, updateWater } from './water';
-import { updateModel } from './model';
 
 
-initWater()
-
-
+window.addEventListener('resize', () => { resize(renderer, camera) }, false);
 
 requestAnimationFrame(loop)
+
 function loop() {
     requestAnimationFrame(loop)
     stats.begin();
 
     controls.update();
 
-    updateModel()
-    updateWater()
-    updateSun()
+    lavaSphere.update()
+    mirrorModel.update()
+    water.update()
     
     //composer.render(clock.getDelta());
     renderer.render(scene, camera)

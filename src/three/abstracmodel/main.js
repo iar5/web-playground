@@ -8,8 +8,9 @@ import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 
 
 import ThreeDatGui from "../../../libmy/DatThreeGui.js"
-import { resize } from '../../../libmy//three'
+import { resize } from '../../../libmy/utils/three'
 import Sky from "./js/2DSkyShader"
+
 
 
 

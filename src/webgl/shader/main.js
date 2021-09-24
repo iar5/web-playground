@@ -1,6 +1,6 @@
 import { createProgramFromSource, destroyGl } from '../../../libmy/utils/webgl'
-import { isTouchDevice, lerp } from '../../../libmy/utils/js'
-import { lerp } from '../../../libmy/utils/math.js'
+import { isTouchDevice } from '../../../libmy/utils/js'
+import { lerp } from '../../../libmy/utils/math'
 import { vs, fs } from './shaderRecNebel.js'
 
 

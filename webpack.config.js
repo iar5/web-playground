@@ -8,9 +8,10 @@ const fs = require('fs')
 
 
 
+const singleProjectModeProjectName = undefined /// "island"
+
 
 const isProd = process.env.NODE_ENV === "production"
-
 
 const entrys = {}
 const htmlWebpacks = []
@@ -21,7 +22,7 @@ function findExperiment(dir) {
     fs.readdirSync(dir).forEach(file => {
 
         const filePath = path.join(dir, file)
-        //if(!filePath.includes("bath")) return
+        if (singleProjectModeProjectName && !filePath.includes(singleProjectModeProjectName)) return;
         if (!fs.statSync(filePath).isDirectory()) return
 
         const srcPath = `./${filePath}/`
