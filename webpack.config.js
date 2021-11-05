@@ -8,7 +8,7 @@ const fs = require('fs')
 
 
 
-const singleProjectModeProjectName = undefined /// "island"
+const devSingleProjectModeProjectName = "island"
 
 
 const isProd = process.env.NODE_ENV === "production"
@@ -22,7 +22,7 @@ function findExperiment(dir) {
     fs.readdirSync(dir).forEach(file => {
 
         const filePath = path.join(dir, file)
-        if (singleProjectModeProjectName && !filePath.includes(singleProjectModeProjectName)) return;
+        if (!isProd && devSingleProjectModeProjectName && !filePath.includes(devSingleProjectModeProjectName)) return;
         if (!fs.statSync(filePath).isDirectory()) return
 
         const srcPath = `./${filePath}/`

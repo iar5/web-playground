@@ -9,7 +9,6 @@ import MirrorModel from './MirrorModel';
 import Ocean from './Ocean';
 
 
-const clock = new THREE.Clock()
 
 const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
     powerPreference: "high-performance",
@@ -18,7 +17,13 @@ const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
 document.body.appendChild(renderer.domElement)
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFShadowMap
+renderer.physicallyCorrectLights = true
 
+// renderer.outputEncoding = THREE.sRGBEncoding
+
+
+
+const clock = new THREE.Clock()
 
 const stats = new Stats();
 document.body.appendChild(stats.dom);
@@ -40,14 +45,14 @@ controls.maxDistance = 100
 
 
 
-const refractionSphere = new RefractionSphere(new THREE.SphereGeometry(3, 64, 32))
-refractionSphere.position.set(7, 5, -3);
+const refractionSphere = new RefractionSphere(new THREE.SphereGeometry(3, 32, 32))
+refractionSphere.position.set(7, 5, 0);
 
-const lavaSphere = new LavaSphere(new THREE.SphereGeometry(3, 32, 64))
+const lavaSphere = new LavaSphere(new THREE.SphereGeometry(3, 64, 64))
 lavaSphere.position.set(-7, 5, 0)
 
 const mirrorModel = new MirrorModel()
-mirrorModel.position.set(0, 5, 0)
+mirrorModel.position.set(0, 5, 14)
 
 const water = new Ocean()
 
