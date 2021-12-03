@@ -1,75 +1,33 @@
 const webpack = require('webpack')
 const path = require('path')
+const fs = require('fs')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const fs = require('fs')
-
-
-
-const devSingleProjectModeProjectName = "island"
-
-
 const isProd = process.env.NODE_ENV === "production"
+const configfinder = require('./configfinder');
 
-const entrys = {}
-const htmlWebpacks = []
-const copyPlugins = []
+const otherExperiments = configfinder.findExperiment("./src/other/")
+const webglExperiments = configfinder.findExperiment("./src/webgl/")
+const threeExperiments = configfinder.findExperiment("./src/three/")
+const githubExperiments = [
+    {
+        title: "SPH fluid siimulation",
+        urlPath: "https://github.com/iar5/webgl-sph-water",
+        tags: ["WebGL", "Simulation", "Physics"],
+        public: true,
+    },{
+        title: "webgl-heightfield-water",
+        urlPath: "https://github.com/iar5/webgl-heightfield-water",
+        tags: ["WebGL", "Simulation", "Realtime"],
+        public: true,
+    }
+]
 
-function findExperiment(dir) {
-    const result = []
-    fs.readdirSync(dir).forEach(file => {
-
-        const filePath = path.join(dir, file)
-        if (!isProd && devSingleProjectModeProjectName && !filePath.includes(devSingleProjectModeProjectName)) return;
-        if (!fs.statSync(filePath).isDirectory()) return
-
-        const srcPath = `./${filePath}/`
-        if (!fs.existsSync(srcPath + `config.js`)) return
-        const config = require(srcPath + `config.js`)
-        if (isProd && config.public == false) return
-
-        // create chunk
-        const outPath = srcPath.replace("/src", "").replace(/\\/g, '/') // windows backslash replace
-        entrys[outPath] = srcPath + config.entry
-        config.urlPath = outPath + "index.html"
-        result.push(config)
-
-        // setup chunk injection
-        htmlWebpacks.push(new HtmlWebpackPlugin({
-            filename: outPath + '/index.html',
-            chunks: [outPath],
-            template: config.html ? srcPath + config.html : './src/experiment.html',
-            inject: 'body',
-            templateParameters: {
-                config // geht in die template html mit rein
-            },
-            meta: {
-                viewport: "width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0",
-                description: config.description,
-                keywords: config.tags.join(", ")
-            },
-            title: config.title,
-            favicon: "public/favicon.png"
-        }))
-
-        // copy local assets 
-        copyPlugins.push({
-            from: srcPath.slice(0, -1).substring(2), // letzten backslash entfernen und ./ am anfang entfernen
-            to: outPath,
-            ignore: ['*.js', '*.ts', '*.css', "*.html"],
-        })
-    });
-    return result.sort((a, b) => { a.title === b.title ? 0 : a.title < b.title ? -1 : 1; })
-}
-
-const otherExperiments = findExperiment("./src/other/")
-const webglExperiments = findExperiment("./src/webgl/")
-const threeExperiments = findExperiment("./src/three/")
-
-
-
+const entrys = configfinder.entrys
+const htmlWebpacks = configfinder.htmlWebpacks
+const copyPlugins = configfinder.copyPlugins
 
 module.exports = {
     mode: isProd ? "production" : "development",
@@ -84,7 +42,12 @@ module.exports = {
             filename: 'index.html',
             templateParameters: {
                 isProd,
-                experimentsCategories: { "WebGL native": webglExperiments, "Three.js": threeExperiments, "Other": otherExperiments }
+                experimentsCategories: { 
+                    "WebGL native": webglExperiments, 
+                    "Three.js": threeExperiments, 
+                    "Other": otherExperiments,
+                    "GitHub": githubExperiments 
+                }
             },
             chunks: []
         })

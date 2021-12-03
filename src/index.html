@@ -2,7 +2,7 @@
 <html class="gradienBackground"> 
 
 <head>
-    <title>Web Dev | Tom Wendland</title>
+    <title>Web Experiments | Tom Wendland</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -13,7 +13,7 @@
     <div id="headline">
         <h1>Web Dev</h1>
         <p>Small projects and tests</p>
-        <p>Last updated: <%= new Date().getDate() %>.<%= new Date().getMonth()+1 %>.<%= new Date().getFullYear() %></p>
+        <!--p>Last updated: <%= new Date().getDate() %>.<%= new Date().getMonth()+1 %>.<%= new Date().getFullYear() %></p-->
     </div>
 
     <% for(const [name, experiments] of Object.entries(experimentsCategories)){ if(experiments.length == 0) continue; %>
