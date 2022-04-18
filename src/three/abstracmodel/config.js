@@ -1,8 +1,7 @@
 module.exports = {
-    "title": "DOF Shader Test",
-    "description": "",
+    "title": "Abstract model",
+    "description": "DOF Shader Test",
     "tags": ["Three.js", "Materials"],
-    "public": false,
+    "public": true,
     "entry": "main.js",
-    "html": "index.html"
 }

@@ -9,7 +9,7 @@ import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 
 import ThreeDatGui from "../../../libmy/DatThreeGui.js"
 import { resize } from '../../../libmy/utils/three'
-import Sky from "./js/2DSkyShader"
+import Sky from "./2DSkyShader"
 
 
 
@@ -29,7 +29,7 @@ const scene = new THREE.Scene()
 let height = 4
 let width = height * window.innerWidth / window.innerHeight
 const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.001, 10000)
-camera.position.z = 5
+camera.position.z = 3
 scene.add(camera)
 
 
@@ -59,12 +59,11 @@ gltfloader.load('/mymodels/procgarden.gltf', function(gltf){
     scene.add(model);
 
     let material = new THREE.MeshPhysicalMaterial();
-    material.transparent = true // damit transmission möglich
+    material.transparent = true 
     material.envMap = cubeCamera.renderTarget.texture;
     material.roughness = 0
     material.metalness = 1
     material.reflectivity = 0
-    material.lightMap = cubeCamera.renderTarget.texture;
     material.side = THREE.DoubleSide
     model.material = material
     gui.addMaterial(material)
@@ -92,8 +91,6 @@ const composer = new EffectComposer( renderer );
 composer.addPass(renderPass);
 composer.addPass(bloomPass);
 composer.addPass(bokehPass);
-
-
 
 let f = gui.datgui.addFolder("Bloom")
 f.add(bloomPass, "threshold", 0, 1, 0.01)

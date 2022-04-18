@@ -2,6 +2,6 @@ module.exports = {
     "title": "Bath",
     "description": "",
     "tags": ["Three.js", "Shader", "Water"],
-    "public": true,
+    "public": false,
     "entry": "main.js",
 }

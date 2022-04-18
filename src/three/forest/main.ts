@@ -3,6 +3,7 @@ import { AmbientLight, Clock, Mesh, MeshPhongMaterial, Object3D, PerspectiveCame
 import { resize } from '../../../libmy/utils/three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import NoiseFog from "./NoiseFog"
+import NoiseFog2 from "./NoiseFog2"
 
 
 
@@ -14,8 +15,8 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 const scene = new Scene()
 
 const camera = new PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.001, 10000)
-camera.position.z = -3
-camera.position.y = 3
+camera.position.z = -30
+camera.position.y = 15
 scene.add(camera)
 window.addEventListener('resize', () => { resize(renderer, camera) }, false);
 

@@ -1,7 +1,7 @@
 module.exports = {
     "title": "Island",
     "description": "",
-    "tags": ["Three.js", "Sky", "Water", "Terrain", "Mirror Material"],
+    "tags": ["Three.js", "Sky", "Water", "Procedural Terrain", "Material"],
     "public": true,
     "entry": "main.ts",
     "references": {

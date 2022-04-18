@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --public",
-    "build": "cross-env NODE_ENV=production webpack"
+    "build": "cross-env NODE_ENV=production webpack",
+    "deploy": "npm run build && node deploy"
   },
   "keywords": [],
   "devDependencies": {
@@ -41,5 +42,8 @@
     "webpack-dev-middleware": "^3.7.2",
     "webpack-dev-server": "^3.11.0",
     "worker-loader": "^3.0.6"
+  },
+  "dependencies": {
+    "ftp-deploy": "^2.4.1"
   }
 }

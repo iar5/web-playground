@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--
-    TODO
-    zurück button 
-    liste mit referenzen
--->
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title></title>
+</head>
 <body>
 </body>
     <header>
-        <h1><%= config.title %></h1>
+        <h1>        
+            <span style="display: inline-block; transform: rotate(90deg); margin-right: 10px; cursor: pointer" alt="return" onclick="window.history.go(-1)">↲</span>
+            <%= config.title %>
+        </h1>
         <p><%= config.description %></p>
         <ul>
             <% if(config.references && config.references.length != 0) for(const [key, value] of Object.entries(config.references)){ %>
@@ -45,5 +48,12 @@
     }
     p{
         font-size: 0.8rem;
+    }
+    .dg.ac{
+        position: right;
+        left: unset;
+    }
+    .dg.main.a{
+        margin-right: 0;
     }
 </style>

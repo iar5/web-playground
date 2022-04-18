@@ -23,7 +23,7 @@ var weight3 = 0
 
 export function create(scene){
     
-    new FBXLoader().load('models/character/Untitled 1.fbx', object => {
+    new FBXLoader().load('/models/character/Untitled 1.fbx', object => {
 
         console.log(object);
         mixer = new THREE.AnimationMixer(object)
@@ -35,7 +35,7 @@ export function create(scene){
     })
 
     return
-    new GLTFLoader().load( 'models/Soldier.glb', function ( gltf ) {
+    new GLTFLoader().load( '/models/Soldier.glb', function ( gltf ) {
 
         console.log(gltf);
         model = gltf.scene;
