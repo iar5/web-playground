@@ -69,9 +69,12 @@ function heightfield(x, z) {
     return low + high
 }
 
-terrain.geometry.vertices.forEach(v => {
-    v.y = heightfield(v.x, v.z)
-})
+
+const arr = terrain.geometry.attributes.position.array
+for(let i=0; i<arr.length; i+=3){
+    // @ts-ignore
+    arr[i+1] = heightfield(arr[i], arr[i+2])
+}
 
 
 

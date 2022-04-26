@@ -1,7 +1,7 @@
 import * as THREE from "three"
 import { camera, renderer, scene } from "./main";
-import { FresnelShader } from 'three/examples/jsm/shaders/FresnelShader.js';
 import { Mesh, Object3D, SphereGeometry } from "three";
+import { FresnelShader } from "./FresnelShader";
 
 
 // https://threejs.org/examples/webgl_materials_shaders_fresnel.html

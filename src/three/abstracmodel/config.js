@@ -1,7 +1,7 @@
 module.exports = {
     "title": "Abstract model",
     "description": "DOF Shader Test",
-    "tags": ["Three.js", "Materials"],
+    "tags": ["Three.js", "Shader"],
     "public": true,
-    "entry": "main.js",
+    "entry": "mainTest.ts",
 }

@@ -1,4 +1,4 @@
-import { Scene, Shader } from "three";
+import { FogBase, Scene, Shader } from "three";
 import THREE = require("three");
 import DatThreeGui from "../../../libmy/DatThreeGui";
 
@@ -154,7 +154,7 @@ export default class NoiseFog2 {
     private shaders: Array<Shader> = []
 
 
-    constructor(scene: Scene, fog: THREE.IFog = new THREE.FogExp2(0x00ff00, 0.01)) {
+    constructor(scene: Scene, fog: FogBase = new THREE.FogExp2(0x00ff00, 0.01)) {
 
         scene.fog = fog
         scene.traverse((child) => {

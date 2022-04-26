@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title></title>
+</head>
+<body>
+</body>
+    <header>
+        <h1>Maria Kopytko</h1>
+        <p>SS23 visions </p>
+        <br>
+        <p>Prototyping</p>
+        <p>- Improvement</p>
+        <br>
+    </header>
+    <div id="bottompane" class="grid">
+        <div id="info">
+            <h3>Serial Butterfly</h3>
+            <p>These shearling slippers embody an aesthetic and stylistic duality, combining a contemporary, urban design and alpine-inspired materials. The iconic enameled triangle logo decorates the footwear.</p>
+            <a>⟿ further information</a>
+        </div>
+    </div>
+</html>
+<style>
+    @font-face {
+        font-family: 'MedusaGothic';
+        src: url('/fonts/MedusaGothic-VAEV.ttf')
+    }
+    * {
+        padding: 0;
+        margin: 0;
+        font-family: "sans-serif";
+    }
+    html, body, canvas{
+        width: 100%;
+        height: 100%;
+        overscroll-behavior: none
+    }
+    header{
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        padding: 50px;
+    }
+    *{
+        font-weight: normal;
+        color: white
+    }
+    h1{
+        font-size: 2.3rem;
+    }
+    p{
+        font-size: 0.8rem;
+    }
+    .dg.ac{
+        position: right;
+        left: unset;
+        z-index: 10000;
+    }
+    .dg.main.a{
+        margin-right: 0;
+    }
+
+    .grid{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #bottompane{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        padding-bottom: 40px;
+    }
+    #info{
+        width: 120px;
+    }
+</style>

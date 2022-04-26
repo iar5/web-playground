@@ -1,10 +1,10 @@
 import { DoubleSide, Object3D, Vector3 } from "three"
-import THREE = require("three")
+import * as THREE from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { camera, gui, renderer, scene } from "./main"
 
 
-export default class MirrorModel extends Object3D{
+export default class MirrorModel extends Object3D {
 
     private cubeCamera: THREE.CubeCamera
 
@@ -18,7 +18,7 @@ export default class MirrorModel extends Object3D{
             model.scale.set(3, 3, 3)
 
             const material = new THREE.MeshPhysicalMaterial({
-                transparent: true, // damit transmission klappt
+                transparent: true, 
                 envMap: cubeRenderTarget.texture,
                 roughness: 0,
                 metalness: 1,
@@ -43,24 +43,22 @@ export default class MirrorModel extends Object3D{
          */
 
         const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(128, {
-            format: THREE.RGBFormat,
+            format: THREE.RGBAFormat,
             generateMipmaps: true,
             minFilter: THREE.LinearMipmapLinearFilter,
         });
-        this.cubeCamera = new THREE.CubeCamera(0.0001, 10000, cubeRenderTarget);
+        this.cubeCamera = new THREE.CubeCamera(0.001, 1000, cubeRenderTarget);
     }
 
 
     renderEnvMap() {
         // camera springt (warum auch immer) beim rendern, deswegen alte position merken und später zurück setzen
-        // in Refraction Kugel das selbe problem 
-        // als ich beispiel kopiert hatte war das aber noch nicht so! 
-        const cameraPos = camera.position.clone()
+        // TODO beispil anschauen und kopieren
         this.visible = false
+        this.position.x = Math.sin(Date.now()/1000)
         this.cubeCamera.position.copy(this.position)
         this.cubeCamera.update(renderer, scene);
         this.visible = true
-        camera.position.copy(cameraPos)
     }
 
     update() {

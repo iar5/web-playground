@@ -11,6 +11,8 @@ import { scene, gui, renderer, camera } from "./main"
 //renderer.outputEncoding = THREE.sRGBEncoding;
 //renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
+// TODO sky based on aktuelle zeit
+
 const ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.1)
 scene.add(ambientLight)
 gui.addLight(ambientLight)

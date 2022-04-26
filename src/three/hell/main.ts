@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import ThreeDatGui from "../../../libmy/DatThreeGui.js"
 import { resize } from '../../../libmy/utils/three'
 import { isKeyHold } from '../../../libmy/keyhold.js'
-import Room from "./Hell.js"
+import Hell from "./Hell"
 import Controls from './Controls'
 import { TextureLoader } from 'three/build/three.module'
 import { renderDisplacement, displacementMap } from "./DispalcementShader"
@@ -18,7 +18,7 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFShadowMap
 renderer.context.getExtension('OES_standard_derivatives');
-
+renderer.setAnimationLoop((perf) => { update() })
 
 const scene = new THREE.Scene()
 //scene.fog = new THREE.FogExp2(0x00ff00, 0, 0.0005)
@@ -48,8 +48,8 @@ player.add(cubeCamera);
 
 
 
-let room = new Room()
-player.add(room)
+let hell = new Hell()
+player.add(hell)
 
 
 let material = new THREE.MeshPhysicalMaterial({
@@ -72,15 +72,13 @@ scene.add(model)
 
 
 
-requestAnimationFrame(update)
 function update() {
-    requestAnimationFrame(update)
-
     renderDisplacement(renderer)
     
     //room.uniforms.time.value = time / 1000
-    room.uniforms.positionOffset.value.copy(camera.position)
-    room.position.copy(camera.position)
+    // @ts-ignore
+    hell.material.uniforms.positionOffset.value.copy(camera.position)
+    hell.position.copy(camera.position)
 
     if(model) model.visible = false
     cubeCamera.update(renderer, scene);

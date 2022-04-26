@@ -1,10 +1,10 @@
 import { BoxBufferGeometry, BoxGeometry, BufferGeometry, DoubleSide, MathUtils, Mesh, MeshNormalMaterial, MeshStandardMaterial, Object3D, PlaneBufferGeometry } from "three";
 import { doubleArray } from "../../../libmy/utils/js"
 import * as THREE from "three"
-import { FresnelShader } from 'three/examples/jsm/shaders/FresnelShader.js';
 import OpenBoxBufferGeometry from "./OpenBoxBufferGeometry";
 import { Reflector } from 'three/examples/jsm/objects/Reflector';
 import { degToRad } from "../../../libmy/utils/math";
+import { FresnelShader } from "../island/FresnelShader";
 
 
 // https://29a.ch/slides/2012/webglwater/#slide-80

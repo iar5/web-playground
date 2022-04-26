@@ -12,14 +12,14 @@ import Ocean from './Ocean';
 
 const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
     powerPreference: "high-performance",
-    //antialias: true,
+    antialias: true,
 })
 document.body.appendChild(renderer.domElement)
 renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFShadowMap
-renderer.physicallyCorrectLights = true
+renderer.setAnimationLoop((perf) => { update() })
+// renderer.physicallyCorrectLights = true
 
-// renderer.outputEncoding = THREE.sRGBEncoding
 
 
 
@@ -45,26 +45,24 @@ controls.maxDistance = 100
 
 
 
-const refractionSphere = new RefractionSphere(new THREE.SphereGeometry(3, 32, 32))
-refractionSphere.position.set(7, 5, 0);
+// const refractionSphere = new RefractionSphere(new THREE.SphereGeometry(3, 32, 32))
+// refractionSphere.position.set(7, 5, 0);
+// scene.add(refractionSphere)
 
 const lavaSphere = new LavaSphere(new THREE.SphereGeometry(3, 64, 64))
 lavaSphere.position.set(-7, 5, 0)
+scene.add(lavaSphere)
 
 const mirrorModel = new MirrorModel()
 mirrorModel.position.set(0, 5, 14)
+scene.add(mirrorModel)
 
 const water = new Ocean()
+scene.add(water)
 
-scene.add(refractionSphere, lavaSphere, mirrorModel, water)
 
 
-setInterval(() => {
-    refractionSphere.renderEnvMap()
-    mirrorModel.renderEnvMap()
-    resize(renderer, camera)
 
-}, 2000)
 
 
 import "./sky"
@@ -72,11 +70,10 @@ import "./terrain"
 
 
 window.addEventListener('resize', () => { resize(renderer, camera) }, false);
+window.addEventListener('DOMContentLoaded', () => { resize(renderer, camera) })
 
-requestAnimationFrame(loop)
 
-function loop() {
-    requestAnimationFrame(loop)
+function update(){
     stats.begin();
 
     controls.update();
@@ -85,9 +82,13 @@ function loop() {
     mirrorModel.update()
     water.update()
     
-    //composer.render(clock.getDelta());
     renderer.render(scene, camera)
     stats.end();
+
+    // refractionSphere.renderEnvMap()
+    mirrorModel.renderEnvMap()
 }
+
+
 
 export { scene, gui, renderer, camera }

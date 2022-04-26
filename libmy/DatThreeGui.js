@@ -62,7 +62,7 @@ export default class DatThreeGui{
 
     addLight(light){       
         if (!this.lightFolder) this.lightFolder = this.datgui.addFolder('Lights');
-        let folder = this.lightFolder.addFolder(light.type + " " + light.name)
+        let folder = this.lightFolder.addFolder(light.type + " " + light.name + Math.round(Math.random()*100))
 
         folder.addColorThree(light, "color")
         folder.add(light, "intensity", 0, 5, 0.01)

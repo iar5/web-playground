@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Fog, FogExp2, IFog, Material, Mesh, Scene, Shader, ShaderLib } from 'three';
+import { Fog, FogBase, FogExp2, Material, Mesh, Scene, Shader, ShaderLib } from 'three';
 import { Sky } from 'three/examples/jsm/objects/Sky';
 
 
@@ -197,7 +197,7 @@ export default class NoiseFog {
 
     private shaders: Array<Shader> =  []
 
-  constructor(scene: Scene, fog: IFog) {
+  constructor(scene: Scene, fog: FogBase) {
 
     scene.fog = fog
     scene.traverse((child) => {

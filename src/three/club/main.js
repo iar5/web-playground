@@ -159,8 +159,7 @@ function createLocation(scene, camera) {
     top.receiveShadow = true
     scene.add(top);
 
-    var tgeo = new THREE.Geometry()
-    tgeo.merge(new THREE.BoxGeometry(7.4, 0.1, 2.4).translate(0, 3, 0))
+    var tgeo = new THREE.BoxGeometry(7.4, 0.1, 2.4).translate(0, 3, 0)
     let t_ = new THREE.BoxGeometry(0.2, 3, 0.2).translate(0, 1.5, 0)
     tgeo.merge(t_.clone().translate(3.5, 0, 1))
     tgeo.merge(t_.clone().translate(-3.5, 0, 1))
