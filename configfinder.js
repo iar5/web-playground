@@ -22,7 +22,7 @@ function findExperiment(dir) {
         const srcPath = `./${filePath}/`
         if (!fs.existsSync(srcPath + `config.js`)) return
         const config = require(srcPath + `config.js`)
-        if (isProd && config.public == false) return
+        // if (isProd && config.public == false) return hide private prototypes
 
         // create chunk
         const outPath = srcPath.replace("/src", "").replace(/\\/g, '/') // windows backslash replace

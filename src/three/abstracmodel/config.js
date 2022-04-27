@@ -3,5 +3,5 @@ module.exports = {
     "description": "DOF Shader Test",
     "tags": ["Three.js", "Shader"],
     "public": true,
-    "entry": "mainTest.ts",
+    "entry": "main.ts",
 }

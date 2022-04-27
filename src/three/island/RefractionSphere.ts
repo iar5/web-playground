@@ -1,12 +1,14 @@
 import * as THREE from "three"
 import { camera, renderer, scene } from "./main";
-import { Mesh, Object3D, SphereGeometry } from "three";
+import { Mesh, Object3D, SphereGeometry, Vector3 } from "three";
 import { FresnelShader } from "./FresnelShader";
 
 
 // https://threejs.org/examples/webgl_materials_shaders_fresnel.html
 // https://stemkoski.github.io/Three.js/Bubble.html
 
+
+const tempVec3 = new Vector3()
 
 export default class RefractionSphere extends Mesh{
 
@@ -15,7 +17,7 @@ export default class RefractionSphere extends Mesh{
     constructor(sphereGeometry: SphereGeometry){
 
         const renderTarget = new THREE.WebGLCubeRenderTarget(128, {
-            format: THREE.RGBFormat,
+            format: THREE.RGBAFormat,
             generateMipmaps: true,
             minFilter: THREE.LinearMipmapLinearFilter,
         });
@@ -37,7 +39,7 @@ export default class RefractionSphere extends Mesh{
 
 
     renderEnvMap() {
-        const cameraPos = camera.position.clone()
+        const cameraPos = tempVec3.copy(camera.position)
         this.cubeCamera.position.copy(this.position)
         this.cubeCamera.update(renderer, scene);
         camera.position.copy(cameraPos)

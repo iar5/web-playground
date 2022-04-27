@@ -55,7 +55,7 @@ module.exports = {
     output: {
         // wird für jedes HtmlWebpackPlugin durchgeführt
         path: __dirname + '/dist',
-        filename: '[name].js',
+        filename: '[name]main.js',
     },
     devServer: {
         host: '0.0.0.0',

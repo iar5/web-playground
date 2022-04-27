@@ -13,7 +13,7 @@ import { FresnelShader } from "../island/FresnelShader";
 // reflector + refractor?
 
 const renderTarget = new THREE.WebGLCubeRenderTarget(128, {
-    format: THREE.RGBFormat,
+    format: THREE.RGBAFormat,
     generateMipmaps: true,
     minFilter: THREE.LinearMipmapLinearFilter,
 });

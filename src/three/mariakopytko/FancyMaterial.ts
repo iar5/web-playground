@@ -70,7 +70,7 @@ const shader = {
 		vec3 color3 = vec3(1.-1./(1.+color*(.09/float(MAXITER*MAXITER))));
 		color3 *= color3;
 		gl_FragColor = vec4(color3.r*R_FACTOR, color3.g*G_FACTOR, color3.b*B_FACTOR,1.);
-        gl_FragColor.a = normalize(length(gl_FragColor.xyz)) * 1.-(pos.y/2.);
+        gl_FragColor.a = normalize(length(gl_FragColor.xyz)) * 1.-(pos.y/1.); // die letzte 1 ist zylinder height
 	}    
     `,
 

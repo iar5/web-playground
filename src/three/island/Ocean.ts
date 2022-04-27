@@ -31,8 +31,7 @@ export default class Ocean extends Object3D{
         });
 
 
-        this.water.position.y -= 6
-        this.water.rotation.x = - Math.PI / 2;
+        this.water.rotation.x = -Math.PI/2;
         this.add(this.water);
 
         /* @ts-ignore */

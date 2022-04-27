@@ -4,6 +4,9 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { camera, gui, renderer, scene } from "./main"
 
 
+const tempVec = new Vector3()
+
+
 export default class MirrorModel extends Object3D {
 
     private cubeCamera: THREE.CubeCamera
@@ -54,11 +57,12 @@ export default class MirrorModel extends Object3D {
     renderEnvMap() {
         // camera springt (warum auch immer) beim rendern, deswegen alte position merken und später zurück setzen
         // TODO beispil anschauen und kopieren
+        const cameraPos = tempVec.copy(camera.position)
         this.visible = false
-        this.position.x = Math.sin(Date.now()/1000)
         this.cubeCamera.position.copy(this.position)
         this.cubeCamera.update(renderer, scene);
         this.visible = true
+        camera.position.copy(cameraPos)
     }
 
     update() {

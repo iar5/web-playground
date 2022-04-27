@@ -8,6 +8,11 @@ import { AmbientLight, Fog, PointLight, RectAreaLight, SpotLight } from 'three';
 import ThreeDatGui from "../../../libmy/DatThreeGui.js"
 import FancyMaterial from './FancyMaterial';
 import { LightFlickerAnimation } from "@ravespaceclub/space-engine"
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 
 
 
@@ -41,8 +46,35 @@ controls.rotateSpeed = 0.2
 controls.target.y += 0.5
 controls.enablePan = false
 
-window.addEventListener('resize', () => { resize(renderer, camera) }, false);
-window.addEventListener('DOMContentLoaded', () => { resize(renderer, camera) })
+
+const composer = new EffectComposer(renderer)
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass);
+
+
+window.addEventListener('resize', () => { 
+    composer.setSize(renderer.domElement.clientWidth, renderer.domElement.clientHeight)
+    resize(renderer, camera) 
+}, false);
+window.addEventListener('DOMContentLoaded', () => { 
+    composer.setSize(renderer.domElement.clientWidth, renderer.domElement.clientHeight)
+    resize(renderer, camera) 
+})
+
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+bloomPass.threshold = 1
+bloomPass.strength = 0.5
+bloomPass.radius = 0.2
+let f = gui.datgui.addFolder("Bloom")
+f.add(bloomPass, "threshold", 0, 2, 0.01)
+f.add(bloomPass, "strength", 0, 2, 0.01)
+f.add(bloomPass, "radius", 0, 2, 0.01)
+f.add(renderer, "toneMappingExposure", 0, 2, 0.01)
+composer.addPass(bloomPass);
+
+const fxaaPass = new ShaderPass(FXAAShader);
+composer.addPass(fxaaPass);
+
 
 
 const updates = []
@@ -121,6 +153,16 @@ gltfLoader.load("/mymodels/mariakopytko.glb", (gltf) => {
 
 
 
+
+
+const mat = new FancyMaterial()
+mat.side = THREE.DoubleSide
+const cylinder = new THREE.Mesh(new THREE.CylinderBufferGeometry(2, 1.5, 1.5, 36, 36, false), mat)
+cylinder.translateY(0.75)
+scene.add(cylinder)
+
+
+
 function loop() {
     const now = performance.now()
     controls.update();
@@ -134,16 +176,9 @@ function loop() {
     mat.uniforms.time.value = now
 
     updates.forEach((u)=>{
-        u.update(now)
+        if(u.update) u.update(now)
     })
 
-    renderer.render(scene, camera)
+    // renderer.render(scene, camera)
+    composer.render()
 }
-
-
-const mat = new FancyMaterial()
-mat.side = THREE.DoubleSide
-const cylinder = new THREE.Mesh(new THREE.CylinderBufferGeometry(1.5, 1.5, 2, 36, 36, false), mat)
-cylinder.translateY(1)
-scene.add(cylinder)
-
