@@ -12,8 +12,12 @@
 <body>
     <div id="headline">
         <h1>Web Prototypes</h1>
-        <p>fun fun fun by <a style="color: blue; text-decoration: underline" href="https://tomwendland.de" taget="_blank">Tom Wendland</p>
+        <p>fun fun fun by <a class="externalLink" href="https://tomwendland.de" taget="_blank">Tom Wendland</a></p>
         <!--p>Last updated: <%= new Date().getDate() %>.<%= new Date().getMonth()+1 %>.<%= new Date().getFullYear() %></p-->
+    </div>
+
+    <div>
+        <p class="boxDing">Checkout <a class="externalLink" href="https://ravespace.io/engine" target="_blank">Rave Engine</a>. A lot of my personal work is used and extended here.</p>
     </div>
 
     <% for(const [name, experiments] of Object.entries(experimentsCategories)){ if(experiments.length == 0) continue; %>
@@ -118,7 +122,7 @@
     }
 
 
-    h3{
+    .boxDing, h3{
         font-size: 1rem;
         margin-top: 30px;
         margin-bottom: 10px;
@@ -198,5 +202,10 @@
     .info:hover div{
         display: initial;
         opacity: 1;
+    }
+
+    .externalLink{
+        color: blue; 
+        text-decoration: underline"
     }
 </style>

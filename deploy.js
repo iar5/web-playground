@@ -1,6 +1,6 @@
 // https://www.npmjs.com/package/ftp-deploy
 // https://github.com/simonh1000/ftp-deploy
-
+// besser: ftp deploy bei publish
 
 var FtpDeploy = require('ftp-deploy');
 var ftpDeploy = new FtpDeploy();

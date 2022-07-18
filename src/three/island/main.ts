@@ -46,28 +46,28 @@ controls.maxDistance = 100
 updates.push(controls)
 
 
-const refractionSphere = new RefractionSphere(new THREE.SphereGeometry(3, 32, 32))
-refractionSphere.position.set(7, 5, 0);
-scene.add(refractionSphere)
-updates.push(refractionSphere)
+// const refractionSphere = new RefractionSphere(new THREE.SphereGeometry(3, 32, 32))
+// refractionSphere.position.set(7, 5, 0);
+// scene.add(refractionSphere)
+// updates.push(refractionSphere)
 
-const lavaSphere = new LavaSphere(new THREE.SphereGeometry(3, 64, 64))
-lavaSphere.position.set(-7, 5, 0)
-scene.add(lavaSphere)
-updates.push(lavaSphere)
+// const lavaSphere = new LavaSphere(new THREE.SphereGeometry(3, 64, 64))
+// lavaSphere.position.set(-7, 5, 0)
+// scene.add(lavaSphere)
+// updates.push(lavaSphere)
 
-const mirrorModel = new MirrorModel()
-mirrorModel.position.set(0, 5, 14)
-scene.add(mirrorModel)
-updates.push(mirrorModel)
+// const mirrorModel = new MirrorModel()
+// mirrorModel.position.set(0, 5, 14)
+// scene.add(mirrorModel)
+// updates.push(mirrorModel)
 
 const water = new Ocean() // TODO wenn ocean da ist rendert mirror/refraction das terrain nicht
 water.position.y -= 6
 scene.add(water)
 updates.push(water)
 
-const terrain = new Terrain()
-scene.add(terrain)
+// const terrain = new Terrain()
+// scene.add(terrain)
 
 const sky = new MySky()
 scene.add(sky)
@@ -84,14 +84,14 @@ function update(perf){
         if(u.update) u.update()
     }
 
-    refractionSphere.position.x += Math.sin(perf/1000)/100
-    refractionSphere.position.z += Math.cos(perf/1000)/100
-    refractionSphere.position.z += Math.sin(perf/1270)/100
+    // refractionSphere.position.x += Math.sin(perf/1000)/100
+    // refractionSphere.position.z += Math.cos(perf/1000)/100
+    // refractionSphere.position.z += Math.sin(perf/1270)/100
     
     renderer.render(scene, camera)
 
-    refractionSphere.renderEnvMap() 
-    mirrorModel.renderEnvMap() 
+    // refractionSphere.renderEnvMap() 
+    // mirrorModel.renderEnvMap() 
 
     stats.end();
 }
