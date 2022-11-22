@@ -33,6 +33,12 @@ controls.update()
 const scene = new THREE.Scene()
 
 
+const pl = new THREE.PointLight(0x00ff00)
+scene.add(pl)
+pl.position.set(2, 2, 2)
+const pl2 = new THREE.PointLight(0xffff00)
+scene.add(pl2)
+pl2.position.set(-2, -2, -2)
 
       
 let htmlElement = document.getElementById("htmlSrc")
@@ -49,20 +55,20 @@ group.add(css3dObject);
 
 
 // canvas chop plane
-let material = new THREE.MeshPhongMaterial({opacity: 0, color: new THREE.Color("black"), blending: THREE.NoBlending, side: THREE.DoubleSide });
+let material = new THREE.MeshLambertMaterial({opacity: 0, color: new THREE.Color("black"), blending: THREE.NoBlending, side: THREE.DoubleSide });
 let geometry = new THREE.BoxBufferGeometry(htmlElement.clientWidth,  htmlElement.clientHeight, 0.1);
 let mesh = new THREE.Mesh(geometry, material);
 group.add(mesh);
 
 // back plate
-material = new THREE.MeshBasicMaterial({opacity: 1, color: new THREE.Color("red")});
+material = new THREE.MeshLambertMaterial({opacity: 1, color: new THREE.Color("red")});
 geometry = new THREE.BoxBufferGeometry(htmlElement.clientWidth+2,  htmlElement.clientHeight+2, 0.1);
 mesh = new THREE.Mesh(geometry, material);
 mesh.position.z = -1
 group.add(mesh);
 
 // sphere davor
-material = new THREE.MeshBasicMaterial({opacity: 1, color: new THREE.Color("green")});
+material = new THREE.MeshLambertMaterial({opacity: 1, color: new THREE.Color("white")});
 geometry = new THREE.SphereBufferGeometry(htmlElement.clientWidth/4);
 let sphereMesh = new THREE.Mesh(geometry, material);
 group.add(sphereMesh);
