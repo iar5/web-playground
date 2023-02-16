@@ -102,10 +102,10 @@ var bottom = new THREE.Mesh(new THREE.PlaneGeometry(20, 20, 1, 1), whiteTiles)
     .rotateX(THREE.MathUtils.degToRad(-90))
 scene.add(bottom);
 
-var top = new THREE.Mesh(new THREE.PlaneGeometry(20, 20, 1, 1), whiteTiles)
-    .translateY(12)
-    .rotateX(THREE.MathUtils.degToRad(90))
-scene.add(top);
+// var top = new THREE.Mesh(new THREE.PlaneGeometry(20, 20, 1, 1), whiteTiles)
+//     .translateY(12)
+//     .rotateX(THREE.MathUtils.degToRad(90))
+// scene.add(top);
 
 
 //////
@@ -159,7 +159,7 @@ scene.add(am)
 ////
 renderer.setAnimationLoop(() => {
     wt += clock.getDelta()
-    if(wt >= 2){
+    if(wt >= 0.1){
         water.drop(Math.random(), Math.random(), Math.random())
         wt = 0
     }  

@@ -82,9 +82,9 @@ export default class Water extends Object3D{
             fragmentShader: FresnelShader.fragmentShader,
         });
 
-        let mesh = new Mesh(this.geometry, fresnelMaterial)
-        mesh.translateY(2)
-        this.add(mesh) 
+        let waterSurfaceMesh = new Mesh(this.geometry, bodyMat)
+        waterSurfaceMesh.translateY(2)
+        this.add(waterSurfaceMesh) 
 
 
 
