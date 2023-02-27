@@ -81,17 +81,23 @@ export default (function(){ return {
      */
     setupOrientationControl(canvas, matrix) {
 
-        window.addEventListener('deviceorientation', event => {          
-            if(!this.enableOrientation) return
+        if (window.DeviceOrientationEvent && 'ontouchstart' in window) {
+            window.addEventListener('deviceorientation', event => {          
+                if(!this.enableOrientation) return
+    
+                let x = event.gamma
+                let y = event.beta 
+    
+                if (this.initialOrientation == null) {
+                    this.initialOrientation = [x, y]
+                }
+                this.rotateByValues(matrix, this.initialOrientation[0]-x, this.initialOrientation[1]-y) 
+            })
+        } else {
+            document.getElementById("checkboxOrientationControle").style.display = "none"
+        }
 
-            let x = event.gamma
-            let y = event.beta 
-
-            if (this.initialOrientation == null) {
-                this.initialOrientation = [x, y]
-            }
-            this.rotateByValues(matrix, this.initialOrientation[0]-x, this.initialOrientation[1]-y) 
-        })
+    
     },
 
     /**
