@@ -22,8 +22,19 @@ const githubExperiments = [
         urlPath: "https://github.com/iar5/webgl-heightfield-water",
         tags: ["WebGL", "Simulation", "Realtime"],
         public: true,
+    },{
+        title: "mandelbulb",
+        urlPath: "https://github.com/iar5/mandelbulb",
+        tags: ["WebGL", "Simulation", "Realtime", "Fragment Shader"],
+        public: true,
+    },{
+        title: "img-displacement",
+        urlPath: "https://github.com/iar5/img-displacement",
+        tags: ["WebGL", "Simulation", "Realtime", "Vertex Shader"],
+        public: true,
     }
 ]
+
 
 const entrys = configfinder.entrys
 const htmlWebpacks = configfinder.htmlWebpacks
