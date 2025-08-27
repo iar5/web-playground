@@ -8,7 +8,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const isProd = process.env.NODE_ENV === "production"
 const configfinder = require('./configfinder');
 
-const webglExperiments = configfinder.findExperiment("./src/webgl/")
 const threeExperiments = configfinder.findExperiment("./src/three/")
 const githubExperiments = [
     {
@@ -53,9 +52,8 @@ module.exports = {
             templateParameters: {
                 isProd,
                 experimentsCategories: { 
-                    "WebGL native": webglExperiments, 
                     "Three.js": threeExperiments, 
-                    "GitHub": githubExperiments 
+                    "WebGL native (on GitHub)": githubExperiments 
                 }
             },
             chunks: []
