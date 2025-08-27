@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --public",
-    "build": "cross-env NODE_ENV=production webpack",
-    "deploy": "npm run build && node deploy"
+    "build": "cross-env NODE_ENV=production webpack"
   },
   "keywords": [],
   "devDependencies": {
@@ -22,7 +21,6 @@
     "exports-loader": "^1.1.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^6.2.0",
-    "ftp-deploy": "^2.4.1",
     "gsap": "^3.6.0",
     "html-webpack-plugin": "^4.2.0",
     "imports-loader": "^0.8.0",
