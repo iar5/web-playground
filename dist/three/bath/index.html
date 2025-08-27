@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><title></title><meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1,maximum-scale=1"><meta name="description" content=""><meta name="keywords" content="Three.js, Shader, Water"><link rel="icon" href="../../favicon.png"></head><body><script src="../.././three/bath/main.js"></script></body><header><h1><span style="display: inline-block; transform: rotate(90deg); margin-right: 10px; cursor: pointer" alt="return" onclick="window.history.go(-1)">↲</span> Bath</h1><p></p><ul></ul></header></html><style>* {
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><title></title><meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1,maximum-scale=1"><meta name="description" content=""><meta name="keywords" content="Three.js, Shader, Water"><link rel="icon" href="../../favicon.png"></head><body><script src="../.././three/bath/main.js"></script></body><header><h1><span alt="return" onclick="window.history.go(-1)">↲</span> <span>Bath</span></h1></header></html><style>* {
         padding: 0;
         margin: 0;
         font-family: sans-serif;
@@ -11,17 +11,27 @@
     header{
         border: 1px solid black;
         border-radius: 10px;
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 1);
         position: fixed;
         left: 10px;
         top: 10px;
-        padding: 5px;
     }
     h1{
         font-size: .9rem;
         font-weight: normal;
     }
-    p{
+    h1>span{
+        padding: 5px 10px;
+        box-sizing: border-box;
+    }
+    h1>span:nth-of-type(1){
+        display: inline-block; 
+        cursor: pointer;
+        border-right: 1px solid black;
+    }
+    header>p{
+        border-top: 1px solid black;
+        padding: 5px 10px;
         font-size: 0.8rem;
     }
     .dg.ac{

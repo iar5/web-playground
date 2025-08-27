@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --public",
     "build": "cross-env NODE_ENV=production webpack",
-    "deploy": "npm run build && node deploy",
-    "clear": "rm -rf node_modules && rm package-lock.json"
+    "deploy": "npm run build && node deploy"
   },
   "keywords": [],
   "devDependencies": {

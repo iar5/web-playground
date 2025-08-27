@@ -4,7 +4,7 @@ import * as THREE from "three"
 import OpenBoxBufferGeometry from "./OpenBoxBufferGeometry";
 import { Reflector } from 'three/examples/jsm/objects/Reflector';
 import { degToRad } from "../../../libmy/utils/math";
-import { FresnelShader } from "../island/FresnelShader";
+import { FresnelShader } from "./FresnelShader";
 
 
 // https://29a.ch/slides/2012/webglwater/#slide-80

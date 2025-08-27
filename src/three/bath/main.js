@@ -43,9 +43,6 @@ controls.update();
 window.addEventListener("resize", resize(renderer, camera));
 resize(renderer, camera)
 
-const stats = new Stats();
-document.body.appendChild(stats.dom);
-
 
 
 //////
@@ -165,7 +162,6 @@ renderer.setAnimationLoop(() => {
     }  
     water.update()   
     renderer.render(scene, camera);
-    stats.update();
 });
 
 
